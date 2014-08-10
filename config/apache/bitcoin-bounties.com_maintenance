@@ -1,0 +1,33 @@
+<IfModule mod_ssl.c>
+  <VirtualHost *:443>
+
+    ServerAdmin admin@bitcoin-bounties.com
+    ServerName  bitcoin-bounties.com
+    ServerAlias www.bitcoin-bounties.com
+
+    DocumentRoot /home/bitcoin_bounties/www
+
+    ## Redirect everything 
+    RedirectMatch 301 /(.+) https://bitcoin-bounties.com
+
+    # static media aliases                                                       
+    Alias / /home/bitcoin_bounties/www/apps/site/templates/site/maintenance.html
+
+    # logging
+    LogLevel warn
+    ErrorLog  /home/bitcoin_bounties/log/apache_error.log
+    CustomLog /home/bitcoin_bounties/log/apache_access.log combined
+
+    # ssl
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/bitcoin-bounties.com.crt
+    SSLCertificateKeyFile /etc/ssl/private/bitcoin-bounties.com.key
+    SSLCertificateChainFile /etc/ssl/certs/bitcoin-bounties.com_intermediate.crt
+    BrowserMatch "MSIE [2-6]" \
+            nokeepalive ssl-unclean-shutdown \
+            downgrade-1.0 force-response-1.0
+    # MSIE 7 and newer should be able to use keepalive
+    BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+  </VirtualHost>
+</IfModule>

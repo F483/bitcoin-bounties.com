@@ -1,0 +1,31 @@
+<ul class="nav nav-tabs">
+  {% for tab in tabs %}
+    {% if tab.active %}
+      <li class="active">
+        <a href="{{ tab.url }}">
+          <b>
+            {% if tab.icon_classes %}
+              <i class="{{ tab.icon_classes }}"></i>
+            {% endif %}
+            {{ tab.label }}
+            {% if tab.badge %}
+              <span class="badge">{{ tab.badge }}</span>
+            {% endif %}
+          </b>
+        </a>
+      </li>
+    {% else %}
+      <li>
+        <a href="{{ tab.url }}">
+          {% if tab.icon_classes %}
+            <i class="{{ tab.icon_classes }}"></i>
+          {% endif %}
+          {{ tab.label }}
+          {% if tab.badge %}
+            <span class="badge">{{ tab.badge }}</span>
+          {% endif %}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

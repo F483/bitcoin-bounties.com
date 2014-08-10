@@ -1,0 +1,58 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% load common_tags %}
+{% load bitcoin_tags %}
+{% load bounty_tags %}
+
+{% block before_content %}
+
+  <div class="container">
+    {% include "common/tabs.html" %}
+  </div>
+
+  <div class="container">
+    {% if bounty.state == "PENDING" %}
+      <div class="panel panel-default">
+    {% endif %}
+    {% if bounty.state == "ACTIVE" %}
+      <div class="panel panel-primary">
+    {% endif %}
+    {% if bounty.state == "MEDIATION" %}
+      <div class="panel panel-warning">
+    {% endif %}
+    {% if bounty.state == "FINISHED" %}
+      {% if bounty.awarded %}
+        <div class="panel panel-success">
+      {% else %}
+        <div class="panel panel-danger">
+      {% endif %}
+    {% endif %}
+    {% if bounty.state == "CANCELLED" or bounty.state == "DELETED" %}
+        <div class="panel panel-danger">
+    {% endif %}
+
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3 class="panel-title"> 
+              <b>{{ bounty|render_type }} {{ bounty.title }} </b>
+            </h3>
+          </div>
+          <div class="col-sm-6" style="text-align:right;">
+            {% include "bounty/view/actions.html" %}
+          </div>
+        </div>
+      </div>
+
+      {% if bounty.created_by == user and bounty.state == "PENDING" %}
+        <div class="panel-footer">
+          {% blocktrans with deadline=bounty.deadline %}
+            PENDING_HELP_{{ deadline }}
+          {% endblocktrans %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}
+

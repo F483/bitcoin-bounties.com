@@ -1,0 +1,3 @@
+A Claim has been submitted for the bounty "{{ claim.bounty.title }}".
+
+http://{{ site.domain  }}{{ claim.url_details }}

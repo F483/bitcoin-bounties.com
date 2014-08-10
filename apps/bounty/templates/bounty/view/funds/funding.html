@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load common_tags %}
+{% load bitcoin_tags %}
+{% load userfund_tags %}
+
+<table class="table table-striped table-hover ">
+  <tbody>
+    <tr>
+      <td>
+        {% trans "REWARD" %} 
+      </td>
+      <td style="text-align: right;">
+        {{ bounty.display_reward|render_mbtc }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% trans "FEES" %} 
+        (+{{ settings.FEES|render_percent }})
+      </td>
+      <td style="text-align: right;">
+        {{ bounty.display_fees|render_mbtc }}
+      </td>
+    </tr>
+
+    {% if bounty.state == "PENDING" %}
+      <tr>
+        <td>{% trans "FUNDED" %} ({{ bounty.funded_ratio|render_percent }})
+        </td>
+        <td style="text-align: right;">
+          {{ bounty.funds|render_mbtc }} / 
+          {{ bounty.target_funds|render_mbtc }}
+        </td>
+      </tr>
+      <tr>
+        <td>{% trans "FUNDS_NEEDED" %}</td>
+        <td style="text-align: right;">
+          <b>{{ bounty.funds_needed|render_mbtc }}</b>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td>{% trans "BALANCE" %}</td>
+        <td style="text-align: right;">
+          {{ bounty.funds|render_mbtc }}
+        </td>
+      </tr>
+    {% endif %}
+
+    {% if_can_fund user bounty %}
+      {% if userfund.balance %}
+        <tr>
+          <td>
+            {% trans "YOUR_FUNDS" %}
+            ({{ userfund.balance|div:bounty.funds|render_percent }})
+          </td>
+          <td style="text-align: right;">
+            {{ userfund.balance|render_mbtc }}
+          </td>
+        </tr>
+      {% endif %}
+    {% endif_can_fund %}
+
+  </tbody>
+</table>
+

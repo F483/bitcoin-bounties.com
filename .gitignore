@@ -1,0 +1,18 @@
+syntax: glob
+*~
+*.pyc
+*.orig
+*.swp
+*.swo
+*.rej
+*.DS_Store
+*.log
+*.bak
+*.lock
+development.db
+config/local_settings.py
+config/ssl/*
+uploads/*
+flags/*
+doc/video/*
+

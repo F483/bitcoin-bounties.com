@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-17 10:50-0500\n"
+"PO-Revision-Date: 2014-04-30 11:32-0600\n"
+"Last-Translator:   <fabian.barkhau@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.7.4\n"
+
+#: forms.py:13
+msgid "ADDRESS"
+msgstr "Address"
+
+#: forms.py:24
+msgid "ERROR_INVALID_ADDRESS"
+msgstr "Invalid field: Address is not valid!"
+
+#: models.py:68
+msgid "REFUND"
+msgstr "Refund"
+
+#: views.py:33
+msgid "SET_REFUND_ADDRESS"
+msgstr "Set refund address"
+
+#: views.py:34
+msgid "SET_REFUND_ADDRESS_ALERT_INFO"
+msgstr ""
+"Funds invested will be sent to this bitcoin address if the bounty is not "
+"successfully claimed."

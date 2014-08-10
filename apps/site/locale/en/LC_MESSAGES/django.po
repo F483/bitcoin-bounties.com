@@ -1,0 +1,691 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-17 10:50-0500\n"
+"PO-Revision-Date: 2014-06-25 17:52-0551\n"
+"Last-Translator:   <fabian.barkhau@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.7.4\n"
+
+#: templates/account/email.html:7
+msgid "Account"
+msgstr ""
+
+#: templates/account/email.html:10
+msgid "E-mail Addresses"
+msgstr ""
+
+#: templates/account/email.html:12
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: templates/account/email.html:26
+msgid "Verified"
+msgstr ""
+
+#: templates/account/email.html:28
+msgid "Unverified"
+msgstr ""
+
+#: templates/account/email.html:30
+msgid "Primary"
+msgstr ""
+
+#: templates/account/email.html:36
+msgid "Make Primary"
+msgstr ""
+
+#: templates/account/email.html:37
+msgid "Re-send Verification"
+msgstr ""
+
+#: templates/account/email.html:38 templates/socialaccount/connections.html:35
+msgid "Remove"
+msgstr ""
+
+#: templates/account/email.html:45
+msgid "Warning:"
+msgstr ""
+
+#: templates/account/email.html:45
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: templates/account/email.html:50
+msgid "Add E-mail Address"
+msgstr ""
+
+#: templates/account/email.html:55
+msgid "Add E-mail"
+msgstr ""
+
+#: templates/account/email.html:64
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: templates/account/email_confirm.html:7
+#: templates/account/email_confirm.html:11
+#: templates/account/email_confirmed.html:6
+#: templates/account/email_confirmed.html:11
+#: templates/account/email/email_confirmation_subject.txt:3
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: templates/account/email_confirm.html:17
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: templates/account/email_confirm.html:21
+msgid "Confirm"
+msgstr ""
+
+#: templates/account/email_confirm.html:28
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: templates/account/email_confirmed.html:15
+#, python-format
+msgid ""
+"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-"
+"mail address for user %(user_display)s."
+msgstr ""
+
+#: templates/account/login.html:8 templates/account/login.html.py:12
+#: templates/account/login.html:46
+msgid "Sign In"
+msgstr "Login"
+
+#: templates/account/login.html:15
+#, python-format
+msgid ""
+"Please sign in with one\n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
+"up</a> \n"
+"for a %(site_name)s account and sign in below:"
+msgstr ""
+
+#: templates/account/login.html:25
+msgid "or"
+msgstr ""
+
+#: templates/account/login.html:33
+#, python-format
+msgid ""
+"Don't have an account? \n"
+"    <a href=\"%(signup_url)s\"><b>Signup</b></a> for a %(site_name)s account."
+msgstr ""
+
+#: templates/account/login.html:44
+msgid "Forgot Password?"
+msgstr ""
+
+#: templates/account/logout.html:6 templates/account/logout.html.py:9
+#: templates/account/logout.html:18
+msgid "Sign Out"
+msgstr "Logout"
+
+#: templates/account/logout.html:11
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: templates/account/password_change.html:5
+#: templates/account/password_change.html:8
+#: templates/account/password_change.html:13
+#: templates/account/password_reset_from_key.html:6
+#: templates/account/password_reset_from_key.html:9
+msgid "Change Password"
+msgstr ""
+
+#: templates/account/password_delete.html:5
+#: templates/account/password_delete.html:8
+msgid "Delete Password"
+msgstr ""
+
+#: templates/account/password_delete.html:9
+msgid ""
+"You may delete your password since you are currently logged in using OpenID."
+msgstr ""
+
+#: templates/account/password_delete.html:12
+msgid "delete my password"
+msgstr ""
+
+#: templates/account/password_delete_done.html:5
+#: templates/account/password_delete_done.html:8
+msgid "Password Deleted"
+msgstr ""
+
+#: templates/account/password_delete_done.html:9
+msgid "Your password has been deleted."
+msgstr ""
+
+#: templates/account/password_reset.html:7
+#: templates/account/password_reset.html:11
+#: templates/account/password_reset_done.html:6
+#: templates/account/password_reset_done.html:9
+msgid "Password Reset"
+msgstr ""
+
+#: templates/account/password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: templates/account/password_reset.html:21
+msgid "Reset My Password"
+msgstr ""
+
+#: templates/account/password_reset.html:25
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: templates/account/password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:9
+msgid "Bad Token"
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:13
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:19
+msgid "change password"
+msgstr ""
+
+#: templates/account/password_reset_from_key.html:22
+msgid "Your password is now changed."
+msgstr ""
+
+#: templates/account/password_set.html:6 templates/account/password_set.html:9
+#: templates/account/password_set.html:14
+msgid "Set Password"
+msgstr ""
+
+#: templates/account/signup.html:7 templates/socialaccount/signup.html:5
+msgid "Signup"
+msgstr "Sign Up"
+
+#: templates/account/signup.html:10 templates/account/signup.html.py:20
+#: templates/socialaccount/signup.html:8
+#: templates/socialaccount/signup.html:19
+msgid "Sign Up"
+msgstr ""
+
+#: templates/account/signup.html:12
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: templates/account/signup_closed.html:6
+#: templates/account/signup_closed.html:9
+msgid "Sign Up Closed"
+msgstr ""
+
+#: templates/account/signup_closed.html:11
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: templates/account/verification_sent.html:5
+#: templates/account/verification_sent.html:8
+#: templates/account/verified_email_required.html:6
+#: templates/account/verified_email_required.html:9
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: templates/account/verification_sent.html:10
+#, python-format
+msgid ""
+"We have sent an e-mail to <a href=\"mailto:%(email)s\">%(email)s</a> for "
+"verification. Follow the link provided to finalize the signup process. "
+"Please contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: templates/account/verified_email_required.html:13
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: templates/account/verified_email_required.html:17
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: templates/account/verified_email_required.html:21
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: templates/account/email/email_confirmation_message.txt:1
+#, python-format
+msgid ""
+"User %(user_display)s at %(site_name)s has given this as an email address.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s\n"
+msgstr ""
+
+#: templates/account/email/password_reset_key_message.txt:1
+#, python-format
+msgid ""
+"You're receiving this e-mail because you or someone else has requested a "
+"password for your user account at %(site_domain)s.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"link below to reset your password.\n"
+"\n"
+"%(password_reset_url)s\n"
+"\n"
+"In case you forgot, your username is %(username)s.\n"
+"\n"
+"Thanks for using our site!\n"
+msgstr ""
+
+#: templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset E-mail"
+msgstr ""
+
+#: templates/account/messages/cannot_delete_primary_email.txt:2
+#, python-format
+msgid "You cannot remove your primary e-mail address (%(email)s)."
+msgstr ""
+
+#: templates/account/messages/email_confirmation_sent.txt:2
+#, python-format
+msgid "Confirmation e-mail sent to %(email)s."
+msgstr ""
+
+#: templates/account/messages/email_confirmed.txt:2
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr ""
+
+#: templates/account/messages/email_deleted.txt:2
+#, python-format
+msgid "Removed e-mail address %(email)s."
+msgstr ""
+
+#: templates/account/messages/logged_in.txt:4
+#, python-format
+msgid "Successfully signed in as %(name)s."
+msgstr ""
+
+#: templates/account/messages/logged_out.txt:2
+msgid "You have signed out."
+msgstr ""
+
+#: templates/account/messages/password_changed.txt:2
+msgid "Password successfully changed."
+msgstr ""
+
+#: templates/account/messages/password_set.txt:2
+msgid "Password successfully set."
+msgstr ""
+
+#: templates/account/messages/primary_email_set.txt:2
+msgid "Primary e-mail address set."
+msgstr ""
+
+#: templates/account/messages/unverified_primary_email.txt:2
+msgid "Your primary e-mail address must be verified."
+msgstr ""
+
+#: templates/account/snippets/already_logged_in.html:5
+msgid "Note"
+msgstr ""
+
+#: templates/account/snippets/already_logged_in.html:5
+#, python-format
+msgid "you are already logged in as %(user_display)s."
+msgstr ""
+
+#: templates/openid/login.html:10
+msgid "OpenID Sign In"
+msgstr ""
+
+#: templates/site/about.html:11
+msgid "SITE_ABOUT"
+msgstr ""
+"# Welcome to Bitcoin Bounties\n"
+"\n"
+"**Bitcoin Bounties** is a site that lets you easily claim, post or fund "
+"rewards with [bitcoin](http://en.wikipedia.org/wiki/Bitcoin).\n"
+"\n"
+"Here is a quick overview of how it works.\n"
+"\n"
+"\n"
+"# Claiming bounties\n"
+"\n"
+"**Earn bitcoin** by  completing tasks and successfully claiming bounty "
+"rewards.\n"
+"\n"
+"\n"
+"# Creating bounties\n"
+"\n"
+"Create a bounty and **only pay the reward if the task is completed**, "
+"otherwise you will be refunded your investment (minus fees). \n"
+"\n"
+"\n"
+"# Crowd funding public bounties\n"
+"\n"
+"Bounty creators can make a bounty public to enable crowd funding. The "
+"resulting claims will also be made publicly available."
+
+#: templates/site/about.html:12
+msgid "CREATE_BOUNTY"
+msgstr "Create bounty"
+
+#: templates/site/about.html:13
+msgid "BROWSE_BOUNTIES"
+msgstr "Browse bounties"
+
+#: templates/site/contact.html:11
+msgid "SITE_CONTACT"
+msgstr ""
+"Contact bitcoin-bounties.com\n"
+"=================\n"
+"\n"
+"You can contact us by the following methods.\n"
+"\n"
+"Email: admin@bitcoin-bounties.com\n"
+"\n"
+"Twitter: [twitter.com/bitcoinbounties](https://twitter.com/bitcoinbounties)"
+
+#: templates/site/faq.html:7
+msgid "SITE_FAQ"
+msgstr ""
+"# Frequently Asked Questions\n"
+"\n"
+"### What is a \"Private Bounty\"?\n"
+"\n"
+"Every bounty is created as a **private bounty by default**. This means only "
+"the bounty creator can fund the bounty and view the resulting claims. This "
+"allows the creation of bounties where the result is not made available to "
+"the general public.\n"
+"\n"
+"\n"
+"### What is a \"Public Bounty\"?\n"
+"\n"
+"If the bounty creator makes a bounty public, anyone will be able to fund the "
+"bounty. This also means that the resulting claims will be made available to "
+"the general public. This allows for crowd funded bounties."
+
+#: templates/site/form_include.html:32
+msgid "CANCEL"
+msgstr "Cancel"
+
+#: templates/site/form_include.html:36
+msgid "SUBMIT"
+msgstr "Submit"
+
+#: templates/site/terms.html:7
+msgid "SITE_TERMS_AND_CONDITIONS"
+msgstr ""
+"Terms and conditions\n"
+"=============\n"
+"\n"
+"Currently we do not have a proper terms and conditions agreement. Once we "
+"are fully incorporated and have arranged the financing of a lawyer this will "
+"be added. Until then we propose the following.\n"
+"\n"
+"***Be excellent to each other.***"
+
+#: templates/site/base/navbar.html:9
+msgid "SITE_NAME"
+msgstr "bitcoin-bounties.com"
+
+#: templates/site/base/navbar.html:25
+msgid "BROWSE"
+msgstr "Browse"
+
+#: templates/site/base/navbar.html:30
+msgid "CREATE"
+msgstr "Create"
+
+#: templates/site/base/navbar.html:36
+msgid "INFO"
+msgstr "Info"
+
+#: templates/site/base/navbar.html:40
+msgid "ABOUT"
+msgstr "About"
+
+#: templates/site/base/navbar.html:41
+msgid "CONTACT"
+msgstr "Contact"
+
+#: templates/site/base/navbar.html:42
+msgid "FAQ"
+msgstr "F.A.Q."
+
+#: templates/site/base/navbar.html:43
+msgid "SITE_FUNDS"
+msgstr "Site funds"
+
+#: templates/site/base/navbar.html:44
+msgid "TERMS"
+msgstr "Terms and conditions"
+
+#: templates/site/base/navbar.html:51
+msgid "INTERNAL"
+msgstr "Internal"
+
+#: templates/site/base/navbar.html:58
+msgid "TRANSLATIONS"
+msgstr "Translations"
+
+#: templates/site/base/navbar.html:63
+msgid "DJANGO_ADMIN"
+msgstr "Django admin"
+
+#: templates/site/base/navbar.html:80
+msgid "LOGOUT"
+msgstr "Logout"
+
+#: templates/site/base/navbar.html:86
+msgid "LOGIN"
+msgstr "Login"
+
+#: templates/site/base/navbar.html:91
+msgid "SIGNUP"
+msgstr "Sign Up"
+
+#: templates/site/base/noobhelp.html:10
+msgid "NOOB_HELP_INFO"
+msgstr ""
+"Bitcoin Bounties is a site where anyone can easily post, fund or claim "
+"rewards with bitcoin."
+
+#: templates/site/base/noobhelp.html:11
+msgid "NOOB_HELP_TOUR"
+msgstr "Take a quick tour"
+
+#: templates/site/base/noobhelp.html:15
+msgid "NOOB_HELP_CLAIM"
+msgstr "<b>Earn bitcoin</b> by successfully claiming bounties."
+
+#: templates/site/base/noobhelp.html:19
+msgid "NOOB_HELP_CREATE"
+msgstr "Create bounties and <b>pay on delivery</b>."
+
+#: templates/site/base/noobhelp.html:23
+msgid "NOOB_HELP_FUND"
+msgstr "Support public bounties  with <b>crowd funding</b>."
+
+#: templates/site/base/noobhelp.html:27
+msgid "NOOB_HELP_SAFE"
+msgstr "Funds are safely kept offline in <b>cold storage</b>."
+
+#: templates/site/base/testwarning.html:7
+msgid "TEST_INSTANCE_WARNING"
+msgstr ""
+"<h4>Warning: This is a testing instance!</h4>\n"
+"<p>\n"
+"All bitcoin addresses and transaction ids are for the <b>bitcoin testnet</b>."
+"</br>\n"
+"<b>Do not send real bitcoins</b> to any address on this instance, <b>they "
+"<i>WILL</i> be lost</b>!\n"
+"</p>"
+
+#: templates/socialaccount/account_inactive.html:5
+#: templates/socialaccount/account_inactive.html:8
+msgid "Account Inactive"
+msgstr ""
+
+#: templates/socialaccount/account_inactive.html:10
+msgid "This account is inactive."
+msgstr ""
+
+#: templates/socialaccount/authentication_error.html:5
+#: templates/socialaccount/authentication_error.html:8
+msgid "Social Network Login Failure"
+msgstr ""
+
+#: templates/socialaccount/authentication_error.html:10
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr ""
+
+#: templates/socialaccount/connections.html:5
+#: templates/socialaccount/connections.html:8
+msgid "Account Connections"
+msgstr ""
+
+#: templates/socialaccount/connections.html:11
+msgid ""
+"You can sign in to your account using any of the following third party "
+"accounts:"
+msgstr ""
+
+#: templates/socialaccount/connections.html:43
+msgid ""
+"You currently have no social network accounts connected to this account."
+msgstr ""
+
+#: templates/socialaccount/connections.html:46
+msgid "Add a 3rd Party Account"
+msgstr ""
+
+#: templates/socialaccount/login_cancelled.html:6
+#: templates/socialaccount/login_cancelled.html:10
+msgid "Login Cancelled"
+msgstr ""
+
+#: templates/socialaccount/login_cancelled.html:14
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr ""
+
+#: templates/socialaccount/signup.html:10
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to \n"
+"%(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#: templates/socialaccount/messages/account_connected.txt:2
+msgid "The social account has been connected."
+msgstr ""
+
+#: templates/socialaccount/messages/account_connected_other.txt:2
+msgid "The social account is already connected to a different account."
+msgstr ""
+
+#: templates/socialaccount/messages/account_disconnected.txt:2
+msgid "The social account has been disconnected."
+msgstr ""
+
+#~ msgid "NOOB_HELP"
+#~ msgstr ""
+#~ "<p>\n"
+#~ "  Bitcoin Bounties is a site where anyone easily can post, fund or claim "
+#~ "rewards in bitcoin.\n"
+#~ "</p>\n"
+#~ "<a href=\"/about\" class=\"btn btn-primary\">\n"
+#~ "  Learn more\n"
+#~ "  <i class=\"fa fa-angle-double-right\"></i>\n"
+#~ "</a>"
+
+#~ msgid "MORE"
+#~ msgstr "More"
+
+#~ msgid "OTHER"
+#~ msgstr "Other"
+
+#~ msgid "CLAIMING"
+#~ msgstr "Claiming Bounties"
+
+#~ msgid "CREATING"
+#~ msgstr "Creating Bounties"
+
+#~ msgid "RULES"
+#~ msgstr "Rules"
+
+#~ msgid "SITE_HELP_CLAIMING"
+#~ msgstr ""
+#~ "Claiming Bounties\n"
+#~ "===========\n"
+#~ "\n"
+#~ "TODO ..."
+
+#~ msgid "SITE_HELP_CREATING"
+#~ msgstr ""
+#~ "Creating Bounties\n"
+#~ "===========\n"
+#~ "\n"
+#~ "To create a Bounty simply visit the [create bounty page](/bounty/create), "
+#~ "and fill out the form. Make sure the bounty requirements are easy to "
+#~ "understand and that it is easy for a moderator to verify if a claim is "
+#~ "successful or not.\n"
+#~ "\n"
+#~ "A created bounty will remain pending until it is fully funded or "
+#~ "cancelled, if not funded in time it will be cancelled automatically.\n"
+#~ "\n"
+#~ "Bounties can only be edited or cancelled while pending. If cancelled any "
+#~ "funds invested will be refunded to the refund address (minus fees)."
+
+#~ msgid "SITE_RULES"
+#~ msgstr ""
+#~ "Site Rules\n"
+#~ "======\n"
+#~ "\n"
+#~ "TODO ..."
+
+#~ msgid "PROTOCOL"
+#~ msgstr "Protocol"

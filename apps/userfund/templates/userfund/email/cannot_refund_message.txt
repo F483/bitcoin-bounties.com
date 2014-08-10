@@ -1,0 +1,6 @@
+{% load bitcoin_tags %}
+You currently have {{ userfund.balance|render_bitcoin }} invested in the unsuccessful bounty "{{ userfund.bounty.title }}".
+
+Please add a refund address so we can return your investment (minus fees).
+
+http://{{ site.domain }}{{ userfund.bounty.url_funds }}

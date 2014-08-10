@@ -1,0 +1,3 @@
+Import a cold storage address asap!
+
+http://{{ site.domain }}/bitcoin/funds

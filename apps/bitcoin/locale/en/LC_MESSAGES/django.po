@@ -1,0 +1,132 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-17 10:49-0500\n"
+"PO-Revision-Date: 2014-05-05 08:57-0600\n"
+"Last-Translator:   <fabian.barkhau@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.7.4\n"
+
+#: forms.py:16 templates/bitcoin/funds.html:194
+msgid "ADDRESS"
+msgstr "Address"
+
+#: forms.py:21
+msgid "ERROR_INVALID_ADDRESS"
+msgstr "Invalid field: Address is not valid!"
+
+#: forms.py:26
+msgid "AMOUNT_BTC"
+msgstr "Amount (in BTC)"
+
+#: forms.py:35
+msgid "INSUFFICIENT_HOT_FUNDS"
+msgstr "Invalid field: Insufficient funds in hot wallet!"
+
+#: forms.py:39
+msgid "ERROR_NO_COLD_STORAGE"
+msgstr "Invalid field: No cold storage wallets!"
+
+#: forms.py:45
+msgid "PRIVATE_KEY"
+msgstr "Private key"
+
+#: models.py:60
+msgid "IMPORTED"
+msgstr "Imported"
+
+#: models.py:60
+msgid "COLD"
+msgstr "Cold"
+
+#: views.py:45
+msgid "ADD_COLD_STORAGE_WALLET"
+msgstr "Add cold storage wallet."
+
+#: views.py:64
+msgid "SEND_FUNDS_TO_COLD_STORAGE_WALLET"
+msgstr "Send funds to cold storage wallet."
+
+#: views.py:86
+msgid "IMPORT_COLD_STORAGE_WALLET"
+msgstr "Import cold storage wallet."
+
+#: templates/bitcoin/emergencystop.html:8
+msgid "EMERGENCY_STOP_DONE"
+msgstr "Emergency stop done."
+
+#: templates/bitcoin/emergencystop.html:9
+msgid "GOOD_LUCK"
+msgstr "Good luck"
+
+#: templates/bitcoin/funds.html:13
+msgid "SITE_FUNDS"
+msgstr "Site funds"
+
+#: templates/bitcoin/funds.html:20 templates/bitcoin/funds.html.py:75
+msgid "TOTAL"
+msgstr "Total"
+
+#: templates/bitcoin/funds.html:29
+msgid "HOT_WALLET"
+msgstr "Hot wallet"
+
+#: templates/bitcoin/funds.html:49 templates/bitcoin/funds.html.py:181
+msgid "COLD_STORAGE"
+msgstr "Cold storage"
+
+#: templates/bitcoin/funds.html:70
+msgid "DISTRIBUTION"
+msgstr "Distribution"
+
+#: templates/bitcoin/funds.html:84
+msgid "BOUND_USERFUNDS"
+msgstr "Bound userfunds"
+
+#: templates/bitcoin/funds.html:113
+msgid "UNCOLLECTED_FEES"
+msgstr "Uncollected fees"
+
+#: templates/bitcoin/funds.html:142
+msgid "COMPANY_FUNDS"
+msgstr "Company funds"
+
+#: templates/bitcoin/funds.html:173
+msgid "EMERGENCY_STOP"
+msgstr "Emergency stop"
+
+#: templates/bitcoin/funds.html:185
+msgid "ADD_WALLET"
+msgstr "Add wallet"
+
+#: templates/bitcoin/funds.html:186
+msgid "SEND_FUNDS"
+msgstr "Send funds"
+
+#: templates/bitcoin/funds.html:187
+msgid "IMPORT_WALLET"
+msgstr "Import wallet"
+
+#: templates/bitcoin/funds.html:195
+msgid "RECEIVED"
+msgstr "Received"
+
+#~ msgid "RANGE"
+#~ msgstr "Range"
+
+#~ msgid "FULL_COVERAGE"
+#~ msgstr "Full coverage"
+
+#~ msgid "FUNDS"
+#~ msgstr "Funds"

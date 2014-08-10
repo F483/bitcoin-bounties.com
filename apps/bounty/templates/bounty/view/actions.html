@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load common_tags %}
+{% load bitcoin_tags %}
+{% load bounty_tags %}
+{% load userfund_tags %}
+{% load claim_tags %}
+
+{% if_can_claim user bounty %}
+  {% render_button _("CLAIM") bounty.url_claim "btn btn-default btn-xs" %}
+{% endif_can_claim %}
+
+{% if_can_edit_bounty user bounty %}
+  {% render_button_edit _("EDIT") bounty.url_edit "btn btn-default btn-xs" %}
+{% endif_can_edit_bounty %}
+
+{% if_can_make_public user bounty %}
+  {% render_button _("MAKE_PUBLIC") bounty.url_makepublic "btn btn-default btn-xs" "fa fa-globe" %}
+{% endif_can_make_public %}
+
+{% if_can_edit_bounty user bounty %}
+  {% render_button_cancel _("CANCEL") bounty.url_cancel "btn btn-default btn-xs" %}
+{% endif_can_edit_bounty %}
+
+{% if_can_declare_unresolved user bounty %}
+  {% render_button_cancel _("DECLARE_UNRESOLVED") bounty.url_declare_unresolved "btn btn-warning btn-xs" %}
+{% endif_can_declare_unresolved %}
+
+{% if_can_delete user bounty %}
+  {% render_button_delete _("DELETE") bounty.url_delete "btn btn-warning btn-xs" %}
+{% endif_can_delete %}
+

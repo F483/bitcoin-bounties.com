@@ -1,0 +1,73 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% load common_tags %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-6">
+          <i class="fa fa-user"></i> {{ user.username }}</a></br>
+          <i class="fa fa-envelope"></i> {{ primary_email }}
+        </div>
+        <div class="col-sm-6" style="text-align: right;">
+          {% render_button _("CHANGE_PASSWORD") "/accounts/password/change/" "btn btn-primary btn-xs" "fa fa-key" %}
+          {% render_button _("EMAIL_ADDRESSES") "/accounts/email/" "btn btn-primary btn-xs" "fa fa-envelope" %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-6">
+        {##### BOUNTIES ONGOING #####}
+        {% if bounties_ongoing %}
+          {% with bounties_ongoing as bounties %}
+            <div class="well">
+              <h4>{% trans "BOUNTIES_ONGOING" %}</h4>
+              {% include "bounty/generic_list.html" %}
+            </div>
+          {% endwith %}
+        {% endif %}
+
+        {##### BOUNTIES ARCHIVED #####}
+        {% if bounties_archived %}
+          {% with bounties_archived as bounties %}
+            <div class="well">
+              <h4>{% trans "BOUNTIES_ARCHIVED" %}</h4>
+              {% include "bounty/generic_list.html" %}
+            </div>
+          {% endwith %}
+        {% endif %}
+
+      </div>
+      <div class="col-sm-6">
+
+        {##### CLAIMS ONGOING #####}
+        {% if claims_ongoing %}
+          {% with claims_ongoing as claims %}
+            <div class="well">
+              <h4>{% trans "CLAIMS_ONGOING" %}</h4>
+              {% include "claim/generic_list.html" %}
+            </div>
+          {% endwith %}
+        {% endif %}
+
+        {##### CLAIMS ARCHIVED #####}
+        {% if claims_archived %}
+          {% with claims_archived as claims %}
+            <div class="well">
+              <h4>{% trans "CLAIMS_ARCHIVED" %}</h4>
+              {% include "claim/generic_list.html" %}
+            </div>
+          {% endwith %}
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

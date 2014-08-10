@@ -1,0 +1,76 @@
+{% load i18n %}
+{% load claim_tags %}
+{% load common_tags %}
+
+<h4> {% trans "CLAIMS" %}</h4>
+
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>{% trans "NR" %}</th>
+      <th>{% trans "CLAIMANT" %}</th>
+      <th>{% trans "CREATED" %}</th>
+      {% if bounty.state == "FINISHED" %}
+        <th>{% trans "SUCCESSFUL" %}</th>
+      {% endif %}
+      {% if user.is_staff %}
+        <th>{% trans "WEIGHT" %}</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in claims %}
+      {% if c == claim %}
+        <tr class="active" style="font-weight: bold;">
+      {% else %}
+        <tr>
+      {% endif %}
+
+        {% if_can_view_claim user c %}
+          <td>
+            <a href="{{ c.url_details }}">{{ forloop.counter }}</a>
+          </td>
+          <td>
+            <a href="{{ c.url_details }}">{{ c.user.username }}</a>
+          </td>
+          <td>
+            <a href="{{ c.url_details }}">
+              {% blocktrans with date=c.created_on|timesince %}
+                {{ date }}_AGO
+              {% endblocktrans %}
+            </a>
+          </td>
+          {% if c.bounty.state == "FINISHED" %}
+            <td>
+              <a href="{{ c.url_details }}">
+                {% render_boolean c.successful %}
+              </a>
+            </td>
+          {% endif %}
+          {% if user.is_staff %}
+            <td>
+              <a href="{{ c.url_details }}">
+                {{ c.weight|render_percent }}
+              </a>
+            </td>
+          {% endif %}
+        {% else %}
+          <td>{{ forloop.counter }}</td>
+          <td>{{ c.user.username }}</td>
+          <td>
+            {% blocktrans with date=c.created_on|timesince %}
+              {{ date }}_AGO
+            {% endblocktrans %}
+          </td>
+          {% if c.bounty.state == "FINISHED" %}
+            <td>{% render_boolean c.successful %}</td>
+          {% endif %}
+          {% if user.is_staff %}
+            <td>{{ c.weight|render_percent }}</td>
+          {% endif %}
+        {% endif_can_view_claim %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+

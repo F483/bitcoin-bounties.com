@@ -1,0 +1,2 @@
+{% load bitcoin_tags %}
+Payout of {{ claim.payout.amount|render_bitcoin }} for claiming bounty: {{ claim.bounty.title }}

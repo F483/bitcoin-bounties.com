@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load common_tags %}
+{% load comment_tags %}
+
+{% for comment in comments %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-sm-6">
+          <i class="fa fa-comment"></i>
+          <b>{{ comment.created_by.username }}</b>
+        </div>
+        <div class="col-sm-6" style="text-align:right;">
+          {% blocktrans with date=comment.created_on|timesince %}
+            {{ date }}_AGO
+          {% endblocktrans %}
+          {% if_can_delete_comment user comment %}
+            {% with url=comment.url_delete|add:"?next="|add:request.path %}
+              {% render_button_delete _("DELETE") url "btn btn-warning btn-xs" %}
+            {% endwith %}
+          {% endif_can_delete_comment %}
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      {{ comment.text }}
+    </div>
+  </div>
+{% empty %}
+  <p>{% trans "NO_COMMENTS" %}</p>
+{% endfor %}
+
+{% if form %}
+  {% include "site/form_include.html" %}
+{% endif %}
+

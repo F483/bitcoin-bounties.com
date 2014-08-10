@@ -1,0 +1,117 @@
+{% extends "bounty/view.html" %}
+{% load i18n %}
+{% load common_tags %}
+{% load bitcoin_tags %}
+{% load bounty_tags %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+
+      {# DETAILS #}
+      <div class="col-sm-5">
+        <div class="well" style="min-height: 330px;">
+          <table class="table table-striped table-hover ">
+            <tbody>
+
+              {# REWARD #}
+              <tr>
+                <td>{% trans "REWARD" %}</td>
+                <td>{{ bounty.display_reward|render_bitcoin }}</td>
+              </tr>
+
+              {# FUNDED OR CLAIMS #}
+              <tr>
+                {% if bounty.state == "PENDING" %}
+                  <td>{% trans "FUNDED" %}</td>
+                  <td>{{ bounty.funded_ratio|render_percent }}</td>
+                {% else %}
+                  <td>{% trans "CLAIMS" %}</td>
+                  <td>{{ bounty.cashed_claim_count }}</td>
+                {% endif %}
+              </tr>
+
+              {# DEADLINE OR TIMEOUT #}
+              <tr>
+                <td>{% trans "DEADLINE" %}</td>
+                <td>
+                  {% with bounty.state as state %}
+                    {% if state == "PENDING" or state == "ACTIVE" %}
+                      {% blocktrans with date=bounty.deadline|timeuntil %}
+                        IN_{{ date }}
+                      {% endblocktrans %}
+                    {% else %}
+                      {{ bounty.deadline }}
+                    {% endif %}
+                  {% endwith %}
+                </td>
+              </tr>
+
+              {# STATE #}
+              <tr>
+                <td>{% trans "STATE" %}</td>
+                <td>
+                  {% if bounty.state == "FINISHED" %}
+                    {% if bounty.awarded %}
+                      {% trans "REWARDED" %}
+                    {% else %}
+                      {% trans "UNREWARDED" %}
+                    {% endif %}
+                  {% else %}
+                    {% trans bounty.state %}
+                  {% endif %}
+                </td>
+              </tr>
+
+              {# TYPE #}
+              <tr>
+                <td>{% trans "TYPE" %}</td>
+                <td>
+                  {{ bounty|render_type }}
+                  {% if bounty.private %}
+                    {% trans "PRIVATE" %}
+                  {% else %}
+                    {% trans "PUBLIC" %}
+                  {% endif %}
+                </td>
+              </tr>
+
+              {# USER #}
+              <tr>
+                <td>{% trans "CREATED" %}</td>
+                <td>
+                  {% blocktrans with name=bounty.created_by created_on=bounty.created_on|timesince %}
+                    BY_{{ name }}_{{ created_on }}_AGO
+                  {% endblocktrans %}
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+          {# TAGS #}
+          <p>
+            <div class="row">
+              <div class="col-sm-12">
+                {% for tag in bounty.tags.all %}
+                  <span class="label label-default">#{{ tag }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </p>
+
+        </div>
+      </div>
+
+      {# DESCRIPTION #}
+      <div class="col-sm-7">
+        <div class="panel panel-default" style="min-height: 330px;">
+          <div class="panel-body">
+            {{ bounty.description|render_markdown }}
+          </div>
+        </div>
+      </div>
+
+    </div> {# row #}
+  </div> {# container #}
+{% endblock %}

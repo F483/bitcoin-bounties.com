@@ -1,0 +1,75 @@
+{% load i18n %}
+{% load common_tags %}
+{% load bitcoin_tags %}
+{% load bounty_tags %}
+
+{% if bounty.state == "PENDING" %}
+  <tr class="active">
+{% endif %}
+{% if bounty.state == "ACTIVE" %}
+  <tr class="info">
+{% endif %}
+{% if bounty.state == "MEDIATION" %}
+  <tr class="warning">
+{% endif %}
+{% if bounty.state == "FINISHED" %}
+  {% if bounty.awarded %}
+    <tr class="success">
+  {% else %}
+    <tr class="danger">
+  {% endif %}
+{% endif %}
+{% if bounty.state == "CANCELLED" %}
+    <tr class="danger">
+{% endif %}
+
+  <td colspan="{% if list_type == "ARCHIVED" %}4{% else %}3{% endif %}">
+
+    <div class="row">
+      <div class="col-sm-8">
+        <b>
+          {{ bounty|render_type }}
+          <a href="{{ bounty.url_details }}">{{ bounty.title }}</a>
+        </b>
+      </div>
+      <div class="col-sm-4" style="text-align:right;">
+        {% for tag in bounty.tags.all %}
+          <span class="label label-default">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </td>
+</tr>
+
+{% if bounty.state == "PENDING" %}
+  <tr>
+{% else %}
+  <tr class="active">
+{% endif %}
+
+  {# REWARD #}
+  <td>
+    {{ bounty.display_reward|render_bitcoin }}
+  </td>
+
+  {# FINDING OR CLAIMS #}
+  <td>
+    {% if list_type == "PENDING" %}
+      {{ bounty.funded_ratio|render_percent }}
+    {% else %}
+      {{ bounty.cashed_claim_count }}
+    {% endif %}
+  </td>
+
+  {# DEADLINE OR TIMEOUT #}
+  <td>
+    {% if list_type == "ARCHIVED" or list_type == "MEDIATION" %}
+      {{ bounty.deadline }}
+    {% else %}
+      {% blocktrans with date=bounty.deadline|timeuntil %}
+        IN_{{ date }}
+      {% endblocktrans %}
+    {% endif %}
+  </td>
+
+</tr>

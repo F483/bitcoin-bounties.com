@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load common_tags %}
+{% load bootstrap %}
+
+<div class="well well-sm">
+  <form class="form" role="form" action="{{ request.get_full_path }}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+      <div class="form-group">
+        <div class="col-sm-3">{{ form.searchtext }}</div>
+        <div class="col-sm-2">{{ form.date_from }}</div>
+        <div class="col-sm-2">{{ form.date_to }}</div>
+        <div class="col-sm-2">{{ form.outcome }}</div>
+        <div class="col-sm-2">{{ form.ordering }}</div>
+        <div class="col-sm-1">
+          <button type="submit" class="btn btn-primary">
+            &nbsp;
+            <i class="fa fa-search"></i>
+            &nbsp;
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <p></p>
+</div>

@@ -1,0 +1,77 @@
+{% extends "bounty/view.html" %}
+{% load i18n %}
+{% load common_tags %}
+{% load bitcoin_tags %}
+{% load userfund_tags %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-5">
+        <div class="well" style="min-height: 330px;">
+          {% include "bounty/view/funds/funding.html" %}
+
+          {% if_can_fund user bounty %}
+            <hr>
+            <div style="text-align: center;">
+              <p>
+                {% trans "YOUR_REFUND_ADDRESS" %}:
+                {% if userfund.refund_address %}
+                  {{ userfund.refund_address|render_address }}
+                {% else %}
+                  {% trans "NO_REFUND_ADDRESS_SET" %}
+                {% endif %}
+              </p>
+              {% render_button _("SET_REFUND_ADDRESS") bounty.url_setrefund "btn btn-primary btn-sm" %}
+            </div>
+          {% endif_can_fund %}
+        </div>
+      </div>
+
+      {% if_can_fund user bounty %}
+        {% if bounty.state == "PENDING" or bounty.state == "ACTIVE" %}
+          <div class="col-sm-4" style="text-align: center;">
+            <div class="panel panel-default" style="min-height: 330px;">
+              <div class="panel-heading">
+                {% trans "YOUR_FUNDING_ADDRESS" %}
+              </div>
+              <div class="panel-body">
+                {% if bounty.state == "PENDING" and bounty.funds_needed %}
+                  {% gen_request_qrcode "fund_qrcode" userfund.funding bounty.funds_needed %}
+                {% else %}
+                  {% gen_address_qrcode "fund_qrcode" userfund.funding %}
+                {% endif %}
+                <p><b>{{ userfund.funding|render_address }}</b></p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endif_can_fund %}
+
+      <div class="col-sm-3">
+        <div class="panel panel-default" style="min-height: 330px;">
+          <div class="panel-body">
+            {% if_can_fund user bounty %}
+              {% if bounty.state == "PENDING" or bounty.state == "ACTIVE" %}
+                {% trans "BOUNTY_FUNDING_HELP" %}
+              {% endif %}
+            {% endif_can_fund %}
+            {% trans "BOUNTY_REFUNDING_HELP" %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        {% include "bounty/view/funds/transactions_receive.html" %}
+      </div>
+      <div class="col-sm-6">
+        {% include "bounty/view/funds/transactions_send.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

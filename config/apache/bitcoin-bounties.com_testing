@@ -1,0 +1,38 @@
+<VirtualHost *:80>
+    ServerAdmin fabian.barkhau@gmail.com
+    ServerName testing.bitcoin-bounties.com
+    #ServerAlias bitcoin-bounties.com
+    #ServerAlias www.bitcoin-bounties.com
+    
+    DocumentRoot /home/bitcoin_bounties_testing/www
+ 
+    # mod_wsgi settings
+    WSGIDaemonProcess bitcoin_bounties_testing user=bitcoin_bounties_testing group=bitcoin_bounties_testing python-path=/home/bitcoin_bounties_testing/www:/usr/lib/python2.7:/usr/lib/python2.7/plat-linux2:/usr/lib/python2.7/lib-tk:/usr/lib/python2.7/lib-old:/usr/lib/python2.7/lib-dynload:/usr/local/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages/PIL
+
+    WSGIProcessGroup bitcoin_bounties_testing
+    WSGIScriptAlias / /home/bitcoin_bounties_testing/www/config/wsgi.py
+ 
+    # static media aliases
+    Alias /static/admin/ /usr/local/lib/python2.7/dist-packages/django/contrib/admin/static/admin/
+    Alias /static/bootswatch/ /home/bitcoin_bounties_testing/www/apps/common/static/bootswatch/
+    Alias /static/Font-Awesome/ /home/bitcoin_bounties_testing/www/apps/common/static/Font-Awesome/
+    Alias /static/pagedown-bootstrap/ /home/bitcoin_bounties_testing/www/apps/common/static/pagedown-bootstrap/
+    Alias /static/excanvas.js /home/bitcoin_bounties_testing/www/apps/common/static/excanvas.js
+    Alias /static/qrcanvas.js /home/bitcoin_bounties_testing/www/apps/common/static/qrcanvas.js
+    Alias /static/qrcode.js /home/bitcoin_bounties_testing/www/apps/common/static/qrcode.js
+
+    # Project wsgi permissions
+    # Used for serving django pages.
+    <Directory /home/bitcoin_bounties_testing/www/config>
+        <Files wsgi.py>
+            Order deny,allow
+            Allow from all
+        </Files>
+    </Directory>
+
+    # logging
+    LogLevel warn 
+    ErrorLog  /home/bitcoin_bounties_testing/log/apache_error.log 
+    CustomLog /home/bitcoin_bounties_testing/log/apache_access.log combined 
+
+</VirtualHost>

@@ -1,0 +1,151 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-17 10:49-0500\n"
+"PO-Revision-Date: 2014-05-19 09:15-0600\n"
+"Last-Translator:   <fabian.barkhau@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.7.4\n"
+
+#: forms.py:17 forms.py:33
+msgid "DESCRIPTION"
+msgstr "Decsription"
+
+#: forms.py:20 forms.py:44
+msgid "ADDRESS"
+msgstr "Address"
+
+#: forms.py:22
+msgid "ACCEPT_TERMS"
+msgstr "Accept <a href=\"/terms\">terms and conditions of use</a>."
+
+#: forms.py:27 forms.py:54
+msgid "ERROR_INVALID_ADDRESS"
+msgstr "Invalid field: Address is not valid!"
+
+#: views.py:34
+msgid "CLAIM_BOUNTY"
+msgstr "Claim bounty"
+
+#: views.py:56
+msgid "EDIT_DESCRIPTION"
+msgstr "Edit description"
+
+#: views.py:78
+msgid "CHANGE_ADDRESS"
+msgstr "Change address"
+
+#: views.py:94 templates/claim/view.html:22
+msgid "ACCEPT_CLAIM"
+msgstr "Accept claim"
+
+#: views.py:95
+msgid "ACCEPT_CLAIM_ALERT_INFO"
+msgstr ""
+"Irreversibly declare this clam the winner and send the bounty reward to the "
+"claimant."
+
+#: views.py:100 templates/claim/view.html:24
+msgid "APPROVE_CLAIM"
+msgstr "Approve claim"
+
+#: views.py:101
+msgid "APPROVE_CLAIM_ALERT_INFO"
+msgstr ""
+"Approve this clam to add weight to it. This will make the moderators work "
+"easier and more likely to judge correctly."
+
+#: views.py:116 templates/claim/view.html:29
+msgid "DECLARE_WINNER"
+msgstr "Declare winner"
+
+#: views.py:117
+msgid "DECLARE_WINNER_ALERT_INFO"
+msgstr ""
+"Irreversibly declare this clam the winner and send the bounty reward to the "
+"claimant."
+
+#: templates/claim/generic_list.html:7
+msgid "BOUNTY"
+msgstr "Bounty"
+
+#: templates/claim/generic_list.html:8 templates/claim/list.html:12
+#: templates/claim/view.html:44
+msgid "CREATED"
+msgstr "Created"
+
+#: templates/claim/generic_list.html:9 templates/claim/list.html:17
+#: templates/claim/view.html:54
+msgid "WEIGHT"
+msgstr "Weight"
+
+#: templates/claim/generic_list.html:10
+msgid "AWARDED"
+msgstr "Awarded"
+
+#: templates/claim/generic_list.html:23 templates/claim/list.html:61
+#: templates/claim/view.html:46
+#, python-format
+msgid ""
+"\n"
+"              %(date)s_AGO\n"
+"            "
+msgstr ""
+"\n"
+"%(date)s ago"
+
+#: templates/claim/list.html:5
+msgid "CLAIMS"
+msgstr "Claims"
+
+#: templates/claim/list.html:10
+msgid "NR"
+msgstr "Nr."
+
+#: templates/claim/list.html:11 templates/claim/view.html:39
+msgid "CLAIMANT"
+msgstr "Claimant"
+
+#: templates/claim/list.html:14
+msgid "SUCCESSFUL"
+msgstr "Successful"
+
+#: templates/claim/list.html:38
+#, python-format
+msgid ""
+"\n"
+"                %(date)s_AGO\n"
+"              "
+msgstr ""
+"\n"
+"%(date)s ago"
+
+#: templates/claim/view.html:13
+msgid "EDIT_CLAIM"
+msgstr "Edit claim"
+
+#: templates/claim/view.html:17
+msgid "CHANGE_PAYOUT_ADDRESS"
+msgstr "Change payout address"
+
+#: templates/claim/view.html:60
+msgid "PAYOUT_ADDRESS"
+msgstr "Payout address"
+
+#: templates/claim/view.html:66
+msgid "ACCEPTED_BY"
+msgstr "Accepted by"
+
+#~ msgid "UNDECIDED"
+#~ msgstr "Undecided"
