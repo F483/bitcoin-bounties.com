@@ -16,3 +16,6 @@ uploads/*
 flags/*
 doc/video/*
 
+# build
+bitcoin_bounties.egg-info/*
+build/*

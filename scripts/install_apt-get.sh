@@ -56,18 +56,7 @@ apt-get -qy install gettext
 apt-get -qy install python-dev # needed for Fuzzy
 
 ##### PYTHON PACKAGES #####
-pip install --upgrade Django
-pip install --upgrade South
-pip install --upgrade Markdown
-pip install --upgrade bleach
-pip install --upgrade unidecode
-pip install --upgrade Fuzzy
-pip install --upgrade django-rosetta
-pip install --upgrade python-bitcoinrpc
-pip install --upgrade python-bitcoinaddress
-pip install --upgrade django-bootstrap-form
-pip install --upgrade django-pagination
-pip install --upgrade django-allauth
+python setup.py develop
 
 ##### UPGRADE ALL #####
 apt-get upgrade

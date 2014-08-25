@@ -127,7 +127,7 @@ INSTALLED_APPS = (
 
   # third party apps (must be last to allow overwriting templates)
   'rosetta',          # https://www.djangopackages.com/packages/p/django-rosetta/
-  'south',            # http://south.aeracode.org/
+#  'south',            # http://south.aeracode.org/
   'bootstrapform',    # https://pypi.python.org/pypi/django-bootstrap-form/2.0.5
   'pagination',       # https://pypi.python.org/pypi/django-pagination/
   'allauth',
