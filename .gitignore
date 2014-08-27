@@ -1,21 +1,16 @@
-syntax: glob
-*~
-*.pyc
-*.orig
-*.swp
-*.swo
-*.rej
-*.DS_Store
-*.log
-*.bak
-*.lock
+# local data
 development.db
+uploads/*
+
+# local config
 config/local_settings.py
 config/ssl/*
-uploads/*
-flags/*
-doc/video/*
+config/flags/*
 
-# build
+# setuptools
 bitcoin_bounties.egg-info/*
 build/*
+env/*
+
+# development
+scripts/sandbox.py

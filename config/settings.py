@@ -114,11 +114,11 @@ INSTALLED_APPS = (
   'django.contrib.admindocs',
 
   # bitcoin-bounties.com apps
+  'apps.assets',
   'apps.common',
   'apps.site',
   'apps.bounty',
   'apps.userfund',
-  'apps.bitcoin',
   'apps.claim',
   'apps.tags',
   'apps.comment',
@@ -127,7 +127,6 @@ INSTALLED_APPS = (
 
   # third party apps (must be last to allow overwriting templates)
   'rosetta',          # https://www.djangopackages.com/packages/p/django-rosetta/
-#  'south',            # http://south.aeracode.org/
   'bootstrapform',    # https://pypi.python.org/pypi/django-bootstrap-form/2.0.5
   'pagination',       # https://pypi.python.org/pypi/django-pagination/
   'allauth',
@@ -287,7 +286,7 @@ BOOTSWATCH_THEMES = [
 ]
 BOOTSWATCH_THEME = "cerulean"
 
-# bounty settings
+# bounty
 FEES =  Decimal("0.025") # %
 FRACTION_REWARD = (Decimal("1.0") / (Decimal("1.0") + FEES))
 FRACTION_FEES = Decimal("1.0") - FRACTION_REWARD
@@ -299,16 +298,22 @@ MAX_DEADLINE = 365 # days in the future
 DEFAULT_DEADLINE = 150 # days in the future
 MIN_REFUND_AMOUNT = Decimal("0.005") # TODO make value based on FEES
 
-# bitcoin settings
-BITCOIND_RPC = "http://bitcoinrpc:bitcoinrpcpassword@127.0.0.1:18332"
+# bitcoind
+BITCOIND_RPC = "http://bitcoindrpc:rpcpassword@127.0.0.1:18332"
 ACCOUNT_PREFIX = "BITCOIN_BOUNTIES_DEVELOPMENT"
 ACCOUNT_MAIN = "%s_Main" % ACCOUNT_PREFIX
 ACCOUNT_COLDSTORAGE = "%s_ColdStorage" % ACCOUNT_PREFIX
 TRANSACTION_FEE_BUFFER = Decimal("0.001")
 
+# counterpartyd
+COUNTERPARTYD_URL = "http://127.0.0.1:14000/api/"
+COUNTERPARTYD_USER = 'rpcuser'
+COUNTERPARTYD_PASS = 'rpcpassword'
+
 # flags
-STOP_CRONS_FILE = os.path.join(PROJECT_DIR, 'flags', 'stop_crons')
-EMERGENCY_STOP_FILE = os.path.join(PROJECT_DIR, 'flags', 'emergencystop')
+FLAGS_DIR = os.path.join(PROJECT_DIR, 'config', 'flags')
+STOP_CRONS_FILE = os.path.join(FLAGS_DIR, 'stop_crons')
+EMERGENCY_STOP_FILE = os.path.join(FLAGS_DIR, 'emergencystop')
 
 ##################
 # local settings #

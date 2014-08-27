@@ -21,7 +21,10 @@ docs:
     )
 
 django_startserver:
-	python manage.py runserver
+	@python manage.py runserver
+
+counterparty_startserver:
+	@counterpartyd --testnet --testcoin
 
 bitcoin_startserver:
 	@bitcoind -testnet -daemon -txindex
