@@ -11,16 +11,17 @@ from django.db.models import DecimalField
 from django.db.models import CharField
 from django.db.models import ManyToManyField
 from django.utils.translation import ugettext as _
-from apps.bitcoin import control as bitcoin_control
+from apps.assets import control as asset_control
 from config import settings
 
 class UserFund(Model):
 
   user = ForeignKey("auth.User", related_name="userfunds")
   bounty = ForeignKey("bounty.Bounty", related_name="userfunds")
+  funding_address = CharField(max_length=100, blank=True)
   refund_address = CharField(max_length=100, blank=True)
   refund_payments = ManyToManyField(
-    'bitcoin.PaymentLog',
+    'assets.PaymentLog',
     related_name="userfunds",
     null=True, blank=True
   )

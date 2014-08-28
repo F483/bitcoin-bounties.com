@@ -288,11 +288,6 @@ BOOTSWATCH_THEME = "cerulean"
 
 # bounty
 FEES =  Decimal("0.025") # %
-FRACTION_REWARD = (Decimal("1.0") / (Decimal("1.0") + FEES))
-FRACTION_FEES = Decimal("1.0") - FRACTION_REWARD
-MIN_REWARD = Decimal("0.02")
-MIN_FEES = (MIN_REWARD / FRACTION_REWARD) * FRACTION_FEES
-MIN_FUND = MIN_REWARD + MIN_FEES
 MIN_DEADLINE = 3 # days in the future
 MAX_DEADLINE = 365 # days in the future
 DEFAULT_DEADLINE = 150 # days in the future

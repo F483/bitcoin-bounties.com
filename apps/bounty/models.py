@@ -17,7 +17,7 @@ from django.db.models import DecimalField
 from django.utils.translation import ugettext as _
 from apps.common.utils.i18n import uslugify
 from apps.common.utils.models import get_object_or_none
-from apps.bitcoin import control as bitcoin_control
+from apps.assets import control as asset_control
 from config import settings
 
 STATE_CHOICES = [
@@ -38,6 +38,8 @@ class Bounty(Model):
   state = CharField(max_length=64, choices=STATE_CHOICES, default='PENDING')
   private = BooleanField(default=True)
   target_reward = DecimalField(max_digits=512, decimal_places=256)
+  fees = DecimalField(max_digits=512, decimal_places=256)
+  asset = CharField(max_length=100)
 
   # MANY TO MANY
   tags = ManyToManyField('tags.Tag', related_name="bounties")
@@ -65,6 +67,14 @@ class Bounty(Model):
   )
 
   @property
+  def fraction_reward(self): 
+    return (Decimal("1.0") / (Decimal("1.0") + self.fees))
+
+  @property
+  def fraction_fees(self):
+    return Decimal("1.0") - self.fraction_reward
+
+  @property
   def funds(self):
     total = Decimal("0.0")
     for userfund in self.userfunds.all():
@@ -81,8 +91,8 @@ class Bounty(Model):
 
   @property
   def target_funds(self):
-    btc = (self.target_reward / settings.FRACTION_REWARD)
-    return bitcoin_control.quantize_satoshi(btc)
+    amount = (self.target_reward / self.fraction_reward)
+    return asset_control.get_manager(self.asset).quantize(amount)
 
   @property
   def funds_needed(self):
@@ -113,8 +123,8 @@ class Bounty(Model):
     if self.awarded and self.awarded.payout:
       return self.awarded.payout.fees
     funds = self.state == "PENDING" and self.target_funds or self.funds
-    btc = funds * settings.FRACTION_FEES
-    return bitcoin_control.quantize_satoshi(btc)
+    amount = funds * self.fraction_fees
+    return asset_control.get_manager(self.asset).quantize(amount)
 
   @property
   def display_reward(self):

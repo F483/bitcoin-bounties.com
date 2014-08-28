@@ -24,7 +24,13 @@ class AssetManager(object):
     self.label = label and label or key
     self.decimal_places = decimal_places
 
+  def quantize(amount):
+    raise NotImplementedError
+
   def get_balance(self, address):
+    raise NotImplementedError
+
+  def get_wallet_balance(self):
     raise NotImplementedError
 
   def get_received(self, address):
@@ -52,12 +58,9 @@ class AssetManager(object):
   def validate(self, address):
     raise NotImplementedError
 
-  def send(self, src, dest, amount):
-    raise NotImplementedError
-
-  def send_batch(self, srcs, dests):
+  def send(self, outputs):
     """
-    Example: self.send_batch([address, ...], [(address, amount), ...])
+    Example: self.send([(address, amount), ...])
     Returns: [txid, ...]
     """
     raise NotImplementedError
@@ -72,10 +75,16 @@ class BitcoinManager(AssetManager):
   def bitcoind_rpc(self):
     return AuthServiceProxy(settings.BITCOIND_RPC)
 
+  def quantize(amount):
+    raise NotImplementedError
+
   def get_balance(self, address):
     all_unspent = self.bitcoind_rpc().listunspent()
     unspent = filter(lambda tx: tx['address'] == address, all_unspent)
     return _sum_key(unspent, 'amount')
+
+  def get_wallet_balance(self):
+    raise NotImplementedError
 
   def get_received(self, address):
     received = self.bitcoind_rpc().getreceivedbyaddress(address)
@@ -101,7 +110,7 @@ class BitcoinManager(AssetManager):
   def validate(self, address):
     return bitcoinaddress.validate(address)
 
-  def send_batch(self, inputs, outputs, change):
+  def send(self, outputs):
     raise NotImplementedError
 
 class CounterpartyManager(BitcoinManager):
@@ -137,6 +146,9 @@ class CounterpartyManager(BitcoinManager):
     )
     return response.json()
 
+  def quantize(amount):
+    raise NotImplementedError
+
   def get_balance(self, address):
     payload = {
       "method": "get_balances",
@@ -151,6 +163,9 @@ class CounterpartyManager(BitcoinManager):
     result = self.counterpartyd_querry(payload)['result']
     result = filter(lambda x: x['asset'] == self.key, result)
     return _sum_key(result, 'quantity', self.decimal_places)
+
+  def get_wallet_balance(self):
+    raise NotImplementedError
 
   def get_received(self, address):
     result = self.counterpartyd_querry({
@@ -192,22 +207,27 @@ class CounterpartyManager(BitcoinManager):
     txlist = map(reformat, result)
     return sorted(txlist, key=lambda tx: tx["timereceived"], reverse=True)
 
-  def send_batch(self, inputs, outputs, change):
+  def send(self, outputs):
     raise NotImplementedError("TODO implement")
 
+ASSETS = {
+  'BTC' : BitcoinManager(),
+  'XCP' : CounterpartyManager(key='XCP', label='Counterparty XCP'),
+  # TODO 'LTC' : LitecoinManager(),
+  # TODO 'BTSX' : BitSharesXManager(),
+  # TODO 'NXT' : NXTManager(),
+  # TODO 'PPC' : PeercoinManager(),
+  # TODO 'DOGE' : DogecoinManager(),
+  # TODO 'NMC' : NamecoinManager(),
+  # TODO 'DRK' : DarkcoinManager(),
+  # TODO 'MAID' : MaidSafeCoinManager(),
+  # TODO 'XMR' :  MoneroManager(),
+  # TODO 'BTCD' :  BitcoinDarkManager(),
+}
+
 def get_manager(asset):
-  return {
-    'BTC' : BitcoinManager(),
-    'XCP' : CounterpartyManager(key='XCP', label='Counterparty XCP'),
-    # TODO 'LTC' : LitecoinManager(),
-    # TODO 'BTSX' : BitSharesXManager(),
-    # TODO 'NXT' : NXTManager(),
-    # TODO 'PPC' : PeercoinManager(),
-    # TODO 'DOGE' : DogecoinManager(),
-    # TODO 'NMC' : NamecoinManager(),
-    # TODO 'DRK' : DarkcoinManager(),
-    # TODO 'MAID' : MaidSafeCoinManager(),
-    # TODO 'XMR' :  MoneroManager(),
-    # TODO 'BTCD' :  BitcoinDarkManager(),
-  }[asset]
+  return ASSETS[asset]
+
+def get_choices():
+  return map(lambda item: (item[0], item[1].label), ASSETS.items())
 

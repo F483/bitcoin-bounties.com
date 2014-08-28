@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load common_tags %}
-{% load bitcoin_tags %}
+{% load assets_tags %}
 {% load bounty_tags %}
 
 {% if bounty.state == "PENDING" %}
@@ -49,7 +49,7 @@
 
   {# REWARD #}
   <td>
-    {{ bounty.display_reward|render_bitcoin }}
+    {{ bounty.display_reward|render_asset }}
   </td>
 
   {# FINDING OR CLAIMS #}

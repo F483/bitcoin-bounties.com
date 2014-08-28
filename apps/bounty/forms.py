@@ -16,10 +16,10 @@ from django.forms.widgets import Select
 from django.forms.widgets import TextInput
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
-from apps.bitcoin import control as bitcoin_control
 from apps.common.templatetags.common_tags import render_percent
 from apps.tags import control as tags_control
 from config import settings
+from apps.assets import control as asset_control
 
 today = datetime.datetime.now().date()
 mindeadline = today + datetime.timedelta(days=settings.MIN_DEADLINE)
@@ -34,6 +34,12 @@ class Bounty(Form):
     widget=Textarea(attrs={'class' : 'pagedownBootstrap'})
   )
   tags = CharField(label=_("TAGS"))
+  asset = ChoiceField(
+    choices=asset_control.get_choices(),
+    label=_("ASSET"),
+    initial="BTC",
+    widget=Select(attrs={'class':'form-control'})
+  )
   target = DecimalField(
     label=_("TARGET_REWARD"),
     help_text=_("CREATE_BOUNTY_TARGET_HELP_%(fees)s") % { 

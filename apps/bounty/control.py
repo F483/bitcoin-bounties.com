@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
-from apps.bitcoin import control as bitcoin_control
 from apps.tags import control as tags_control
 from apps.search import control as search_control
 from apps.bounty.models import Bounty

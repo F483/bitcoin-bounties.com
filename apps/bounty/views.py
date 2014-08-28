@@ -20,7 +20,6 @@ from apps.comment import forms as comment_forms
 from apps.userfund import control as uf_control
 from apps.claim import control as claim_control
 from apps.search import control as search_control
-from apps.bitcoin import control as bitcoin_control
 
 ####################
 # BOUNTY VIEW TABS #
