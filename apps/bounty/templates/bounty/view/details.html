@@ -17,7 +17,7 @@
               {# REWARD #}
               <tr>
                 <td>{% trans "REWARD" %}</td>
-                <td>{{ bounty.display_reward|render_asset }}</td>
+                <td>{{ bounty.display_reward|render_asset:bounty.asset }}</td>
               </tr>
 
               {# FUNDED OR CLAIMS #}

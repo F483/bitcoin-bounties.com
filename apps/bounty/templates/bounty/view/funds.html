@@ -38,9 +38,9 @@
               </div>
               <div class="panel-body">
                 {% if bounty.state == "PENDING" and bounty.funds_needed %}
-                  {% gen_request_qrcode "fund_qrcode" userfund.funding_address bounty.funds_needed %}
+                  {% gen_request_qrcode "fund_qrcode" userfund.funding_address bounty.funds_needed bounty.asset %}
                 {% else %}
-                  {% gen_address_qrcode "fund_qrcode" userfund.funding_address %}
+                  {% gen_address_qrcode "fund_qrcode" userfund.funding_address bounty.asset %}
                 {% endif %}
                 <p><b>{{ userfund.funding_address|render_address }}</b></p>
               </div>

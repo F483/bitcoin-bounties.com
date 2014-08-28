@@ -81,7 +81,8 @@ class UserFund(Model):
   def __unicode__(self):
     from apps.asset.templatetags.asset_tags import render_asset
     return "User: %s - Bounty.id: %s - %s - %s" % (
-      self.user.username, self.bounty.id, render_asset(self.balance),
+      self.user.username, self.bounty.id, 
+      render_asset(self.balance, self.bounty.asset),
       self.refund_address and self.refund_address or "NO_REFUND_ADDRESS"
     )
 

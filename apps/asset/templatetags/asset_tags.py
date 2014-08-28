@@ -5,27 +5,28 @@
 from django import template
 from django.utils.safestring import mark_safe
 from apps.common.templatetags.common_tags import gen_qrcode
+from apps.asset import control as asset_control
 
 register = template.Library()
 
 @register.filter
-def render_asset(amount):
-  return amount
+def render_asset(amount, asset):
+  fs = "%0." + str(asset_control.get_manager(asset).decimal_places) + "f%s"
+  return fs % (amount, asset)
 
 @register.filter
 def render_address(address):
-  #address = " ".join(chunks(address, 12))
   return mark_safe("""<small>%s</small>""" % address)
 
 @register.simple_tag
-def gen_address_qrcode(tag_id, address):
-  return gen_qrcode(5, tag_id, "bitcoin:%(address)s" % { "address" : address })
+def gen_address_qrcode(tag_id, address, asset):
+  am = asset_control.get_manager(asset)
+  return gen_qrcode(5, tag_id, am.get_qrcode_address_data(address))
 
 @register.simple_tag
-def gen_request_qrcode(tag_id, address, amount):
-  args = { "address" : address, "amount" : amount }
-  data = "bitcoin:%(address)s?amount=%(amount)0.8f" % args
-  return gen_qrcode(8, tag_id, data)
+def gen_request_qrcode(tag_id, address, amount, asset):
+  am = asset_control.get_manager(asset)
+  return gen_qrcode(8, tag_id, am.get_qrcode_request_data(address, amount))
 
 @register.filter
 def render_transaction(txid):
@@ -33,8 +34,10 @@ def render_transaction(txid):
   return mark_safe("""<small>%s</small>""" % txid)
 
 @register.filter
-def render_transaction_link(txid):
-  return mark_safe("""
-    <a href="https://blockchain.info/tx/%(txid)s" target="_blank">%(label)s</a>
-  """ % { "txid" : txid, "label" : render_transaction(txid) })
+def render_transaction_link(txid, asset):
+  am = asset_control.get_manager(asset)
+  return mark_safe('<a href="%(link)s" target="_blank">%(label)s</a>' % { 
+    "link" : am.get_transaction_link(txid), 
+    "label" : render_transaction(txid) 
+  })
 

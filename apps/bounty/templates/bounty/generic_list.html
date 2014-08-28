@@ -32,7 +32,7 @@
         </td>
       </tr>
       <tr>
-        <td>{{ bounty.display_reward|render_asset }}</td>
+        <td>{{ bounty.display_reward|render_asset:bounty.asset }}</td>
         <td>{{ bounty.cashed_claim_count }}</td>
         <td>{{ bounty.deadline }}</td>
         <td>{% trans bounty.state %}</td>

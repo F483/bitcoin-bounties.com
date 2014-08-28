@@ -10,7 +10,7 @@
         {% trans "REWARD" %} 
       </td>
       <td style="text-align: right;">
-        {{ bounty.display_reward|render_asset }}
+        {{ bounty.display_reward|render_asset:bounty.asset }}
       </td>
     </tr>
     <tr>
@@ -19,7 +19,7 @@
         (+{{ settings.FEES|render_percent }})
       </td>
       <td style="text-align: right;">
-        {{ bounty.display_fees|render_asset }}
+        {{ bounty.display_fees|render_asset:bounty.asset }}
       </td>
     </tr>
 
@@ -28,21 +28,21 @@
         <td>{% trans "FUNDED" %} ({{ bounty.funded_ratio|render_percent }})
         </td>
         <td style="text-align: right;">
-          {{ bounty.funds|render_asset }} / 
-          {{ bounty.target_funds|render_asset }}
+          {{ bounty.funds|render_asset:bounty.asset }} / 
+          {{ bounty.target_funds|render_asset:bounty.asset }}
         </td>
       </tr>
       <tr>
         <td>{% trans "FUNDS_NEEDED" %}</td>
         <td style="text-align: right;">
-          <b>{{ bounty.funds_needed|render_asset }}</b>
+          <b>{{ bounty.funds_needed|render_asset:bounty.asset }}</b>
         </td>
       </tr>
     {% else %}
       <tr>
         <td>{% trans "BALANCE" %}</td>
         <td style="text-align: right;">
-          {{ bounty.funds|render_asset }}
+          {{ bounty.funds|render_asset:bounty.asset }}
         </td>
       </tr>
     {% endif %}
@@ -55,7 +55,7 @@
             ({{ userfund.balance|div:bounty.funds|render_percent }})
           </td>
           <td style="text-align: right;">
-            {{ userfund.balance|render_asset }}
+            {{ userfund.balance|render_asset:bounty.asset }}
           </td>
         </tr>
       {% endif %}

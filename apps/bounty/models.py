@@ -209,7 +209,7 @@ class Bounty(Model):
     return "%i: %s - %s - Funds: %s - Deadline: %s - Created: %s" % (
       self.id,
       self.title, self.state,
-      render_asset(self.funds),
+      render_asset(self.funds, self.asset),
       self.deadline,
       self.created_on
     )

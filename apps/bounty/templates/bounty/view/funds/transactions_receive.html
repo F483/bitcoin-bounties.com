@@ -11,7 +11,7 @@
       {% for tx in bounty.display_receive_transactions %}
         <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
           <td>
-            {{ tx.amount|render_asset }}
+            {{ tx.amount|render_asset:bounty.asset }}
           </td>
           <td>{{ tx.userfund.user.username }} </td>
         </tr>
@@ -33,7 +33,7 @@
 
         <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
           <td colspan="2">
-            {{ tx.txid|render_transaction_link }}
+            {{ tx.txid|render_transaction_link:bounty.asset }}
           </td>
         </tr>
       {% endfor %}

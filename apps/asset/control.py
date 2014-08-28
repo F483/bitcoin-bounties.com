@@ -65,6 +65,18 @@ class AssetManager(object):
     """
     raise NotImplementedError
 
+  def get_qrcode_address_data(self, address):
+    raise NotImplementedError
+
+  def get_qrcode_request_data(self, address, amount):
+    raise NotImplementedError
+
+  def get_address_link(self, address):
+    raise NotImplementedError
+
+  def get_transaction_link(self, txid):
+    raise NotImplementedError
+
 class BitcoinManager(AssetManager):
 
   def __init__(self):
@@ -112,6 +124,19 @@ class BitcoinManager(AssetManager):
 
   def send(self, outputs):
     raise NotImplementedError
+
+  def get_qrcode_address_data(self, address):
+    return "bitcoin:%(address)s" % { "address" : address }
+
+  def get_qrcode_request_data(self, address, amount):
+    args = { "address" : address, "amount" : amount }
+    return "bitcoin:%(address)s?amount=%(amount)0.8f" % args
+
+  def get_address_link(self, address):
+    return "https://blockchain.info/address/%s" % address
+
+  def get_transaction_link(self, txid):
+    return "https://blockchain.info/tx/%s" % txid
 
 class CounterpartyManager(BitcoinManager):
 
@@ -209,6 +234,18 @@ class CounterpartyManager(BitcoinManager):
 
   def send(self, outputs):
     raise NotImplementedError("TODO implement")
+
+  def get_qrcode_address_data(self, address):
+    raise NotImplementedError
+
+  def get_qrcode_request_data(self, address, amount):
+    raise NotImplementedError
+
+  def get_address_link(self, address):
+    raise NotImplementedError
+
+  def get_transaction_link(self, txid):
+    raise NotImplementedError
 
 ASSETS = {
   'BTC' : BitcoinManager(),
