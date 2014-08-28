@@ -5,7 +5,7 @@
 import json
 import requests
 import bitcoinaddress
-from decimal import Decimal
+from decimal import Decimal, ROUND_DOWN
 from requests.auth import HTTPBasicAuth
 from bitcoinrpc.authproxy import AuthServiceProxy
 from config import settings
@@ -24,7 +24,7 @@ class AssetManager(object):
     self.label = label and label or key
     self.decimal_places = decimal_places
 
-  def quantize(amount):
+  def quantize(self, amount):
     raise NotImplementedError
 
   def get_balance(self, address):
@@ -75,8 +75,8 @@ class BitcoinManager(AssetManager):
   def bitcoind_rpc(self):
     return AuthServiceProxy(settings.BITCOIND_RPC)
 
-  def quantize(amount):
-    raise NotImplementedError
+  def quantize(self, amount):
+    return amount.quantize(Decimal("0.00000001"), rounding=ROUND_DOWN)
 
   def get_balance(self, address):
     all_unspent = self.bitcoind_rpc().listunspent()
@@ -146,7 +146,7 @@ class CounterpartyManager(BitcoinManager):
     )
     return response.json()
 
-  def quantize(amount):
+  def quantize(self, amount):
     raise NotImplementedError
 
   def get_balance(self, address):

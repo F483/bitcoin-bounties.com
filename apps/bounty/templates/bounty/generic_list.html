@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load common_tags %}
 {% load bounty_tags %}
-{% load bitcoin_tags %}
+{% load asset_tags %}
 
 <table class="table table-striped table-hover ">
   <thead>
@@ -32,7 +32,7 @@
         </td>
       </tr>
       <tr>
-        <td>{{ bounty.display_reward|render_bitcoin }}</td>
+        <td>{{ bounty.display_reward|render_asset }}</td>
         <td>{{ bounty.cashed_claim_count }}</td>
         <td>{{ bounty.deadline }}</td>
         <td>{% trans bounty.state %}</td>

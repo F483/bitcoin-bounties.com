@@ -3,6 +3,7 @@
 # License: MIT (see LICENSE.TXT file)
 
 import datetime
+from decimal import Decimal
 from django.forms import Form
 from django.forms import BooleanField
 from django.forms import Textarea
@@ -19,7 +20,7 @@ from django.utils.translation import ugettext as _
 from apps.common.templatetags.common_tags import render_percent
 from apps.tags import control as tags_control
 from config import settings
-from apps.assets import control as asset_control
+from apps.asset import control as asset_control
 
 today = datetime.datetime.now().date()
 mindeadline = today + datetime.timedelta(days=settings.MIN_DEADLINE)
@@ -79,10 +80,8 @@ class Bounty(Form):
 
   def clean_target(self):
     target = self.cleaned_data["target"]
-    if bitcoin_control.mbtc2btc(target) < settings.MIN_REWARD:
-      args = { "min" : float(bitcoin_control.btc2mbtc(settings.MIN_REWARD)) }
-      msg = "ERROR_TARGET_REWARD_LESS_THEN_MINIMUM_%(min)f_MBTC"
-      raise ValidationError(_(msg) % args )
+    if target < Decimal("0.0"):
+      raise ValidationError(_("ERROR_TARGET_REWARD_LESS_THEN_ZERO"))
     return target
 
 class CreateBounty(Bounty):
@@ -91,9 +90,8 @@ class CreateBounty(Bounty):
 
   def __init__(self, *args, **kwargs):
     super(CreateBounty, self).__init__(*args, **kwargs)
-    target = bitcoin_control.btc2mbtc(settings.MIN_REWARD)
     self.fields["deadline"].initial = default_deadline
-    self.fields["target"].initial = float(target)
+    self.fields["target"].initial = 0.0
 
 class EditBounty(Bounty):
 

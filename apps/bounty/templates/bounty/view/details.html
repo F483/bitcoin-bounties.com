@@ -1,7 +1,7 @@
 {% extends "bounty/view.html" %}
 {% load i18n %}
 {% load common_tags %}
-{% load bitcoin_tags %}
+{% load asset_tags %}
 {% load bounty_tags %}
 
 {% block content %}
@@ -17,7 +17,7 @@
               {# REWARD #}
               <tr>
                 <td>{% trans "REWARD" %}</td>
-                <td>{{ bounty.display_reward|render_bitcoin }}</td>
+                <td>{{ bounty.display_reward|render_asset }}</td>
               </tr>
 
               {# FUNDED OR CLAIMS #}

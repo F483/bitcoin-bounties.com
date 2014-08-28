@@ -332,7 +332,7 @@ def edit(request, bounty_id):
         form.cleaned_data["title"].strip(),
         form.cleaned_data["description"].strip(),
         form.cleaned_data["tags"].strip(),
-        bitcoin_control.mbtc2btc(form.cleaned_data["target"]),
+        form.cleaned_data["target"],
         form.cleaned_data["deadline"]
       )
       return HttpResponseRedirect(bounty.url_details)
@@ -355,7 +355,8 @@ def create(request):
         form.cleaned_data["title"].strip(),
         form.cleaned_data["description"].strip(),
         form.cleaned_data["tags"].strip(),
-        bitcoin_control.mbtc2btc(form.cleaned_data["target"]),
+        form.cleaned_data["asset"],
+        form.cleaned_data["target"],
         form.cleaned_data["deadline"]
       )
       return HttpResponseRedirect(bounty.url_funds)

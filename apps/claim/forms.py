@@ -9,7 +9,6 @@ from django.forms import Textarea
 from django.forms import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
-from apps.bitcoin import control as bitcoin_control
 
 class Create(Form):
 

@@ -6,7 +6,6 @@ from django.forms import Form
 from django.forms import CharField
 from django.forms import ValidationError
 from django.utils.translation import ugettext as _
-from apps.bitcoin import control as bitcoin_control
 
 class SetRefund(Form):
 

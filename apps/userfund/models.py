@@ -11,17 +11,17 @@ from django.db.models import DecimalField
 from django.db.models import CharField
 from django.db.models import ManyToManyField
 from django.utils.translation import ugettext as _
-from apps.assets import control as asset_control
+from apps.asset import control as asset_control
 from config import settings
 
 class UserFund(Model):
 
   user = ForeignKey("auth.User", related_name="userfunds")
   bounty = ForeignKey("bounty.Bounty", related_name="userfunds")
-  funding_address = CharField(max_length=100, blank=True)
+  funding_address = CharField(max_length=100)
   refund_address = CharField(max_length=100, blank=True)
   refund_payments = ManyToManyField(
-    'assets.PaymentLog',
+    'asset.PaymentLog',
     related_name="userfunds",
     null=True, blank=True
   )
@@ -36,30 +36,19 @@ class UserFund(Model):
   )
 
   @property
-  def account(self): # bitcoind account for incoming user funding
-    args = { "prefix" : settings.ACCOUNT_PREFIX, "id" : str(self.id) }
-    return "%(prefix)s_UserFundIncoming_%(id)s" % args
-
-  @property
   def balance(self):
-    rpc = bitcoin_control.get_rpc_access()
-    return rpc.getbalance(self.account)
-
-  @property
-  def funding(self): # address to receive funds
-    rpc = bitcoin_control.get_rpc_access()
-    return rpc.getaccountaddress(self.account)
+    am = asset_control.get_manager(self.bounty.asset)
+    return am.get_balance(self.funding_address)
 
   @property
   def received(self):
     """ Total funds received. """
-    total = Decimal("0.0")
-    for transaction in self.receive_transactions:
-      total = total + transaction["amount"]
-    return total
+    am = asset_control.get_manager(self.bounty.asset)
+    return am.get_received(self.funding_address)
 
   @property
   def display_send_transactions(self):
+    return [] # FIXME
     txlist = []
     rpc = bitcoin_control.get_rpc_access()
     for payment in self.refund_payments.all():
@@ -72,6 +61,7 @@ class UserFund(Model):
 
   @property
   def receive_transactions(self):
+    return [] # FIXME
     rpc = bitcoin_control.get_rpc_access()
     txlist = rpc.listtransactions(self.account)
     txlist = filter(lambda tx: tx["category"] == "receive", txlist) # received
@@ -80,6 +70,7 @@ class UserFund(Model):
 
   @property
   def display_receive_transactions(self):
+    return [] # FIXME
     rpc = bitcoin_control.get_rpc_access()
     txlist = rpc.listtransactions(self.account)
     txlist = filter(lambda tx: tx["category"] == "receive", txlist)
@@ -88,9 +79,9 @@ class UserFund(Model):
     return txlist
 
   def __unicode__(self):
-    from apps.bitcoin.templatetags.bitcoin_tags import render_mbtc
+    from apps.asset.templatetags.asset_tags import render_asset
     return "User: %s - Bounty.id: %s - %s - %s" % (
-      self.user.username, self.bounty.id, render_mbtc(self.balance),
+      self.user.username, self.bounty.id, render_asset(self.balance),
       self.refund_address and self.refund_address or "NO_REFUND_ADDRESS"
     )
 

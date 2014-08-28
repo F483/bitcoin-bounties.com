@@ -2,10 +2,8 @@
 # Copyright (c) 2014 Fabian Barkhau <fabian.barkhau@gmail.com>
 # License: MIT (see LICENSE.TXT file)
 
-from django import template
+from django.contrib import admin
+from apps.asset.models import PaymentLog
 
-register = template.Library()
+admin.site.register(PaymentLog)
 
-@register.filter
-def render_asset(amount):
-  return amount

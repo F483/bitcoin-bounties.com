@@ -17,7 +17,7 @@ from django.db.models import DecimalField
 from django.utils.translation import ugettext as _
 from apps.common.utils.i18n import uslugify
 from apps.common.utils.models import get_object_or_none
-from apps.assets import control as asset_control
+from apps.asset import control as asset_control
 from config import settings
 
 STATE_CHOICES = [
@@ -103,6 +103,8 @@ class Bounty(Model):
 
   @property
   def funded_ratio(self):
+    if not self.target_funds:
+      return Decimal("1")
     return self.funds / self.target_funds
 
   @property
@@ -203,11 +205,11 @@ class Bounty(Model):
     return "/claim/create/%s" % self.id
 
   def __unicode__(self):
-    from apps.bitcoin.templatetags.bitcoin_tags import render_bitcoin
+    from apps.asset.templatetags.asset_tags import render_asset
     return "%i: %s - %s - Funds: %s - Deadline: %s - Created: %s" % (
       self.id,
       self.title, self.state,
-      render_bitcoin(self.funds),
+      render_asset(self.funds),
       self.deadline,
       self.created_on
     )

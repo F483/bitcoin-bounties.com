@@ -114,7 +114,7 @@ INSTALLED_APPS = (
   'django.contrib.admindocs',
 
   # bitcoin-bounties.com apps
-  'apps.assets',
+  'apps.asset',
   'apps.common',
   'apps.site',
   'apps.bounty',

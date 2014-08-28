@@ -1,7 +1,7 @@
 {% extends "bounty/view.html" %}
 {% load i18n %}
 {% load common_tags %}
-{% load bitcoin_tags %}
+{% load asset_tags %}
 {% load userfund_tags %}
 
 {% block content %}
@@ -38,11 +38,11 @@
               </div>
               <div class="panel-body">
                 {% if bounty.state == "PENDING" and bounty.funds_needed %}
-                  {% gen_request_qrcode "fund_qrcode" userfund.funding bounty.funds_needed %}
+                  {% gen_request_qrcode "fund_qrcode" userfund.funding_address bounty.funds_needed %}
                 {% else %}
-                  {% gen_address_qrcode "fund_qrcode" userfund.funding %}
+                  {% gen_address_qrcode "fund_qrcode" userfund.funding_address %}
                 {% endif %}
-                <p><b>{{ userfund.funding|render_address }}</b></p>
+                <p><b>{{ userfund.funding_address|render_address }}</b></p>
               </div>
             </div>
           </div>

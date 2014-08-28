@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load common_tags %}
-{% load bitcoin_tags %}
+{% load asset_tags %}
 
 {% if bounty.display_send_transactions %}
 
@@ -11,14 +11,14 @@
       {% for tx in bounty.display_send_transactions %}
         <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
           <td>
-            {{ tx.payment.amount|render_mbtc }}
+            {{ tx.payment.amount|render_asset }}
           </td>
           <td>{{ tx.type }} {{ tx.user.username }}</td>
         </tr>
 
         <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
           <td>
-            {{ tx.payment.fees|render_mbtc }}
+            {{ tx.payment.fees|render_asset }}
           </td>
           <td>{% trans "FEES" %}</td>
         </tr>

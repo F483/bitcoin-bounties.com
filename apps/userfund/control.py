@@ -6,11 +6,13 @@ from decimal import Decimal
 from django.core.exceptions import PermissionDenied
 from apps.common.utils.models import get_object_or_none
 from apps.userfund.models import UserFund
+from apps.asset import control as asset_control
 
 def create(user, bounty):
   uf = UserFund()
   uf.user = user
   uf.bounty = bounty
+  uf.funding_address = asset_control.get_manager(bounty.asset).new_address()
   uf.save()
   return uf
 

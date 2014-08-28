@@ -124,11 +124,13 @@ def edit(user, bounty, title, description, tagsstr, target, deadline):
   bounty.keywords.add(*search_control.update(title + u" " + tagsstr))
   return bounty
 
-def create(user, title, description, tagsstr, target, deadline):
+def create(user, title, description, tagsstr, asset, target, deadline):
   bounty = Bounty()
   bounty.title = title
   bounty.description = description
   bounty.deadline = deadline
+  bounty.asset = asset
+  bounty.fees = settings.FEES
   bounty.target_reward = target
   bounty.cashed_reward = target # update cashe
   bounty.created_by = user
