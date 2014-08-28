@@ -61,19 +61,14 @@ class UserFund(Model):
 
   @property
   def receive_transactions(self):
-    return [] # FIXME
-    rpc = bitcoin_control.get_rpc_access()
-    txlist = rpc.listtransactions(self.account)
-    txlist = filter(lambda tx: tx["category"] == "receive", txlist) # received
-    txlist = filter(lambda tx: tx["confirmations"] > 0, txlist) # confirmed
-    return txlist
+    am = asset_control.get_manager(self.bounty.asset)
+    txlist = am.get_receives(self.funding_address)
+    return filter(lambda tx: tx["confirmations"] > 0, txlist) # confirmed
 
   @property
   def display_receive_transactions(self):
-    return [] # FIXME
-    rpc = bitcoin_control.get_rpc_access()
-    txlist = rpc.listtransactions(self.account)
-    txlist = filter(lambda tx: tx["category"] == "receive", txlist)
+    am = asset_control.get_manager(self.bounty.asset)
+    txlist = am.get_receives(self.funding_address)
     for tx in txlist:
       tx["userfund"] = self # inject userfund for use in templates
     return txlist

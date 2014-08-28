@@ -5,6 +5,7 @@
 from django import template
 from django.utils.safestring import mark_safe
 from apps.common.templatetags.common_tags import gen_qrcode
+from apps.common.utils.misc import chunks
 from apps.asset import control as asset_control
 
 register = template.Library()

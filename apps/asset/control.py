@@ -19,13 +19,14 @@ class AssetManager(object):
 
   def __init__(self, key=None, label=None, decimal_places=None):
     assert(key)
-    assert(decimal_places)
+    assert(type(decimal_places) == type(1) and decimal_places >= 0)
     self.key = key
     self.label = label and label or key
     self.decimal_places = decimal_places
 
   def quantize(self, amount):
-    raise NotImplementedError
+    atom = Decimal("1.0") / (Decimal("10.0") ** self.decimal_places)
+    return amount.quantize(atom, rounding=ROUND_DOWN)
 
   def get_balance(self, address):
     raise NotImplementedError
@@ -87,9 +88,6 @@ class BitcoinManager(AssetManager):
   def bitcoind_rpc(self):
     return AuthServiceProxy(settings.BITCOIND_RPC)
 
-  def quantize(self, amount):
-    return amount.quantize(Decimal("0.00000001"), rounding=ROUND_DOWN)
-
   def get_balance(self, address):
     all_unspent = self.bitcoind_rpc().listunspent()
     unspent = filter(lambda tx: tx['address'] == address, all_unspent)
@@ -133,23 +131,37 @@ class BitcoinManager(AssetManager):
     return "bitcoin:%(address)s?amount=%(amount)0.8f" % args
 
   def get_address_link(self, address):
+    # TODO testnet "http://tbtc.blockr.io/address/info/%s" address
     return "https://blockchain.info/address/%s" % address
 
   def get_transaction_link(self, txid):
+    # TODO testnet "http://tbtc.blockr.io/tx/info/%s" % txid
     return "https://blockchain.info/tx/%s" % txid
+
+def counterpartyd_querry(payload):
+  response = requests.post(
+    settings.COUNTERPARTYD_URL,
+    data=json.dumps(payload),
+    headers={'content-type': 'application/json'},
+    auth=HTTPBasicAuth(
+      settings.COUNTERPARTYD_USER,
+      settings.COUNTERPARTYD_PASS
+    )
+  )
+  return response.json()
 
 class CounterpartyManager(BitcoinManager):
 
   def __init__(self, key=None, label=None):
     assert(key)
     assert(label)
-    counterparty_assets = (self.counterpartyd_querry({
+    counterparty_assets = (counterpartyd_querry({
       "method": "get_asset_names", "jsonrpc": "2.0", "id": 0,
     })['result'] + [u'XCP'])
     assert(key in counterparty_assets)
 
     # get decimal_places
-    response = self.counterpartyd_querry({
+    response = counterpartyd_querry({
       "method": "get_asset_info",
       "params": {"assets" : [key]},
       "jsonrpc": "2.0",
@@ -158,21 +170,6 @@ class CounterpartyManager(BitcoinManager):
     decimal_places = response['result'][0]['divisible'] and 8 or 0
 
     super(BitcoinManager, self).__init__(key, label, decimal_places)
-
-  def counterpartyd_querry(self, payload):
-    response = requests.post(
-      settings.COUNTERPARTYD_URL,
-      data=json.dumps(payload),
-      headers={'content-type': 'application/json'},
-      auth=HTTPBasicAuth(
-        settings.COUNTERPARTYD_USER,
-        settings.COUNTERPARTYD_PASS
-      )
-    )
-    return response.json()
-
-  def quantize(self, amount):
-    raise NotImplementedError
 
   def get_balance(self, address):
     payload = {
@@ -185,7 +182,7 @@ class CounterpartyManager(BitcoinManager):
       "jsonrpc": "2.0",
       "id": 0,
     }
-    result = self.counterpartyd_querry(payload)['result']
+    result = counterpartyd_querry(payload)['result']
     result = filter(lambda x: x['asset'] == self.key, result)
     return _sum_key(result, 'quantity', self.decimal_places)
 
@@ -193,7 +190,7 @@ class CounterpartyManager(BitcoinManager):
     raise NotImplementedError
 
   def get_received(self, address):
-    result = self.counterpartyd_querry({
+    result = counterpartyd_querry({
       "method": "get_sends",
       "params": {
         "filters": [
@@ -209,7 +206,7 @@ class CounterpartyManager(BitcoinManager):
   def get_receives(self, address):
     btcrpc = self.bitcoind_rpc()
     blockcount = btcrpc.getblockcount()
-    result = self.counterpartyd_querry({
+    result = counterpartyd_querry({
       "method": "get_sends",
       "params": {
         "filters": [
@@ -236,35 +233,44 @@ class CounterpartyManager(BitcoinManager):
     raise NotImplementedError("TODO implement")
 
   def get_qrcode_address_data(self, address):
-    raise NotImplementedError
+    return address # TODO counterparty link standard?
 
   def get_qrcode_request_data(self, address, amount):
-    raise NotImplementedError
+    return address # TODO counterparty link standard?
 
   def get_address_link(self, address):
-    raise NotImplementedError
+    return "http://www.blockscan.com/address.aspx?q=%s" % address
 
-  def get_transaction_link(self, txid):
-    raise NotImplementedError
 
-ASSETS = {
-  'BTC' : BitcoinManager(),
-  'XCP' : CounterpartyManager(key='XCP', label='Counterparty XCP'),
-  # TODO 'LTC' : LitecoinManager(),
-  # TODO 'BTSX' : BitSharesXManager(),
-  # TODO 'NXT' : NXTManager(),
-  # TODO 'PPC' : PeercoinManager(),
-  # TODO 'DOGE' : DogecoinManager(),
-  # TODO 'NMC' : NamecoinManager(),
-  # TODO 'DRK' : DarkcoinManager(),
-  # TODO 'MAID' : MaidSafeCoinManager(),
-  # TODO 'XMR' :  MoneroManager(),
-  # TODO 'BTCD' :  BitcoinDarkManager(),
-}
+def _assets():
+  assets = {
+    'BTC' : BitcoinManager(),
+    # TODO 'LTC' : LitecoinManager(),
+    # TODO 'BTSX' : BitSharesXManager(),
+    # TODO 'NXT' : NXTManager(),
+    # TODO 'PPC' : PeercoinManager(),
+    # TODO 'DOGE' : DogecoinManager(),
+    # TODO 'NMC' : NamecoinManager(),
+    # TODO 'DRK' : DarkcoinManager(),
+    # TODO 'MAID' : MaidSafeCoinManager(),
+    # TODO 'XMR' :  MoneroManager(),
+    # TODO 'BTCD' :  BitcoinDarkManager(),
+  }
+  counterparty_assets = [u'XCP'] + counterpartyd_querry({
+    "method": "get_asset_names",
+    "jsonrpc": "2.0",
+    "id": 0,
+  })['result']
+  for ca in counterparty_assets:
+    assets[ca] = CounterpartyManager(key=ca, label='Counterparty %s' % ca)
+  return assets
+
+ASSETS = _assets()
 
 def get_manager(asset):
   return ASSETS[asset]
 
 def get_choices():
-  return map(lambda item: (item[0], item[1].label), ASSETS.items())
+  choices = map(lambda item: (item[0], item[1].label), ASSETS.items())
+  return sorted(choices, key=lambda c: c[1])
 
