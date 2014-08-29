@@ -1,2 +1,2 @@
-{% load bitcoin_tags %}
-Refund address required for {{ userfund.balance|render_bitcoin }} from unsuccessful bounty: {{ userfund.bounty.title }}
+{% load asset_tags %}
+Refund address required for {{ userfund.balance|render_asset:userfund.bounty.asset }} from unsuccessful bounty: {{ userfund.bounty.title }}

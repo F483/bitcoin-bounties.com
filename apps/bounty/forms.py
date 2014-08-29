@@ -99,11 +99,10 @@ class EditBounty(Bounty):
     bounty = kwargs.pop("bounty")
     super(EditBounty, self).__init__(*args, **kwargs)
     tags = map(lambda t: str(t), bounty.tags.all())
-    target = bitcoin_control.btc2mbtc(bounty.target_reward)
     self.fields["title"].initial = bounty.title
     self.fields["description"].initial = bounty.description
     self.fields["tags"].initial = " ".join(tags)
-    self.fields["target"].initial = float(target)
+    self.fields["target"].initial = float(bounty.target_reward)
     self.fields["deadline"].initial = bounty.deadline
 
 class FilterPending(Form):

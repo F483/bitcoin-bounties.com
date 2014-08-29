@@ -1,6 +1,6 @@
-{% load bitcoin_tags %}
+{% load asset_tags %}
 Your claim for the bounty "{{ claim.bounty.title }}" was successful.
 
-The bounty of {{ claim.bounty.display_reward|render_bitcoin }} will be transfered to your address {{ claim.address }} shortly.
+The bounty of {{ claim.bounty.display_reward|render_asset:claim.bounty.asset }} will be transfered to your address {{ claim.address }} shortly.
 
 http://{{ site.domain }}{{ claim.url_details }}

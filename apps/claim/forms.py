@@ -49,13 +49,14 @@ class ChangeAddress(Form):
   address = CharField(label=_("ADDRESS"))
 
   def __init__(self, *args, **kwargs):
-    claim = kwargs.pop("claim")
+    self.claim = kwargs.pop("claim")
     super(ChangeAddress, self).__init__(*args, **kwargs)
-    self.fields["address"].initial = claim.address
+    self.fields["address"].initial = self.claim.address
 
   def clean_address(self):
+    am = asset_control.get_manager(self.claim.bounty.asset)
     address = self.cleaned_data["address"]
-    if not bitcoin_control.is_valid(address):
+    if not am.validate(address):
       raise ValidationError(_("ERROR_INVALID_ADDRESS"))
     return address
 

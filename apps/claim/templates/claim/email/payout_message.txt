@@ -1,4 +1,4 @@
-{% load bitcoin_tags %}
-{{ claim.payout.amount|render_bitcoin }} have been transfered to your address {{ claim.payout.address }} for successfully claiming the bounty "{{ claim.bounty.title }}".
+{% load asset_tags %}
+{{ claim.payout.amount|render_asset:claim.bounty.asset }} have been transfered to your address {{ claim.payout.address }} for successfully claiming the bounty "{{ claim.bounty.title }}".
 
 http://{{ site.domain }}{{ claim.bounty.url_funds }}
