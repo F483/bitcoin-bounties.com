@@ -9,6 +9,7 @@ from decimal import Decimal, ROUND_DOWN
 from requests.auth import HTTPBasicAuth
 from bitcoinrpc.authproxy import AuthServiceProxy
 from config import settings
+from apps.asset.models import PaymentLog
 
 def _sum_key(dictonary, key, move_decimal=0):
   value = sum(map(lambda x: Decimal(x[key]), dictonary))
@@ -34,6 +35,10 @@ class AssetManager(object):
   def get_wallet_balance(self):
     raise NotImplementedError
 
+  def get_transaction_fee_buffer(self):
+    """ Minimum wallet balance required to cover a transaction fee. """
+    raise NotImplementedError
+
   def get_received(self, address):
     raise NotImplementedError
 
@@ -44,6 +49,7 @@ class AssetManager(object):
       { 
         "txid" : txid, 
         "address" : address,
+        "asset" : asset,
         "amount" : amount, 
         "timereceived" : unixtime,
         "confirmations" : confirmations
@@ -53,16 +59,30 @@ class AssetManager(object):
     """
     raise NotImplementedError
 
+  def get_receive(self, address, txid):
+    txlist = filter(lambda tx: tx["txid"] == txid, self.get_receives(address))
+    return txlist and txlist[0] or None
+
   def new_address(self):
     raise NotImplementedError
 
   def validate(self, address):
     raise NotImplementedError
 
+  def sufficient_hot_funds(self, outputs):
+    """
+    Example: self.sufficient_hot_funds([(address, amount), ...])
+    Returns: bool
+    """
+    available = self.get_wallet_balance()
+    txfeebuffer = self.get_transaction_fee_buffer()
+    required = sum(map(lambda o: o[1] + txfeebuffer, outputs))
+    return available >= required
+
   def send(self, outputs):
     """
     Example: self.send([(address, amount), ...])
-    Returns: [txid, ...]
+    Returns: { address : PaymentLog, ... }
     """
     raise NotImplementedError
 
@@ -94,7 +114,10 @@ class BitcoinManager(AssetManager):
     return _sum_key(unspent, 'amount')
 
   def get_wallet_balance(self):
-    raise NotImplementedError
+    return self.bitcoind_rpc().getbalance()
+
+  def get_transaction_fee_buffer(self):
+    return Decimal("0.001")
 
   def get_received(self, address):
     received = self.bitcoind_rpc().getreceivedbyaddress(address)
@@ -103,10 +126,12 @@ class BitcoinManager(AssetManager):
   def get_receives(self, address):
     txlist = self.bitcoind_rpc().listtransactions("")
     valid = lambda tx: tx["category"] == "receive" and tx["address"] == address
+    asset = self.key
     def reformat(tx):
       return {
         "txid" : tx['txid'], 
         "address" : tx['address'],
+        "asset" : asset,
         "amount" : tx['amount'], 
         "timereceived" : tx['timereceived'],
         "confirmations" : tx['confirmations'],
@@ -120,8 +145,24 @@ class BitcoinManager(AssetManager):
   def validate(self, address):
     return bitcoinaddress.validate(address)
 
+
   def send(self, outputs):
-    raise NotImplementedError
+    # check if enough funds in hot wallet
+    if not self.sufficient_hot_funds(outputs):
+      signals.insufficent_hot_funds.send(sender=self.send, asset=self.key)
+      raise Exception("INSUFFICIENT FUNDS IN HOT WALLET")
+    logs = {}
+    for output in outputs: # TODO batch send instead
+      address = output[0]
+      amount = output[1]
+      txid = self.bitcoind_rpc().sendtoaddress(address, float(amount))
+      log = PaymentLog()
+      log.address = address
+      log.asset = self.key
+      log.transaction = txid
+      log.save()
+      logs[address] = log
+    return logs
 
   def get_qrcode_address_data(self, address):
     return "bitcoin:%(address)s" % { "address" : address }
@@ -189,6 +230,9 @@ class CounterpartyManager(BitcoinManager):
   def get_wallet_balance(self):
     raise NotImplementedError
 
+  def get_transaction_fee_buffer(self):
+    raise NotImplementedError
+
   def get_received(self, address):
     result = counterpartyd_querry({
       "method": "get_sends",
@@ -217,11 +261,13 @@ class CounterpartyManager(BitcoinManager):
       "jsonrpc": "2.0",
       "id": 0,
     })['result']
+    asset = self.key
     def reformat(tx):
       btctx = btcrpc.gettransaction(tx['tx_hash'])
       return {
         "txid" : tx['tx_hash'], 
         "address" : tx['destination'],
+        "asset" : asset,
         "amount" : (tx['quantity'] / (Decimal("10.0") ** self.decimal_places)), 
         "timereceived" : btctx['timereceived'],
         "confirmations" : blockcount - tx['block_index'] + 1,

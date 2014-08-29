@@ -67,10 +67,20 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6">
-        {% include "bounty/view/funds/transactions_receive.html" %}
+        {% if bounty.display_receive_transactions %}
+          <h4>{% trans "PAYMENTS_RECEIVED" %}</h4>
+          {% with bounty.display_receive_transactions as transactions %}
+            {% include "bounty/view/funds/transactions.html" %}
+          {% endwith %}
+        {% endif %}
       </div>
       <div class="col-sm-6">
-        {% include "bounty/view/funds/transactions_send.html" %}
+        {% if bounty.display_send_transactions %}
+          <h4>{% trans "PAYMENTS_SENT" %}</h4>
+          {% with bounty.display_send_transactions as transactions %}
+            {% include "bounty/view/funds/transactions.html" %}
+          {% endwith %}
+        {% endif %}
       </div>
     </div>
   </div>

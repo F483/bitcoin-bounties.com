@@ -75,13 +75,6 @@ class Bounty(Model):
     return Decimal("1.0") - self.fraction_reward
 
   @property
-  def funds(self):
-    total = Decimal("0.0")
-    for userfund in self.userfunds.all():
-      total = total + userfund.balance
-    return total
-
-  @property
   def received(self):
     """ Total funds received. """
     total = Decimal("0.0")
@@ -96,7 +89,7 @@ class Bounty(Model):
 
   @property
   def funds_needed(self):
-    needed = self.target_funds - self.funds
+    needed = self.target_funds - self.received
     if needed < Decimal("0.0"):
       return Decimal("0.0")
     return needed
@@ -105,7 +98,7 @@ class Bounty(Model):
   def funded_ratio(self):
     if not self.target_funds:
       return Decimal("1")
-    return self.funds / self.target_funds
+    return self.received / self.target_funds
 
   @property
   def slug(self):
@@ -122,20 +115,26 @@ class Bounty(Model):
 
   @property
   def display_fees(self):
-    if self.awarded and self.awarded.payout:
-      return self.awarded.payout.fees
-    usetarget = self.state == "PENDING" and self.target_funds > self.funds
-    funds = usetarget and self.target_funds or self.funds
-    amount = funds * self.fraction_fees
+    # FIXME
+    #if self.awarded and self.awarded.payout:
+    #  return self.awarded.payout.fees
+    usetarget = self.state == "PENDING" and self.target_funds > self.received
+    received = usetarget and self.target_funds or self.received
+    amount = received * self.fraction_fees
+    return asset_control.get_manager(self.asset).quantize(amount)
+
+  @property
+  def reward(self):
+    amount = self.received * self.fraction_reward
     return asset_control.get_manager(self.asset).quantize(amount)
 
   @property
   def display_reward(self):
     if self.awarded and self.awarded.payout:
       return self.awarded.payout.amount
-    usetarget = self.state == "PENDING" and self.target_funds > self.funds
-    funds = usetarget and self.target_funds or self.funds
-    reward = funds - self.display_fees
+    usetarget = self.state == "PENDING" and self.target_funds > self.received
+    received = usetarget and self.target_funds or self.received
+    reward = received - self.display_fees
     if self.cashed_reward > reward:
       return self.cashed_reward
     return reward
@@ -146,11 +145,9 @@ class Bounty(Model):
     for userfund in self.userfunds.all():
       txlist = txlist + userfund.display_send_transactions
     if self.awarded and self.awarded.payout:
-      rpc = bitcoin_control.get_rpc_access()
       payment = self.awarded.payout
-      tx = rpc.gettransaction(payment.transaction)
+      tx = payment.transactionobj
       tx["user"] = self.awarded.user  # add user for use in templates
-      tx["payment"] = payment  # add payment for use in templates
       tx["type"] = _("PAYOUT") # add type for use in templates
       txlist.append(tx)
     return sorted(txlist, key=lambda tx: tx["timereceived"], reverse=True)

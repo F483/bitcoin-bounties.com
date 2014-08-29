@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load common_tags %}
+{% load asset_tags %}
+
+<table class="table table-striped table-hover ">
+  <tbody>
+    {% for tx in transactions %}
+      <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
+        <td>
+          {{ tx.amount|render_asset:tx.asset }}
+        </td>
+        <td>{{ tx.type }} {{ tx.user.username }}</td>
+      </tr>
+
+      <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
+        <td>
+          {% blocktrans with date=tx.timereceived|unixtime_to_datetime|timesince %}
+            {{ date }}_AGO
+          {% endblocktrans %}
+        </td>
+        <td>
+          {% if tx.confirmations %}
+            {{ tx.confirmations }} {% trans "CONFIRMATIONS" %}
+          {% else %}
+            {% trans "UNCONFIRMED" %}
+          {% endif %}
+        </td>
+      </tr>
+
+      <tr {% if forloop.counter|divisibleby:2 %}class="active"{% endif %}>
+        <td colspan="2">
+          {{ tx.txid|render_transaction_link:tx.asset }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+

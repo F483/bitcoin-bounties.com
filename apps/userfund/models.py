@@ -48,13 +48,12 @@ class UserFund(Model):
 
   @property
   def display_send_transactions(self):
-    return [] # FIXME
+    return [] # FIXME return refund transactions
     txlist = []
     rpc = bitcoin_control.get_rpc_access()
     for payment in self.refund_payments.all():
       tx = rpc.gettransaction(payment.transaction)
       tx["user"] = self.user   # add user for use in templates
-      tx["payment"] = payment  # add payment for use in templates
       tx["type"] = _("REFUND") # add type for use in templates
       txlist.append(tx)
     return txlist
@@ -70,7 +69,8 @@ class UserFund(Model):
     am = asset_control.get_manager(self.bounty.asset)
     txlist = am.get_receives(self.funding_address)
     for tx in txlist:
-      tx["userfund"] = self # inject userfund for use in templates
+      tx["user"] = self.user    # add user for use in templates
+      tx["type"] = _("FUNDING") # add type for use in templates
     return txlist
 
   def __unicode__(self):

@@ -1,0 +1,3 @@
+Import a {{ asset }} cold storage address asap!
+
+http://{{ site.domain }}/asset/{{ asset }}/funds
