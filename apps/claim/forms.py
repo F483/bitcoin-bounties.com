@@ -9,6 +9,7 @@ from django.forms import Textarea
 from django.forms import ValidationError
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from apps.asset import control as asset_control
 
 class Create(Form):
 
@@ -20,9 +21,14 @@ class Create(Form):
 
   terms = BooleanField(label=mark_safe(_("ACCEPT_TERMS")), initial=False)
 
+  def __init__(self, *args, **kwargs):
+    self.bounty = kwargs.pop("bounty")
+    super(Create, self).__init__(*args, **kwargs)
+
   def clean_address(self):
+    am = asset_control.get_manager(self.bounty.asset)
     address = self.cleaned_data["address"]
-    if not bitcoin_control.is_valid(address):
+    if not am.validate(address):
       raise ValidationError(_("ERROR_INVALID_ADDRESS"))
     return address
 
@@ -34,9 +40,9 @@ class Edit(Form):
   )
 
   def __init__(self, *args, **kwargs):
-    claim = kwargs.pop("claim")
+    self.claim = kwargs.pop("claim")
     super(Edit, self).__init__(*args, **kwargs)
-    self.fields["description"].initial = claim.description
+    self.fields["description"].initial = self.claim.description
 
 class ChangeAddress(Form):
 

@@ -20,7 +20,7 @@ def create(request, bounty_id):
   if not control.can_claim(request.user, bounty):
     raise PermissionDenied
   if request.method == "POST":
-    form = forms.Create(request.POST)
+    form = forms.Create(request.POST, bounty=bounty)
     if form.is_valid():
       claim = control.create(
         request.user, bounty,
@@ -29,7 +29,7 @@ def create(request, bounty_id):
       )
       return HttpResponseRedirect(claim.url_details)
   else:
-    form = forms.Create()
+    form = forms.Create(bounty=bounty)
   args = {
     "form" : form, "form_title" : _("CLAIM_BOUNTY"),
     "cancel_url" : bounty.url_details,

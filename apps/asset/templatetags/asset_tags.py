@@ -30,6 +30,19 @@ def gen_request_qrcode(tag_id, address, amount, asset):
   return gen_qrcode(8, tag_id, am.get_qrcode_request_data(address, amount))
 
 @register.filter
+def render_address(address):
+  #address = " ".join(chunks(address, 12))
+  return mark_safe("""<small>%s</small>""" % address)
+
+@register.filter
+def render_address_link(address, asset):
+  am = asset_control.get_manager(asset)
+  return mark_safe('<a href="%(link)s" target="_blank">%(label)s</a>' % { 
+    "link" : am.get_address_link(address), 
+    "label" : render_address(address) 
+  })
+
+@register.filter
 def render_transaction(txid):
   txid = " ".join(chunks(txid, 32))
   return mark_safe("""<small>%s</small>""" % txid)

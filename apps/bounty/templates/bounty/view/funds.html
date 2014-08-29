@@ -16,8 +16,8 @@
             <hr>
             <div style="text-align: center;">
               <p>
-                {% trans "YOUR_REFUND_ADDRESS" %}:
                 {% if userfund.refund_address %}
+                  {% trans "YOUR_REFUND_ADDRESS" %}:
                   {{ userfund.refund_address|render_address }}
                 {% else %}
                   {% trans "NO_REFUND_ADDRESS_SET" %}

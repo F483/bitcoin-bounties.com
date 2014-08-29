@@ -124,7 +124,8 @@ class Bounty(Model):
   def display_fees(self):
     if self.awarded and self.awarded.payout:
       return self.awarded.payout.fees
-    funds = self.state == "PENDING" and self.target_funds or self.funds
+    usetarget = self.state == "PENDING" and self.target_funds > self.funds
+    funds = usetarget and self.target_funds or self.funds
     amount = funds * self.fraction_fees
     return asset_control.get_manager(self.asset).quantize(amount)
 
@@ -132,7 +133,8 @@ class Bounty(Model):
   def display_reward(self):
     if self.awarded and self.awarded.payout:
       return self.awarded.payout.amount
-    funds = self.state == "PENDING" and self.target_funds or self.funds
+    usetarget = self.state == "PENDING" and self.target_funds > self.funds
+    funds = usetarget and self.target_funds or self.funds
     reward = funds - self.display_fees
     if self.cashed_reward > reward:
       return self.cashed_reward

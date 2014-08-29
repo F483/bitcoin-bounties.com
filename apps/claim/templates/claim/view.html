@@ -2,7 +2,7 @@
 {% load common_tags %}
 {% load bounty_tags %}
 {% load claim_tags %}
-{% load bitcoin_tags %}
+{% load asset_tags %}
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -58,7 +58,7 @@
 
         <tr>
           <td>{% trans "PAYOUT_ADDRESS" %}</td>
-          <td>{{ claim.address|render_address_link }}</td>
+          <td>{{ claim.address|render_address_link:claim.bounty.asset }}</td>
         </tr>
 
         {% if claim.bounty.public and claim.accepts.all %}
