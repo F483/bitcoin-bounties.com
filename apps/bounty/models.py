@@ -125,8 +125,10 @@ class Bounty(Model):
 
   @property
   def reward(self):
-    amount = self.received * self.fraction_reward
-    return asset_control.get_manager(self.asset).quantize(amount)
+    if self.awarded and self.awarded.payout:
+      return self.awarded.payout.amount
+    am = asset_control.get_manager(self.asset)
+    return self.received - am.quantize(self.received * self.fees)
 
   @property
   def display_reward(self):
@@ -146,7 +148,7 @@ class Bounty(Model):
       txlist = txlist + userfund.display_send_transactions
     if self.awarded and self.awarded.payout:
       payment = self.awarded.payout
-      tx = payment.transactionobj
+      tx = payment.transaction
       tx["user"] = self.awarded.user  # add user for use in templates
       tx["type"] = _("PAYOUT") # add type for use in templates
       txlist.append(tx)
@@ -205,10 +207,10 @@ class Bounty(Model):
 
   def __unicode__(self):
     from apps.asset.templatetags.asset_tags import render_asset
-    return "%i: %s - %s - Funds: %s - Deadline: %s - Created: %s" % (
+    return "%i: %s - %s - Reward: %s - Deadline: %s - Created: %s" % (
       self.id,
       self.title, self.state,
-      render_asset(self.funds, self.asset),
+      render_asset(self.display_reward, self.asset),
       self.deadline,
       self.created_on
     )

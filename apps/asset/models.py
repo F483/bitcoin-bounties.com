@@ -13,20 +13,20 @@ class PaymentLog(Model):
 
   asset = CharField(max_length=100)
   address = CharField(max_length=100)
-  transaction = CharField(max_length=100) # TODO rename to txid
+  txid = CharField(max_length=100)
 
   @property
-  def transactionobj(self): # TODO rename to transaction
+  def transaction(self): # TODO rename to transaction
     from apps.asset import control
     am = control.get_manager(self.asset)
-    return am.get_receive(self.address, self.transaction)
+    return am.get_receive(self.address, self.txid)
 
   @property
   def amount(self):
-    return self.transactionobj["amount"]
+    return self.transaction["amount"]
 
   def __unicode__(self):
-    return "asset: %s, address: %s, transaction: %s" % (
-      self.asset, self.address, self.transaction
+    return "asset: %s, amount: %s, address: %s, txid: %s" % (
+      self.asset, self.amount, self.address, self.txid
     )
 

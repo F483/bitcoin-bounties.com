@@ -52,7 +52,7 @@ class UserFund(Model):
     txlist = []
     rpc = bitcoin_control.get_rpc_access()
     for payment in self.refund_payments.all():
-      tx = rpc.gettransaction(payment.transaction)
+      tx = payment.transaction
       tx["user"] = self.user   # add user for use in templates
       tx["type"] = _("REFUND") # add type for use in templates
       txlist.append(tx)
