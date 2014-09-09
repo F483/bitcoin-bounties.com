@@ -22,6 +22,13 @@ class BitcoinManager(AssetManager):
       key='BTC', label='Bitcoin', decimal_places=8
     )
 
+  def get_chain_height(self):
+    return get_bitcoind_rpc().getblockcount()
+
+  def get_tx_height(self, txid):
+    rpc = get_bitcoind_rpc()
+    return rpc.getblock(rpc.gettransaction(txid)['blockhash'])['height']
+
   def get_balance(self, address):
     all_unspent = get_bitcoind_rpc().listunspent()
     unspent = filter(lambda tx: tx['address'] == address, all_unspent)
@@ -60,7 +67,7 @@ class BitcoinManager(AssetManager):
     }
 
   def get_receives(self, address):
-    txlist = get_bitcoind_rpc().listtransactions("") # FIXME 10 transactions ...
+    txlist = get_bitcoind_rpc().listtransactions("", 900000000000000000)
     valid = lambda tx: tx["category"] == "receive" and tx["address"] == address
     asset = self.key
     def reformat(tx):
@@ -92,6 +99,7 @@ class BitcoinManager(AssetManager):
       address = output["destination"]
       txid = rpc.sendtoaddress(address, float(output["amount"]))
       log = PaymentLog()
+      log.chainheight = self.get_chain_height()
       log.address = address
       log.asset = self.key
       log.txid = txid

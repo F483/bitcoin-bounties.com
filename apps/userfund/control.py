@@ -36,9 +36,9 @@ def set_refund(user, bounty, address):
   userfund.refund_address = address
   userfund.save()
 
-def get_balance(user, bounty):
+def funded_bounty(user, bounty):
   userfund = get_object_or_none(UserFund, user=user, bounty=bounty)
   if userfund:
-    return userfund.balance
-  return Decimal("0.0")
+    return userfund.received > Decimal("0.0")
+  return False
 

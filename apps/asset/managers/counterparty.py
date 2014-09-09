@@ -70,7 +70,7 @@ class CounterpartyManager(BitcoinManager):
     return _sum_key(result, 'quantity', self.decimal_places)
 
   def get_transaction_fee_buffer(self):
-    return Decimal("0.0") # XXX requires tx fee in bitcoin!
+    return Decimal("0.0") # required in bitcoin see _findsourceaddress
 
   def get_received(self, address):
     result = counterpartyd_querry({
@@ -193,6 +193,7 @@ class CounterpartyManager(BitcoinManager):
         int(output["amount"] * 10 ** self.decimal_places)
       )
       log = PaymentLog()
+      log.chainheight = self.get_chain_height()
       log.address = output["destination"]
       log.asset = self.key
       log.txid = txid

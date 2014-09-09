@@ -12,6 +12,7 @@ from django.db.models import CharField
 from django.db.models import ManyToManyField
 from django.utils.translation import ugettext as _
 from apps.asset import control as asset_control
+from apps.common.utils.models import get_object_or_none
 from config import settings
 
 class UserFund(Model):
@@ -36,21 +37,50 @@ class UserFund(Model):
   )
 
   @property
-  def balance(self):
-    am = asset_control.get_manager(self.bounty.asset)
-    return am.get_balance(self.funding_address)
-
-  @property
   def received(self):
     """ Total funds received. """
     am = asset_control.get_manager(self.bounty.asset)
     return am.get_received(self.funding_address)
 
   @property
+  def unprocessedfunds(self):
+    am = asset_control.get_manager(self.bounty.asset)
+
+    # no refund for ongoing bounties
+    if self.bounty.state in ['PENDING', 'ACTIVE', 'MEDIATION']:
+      return Decimal("0.0")
+
+    # no refund for successful bounties not yet payed 
+    from apps.claim.models import Claim # avoid circular import
+    claim = get_object_or_none(Claim, bounty=self.bounty, successful=True)
+    if claim and not claim.payout:
+      return Decimal("0.0")
+
+    # everything <= minchainheight already processed
+    minchainheight = 0
+    if claim and claim.payout:
+      minchainheight = claim.payout.chainheight
+    for payment in self.refund_payments.all():
+      if payment.chainheight > minchainheight:
+        minchainheight = payment.chainheight
+
+    unprocessedtx = lambda tx: am.get_tx_height(tx['txid']) > minchainheight
+    txlist = filter(unprocessedtx, self.receive_transactions)
+    return Decimal(sum(map(lambda tx: tx["amount"], txlist)))
+
+  @property
+  def torefund(self):
+    am = asset_control.get_manager(self.bounty.asset)
+    total = self.unprocessedfunds
+    return total - am.quantize(total * self.bounty.fraction_fees)
+
+  @property
+  def has_min_refund_amount(self):
+    return self.torefund > Decimal("0.0") # FIXME get min from asset manager
+
+  @property
   def display_send_transactions(self):
-    return [] # FIXME return refund transactions
     txlist = []
-    rpc = bitcoin_control.get_rpc_access()
     for payment in self.refund_payments.all():
       tx = payment.transaction
       tx["user"] = self.user   # add user for use in templates
@@ -77,7 +107,7 @@ class UserFund(Model):
     from apps.asset.templatetags.asset_tags import render_asset
     return "User: %s - Bounty.id: %s - %s - %s" % (
       self.user.username, self.bounty.id, 
-      render_asset(self.balance, self.bounty.asset),
+      render_asset(self.received, self.bounty.asset),
       self.refund_address and self.refund_address or "NO_REFUND_ADDRESS"
     )
 

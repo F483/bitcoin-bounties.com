@@ -48,18 +48,26 @@
     {% endif %}
 
     {% if_can_fund user bounty %}
-      {% if userfund.balance %}
+      {% if userfund.received %}
         <tr>
-          <td>
-            {% trans "YOUR_FUNDS" %}
-            ({{ userfund.balance|div:bounty.received|render_percent }})
-          </td>
+          <td>{% trans "YOU_INVESTED" %}</td>
           <td style="text-align: right;">
-            {{ userfund.balance|render_asset:bounty.asset }}
+            {{ userfund.received|render_asset:bounty.asset }}
           </td>
         </tr>
       {% endif %}
     {% endif_can_fund %}
+
+    {% if userfund.torefund %}
+      <tr>
+        <td>
+          {% trans "TOREFUND" %}
+        </td>
+        <td style="text-align: right;">
+          {{ userfund.torefund|render_asset:bounty.asset }}
+        </td>
+      </tr>
+    {% endif %}
 
   </tbody>
 </table>

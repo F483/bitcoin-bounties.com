@@ -1,6 +1,6 @@
 {% load asset_tags %}
-You currently have {{ userfund.balance|render_asset:userfund.bounty.asset }} invested in the unsuccessful bounty "{{ userfund.bounty.title }}".
+You currently have {{ userfund.torefund|render_asset:userfund.bounty.asset }} invested in the unsuccessful bounty "{{ userfund.bounty.title }}".
 
-Please add a refund address so we can return your investment (minus fees).
+Please add a refund address so we can return your investment.
 
 http://{{ site.domain }}{{ userfund.bounty.url_funds }}

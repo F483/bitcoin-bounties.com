@@ -41,6 +41,12 @@ class AssetManager(object):
     balances = filter(lambda b: b[1] != Decimal("0.0"), balances)
     return sorted(balances, key=lambda b: b[1])
 
+  def get_chain_height(self):
+    raise NotImplementedError
+
+  def get_tx_height(self, txid):
+    raise NotImplementedError
+
   def get_balance(self, address):
     raise NotImplementedError
 

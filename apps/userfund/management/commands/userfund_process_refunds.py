@@ -8,9 +8,8 @@ from apps.userfund.models import UserFund
 from apps.userfund import signals
 from apps.bounty.models import Bounty
 from apps.claim.models import Claim
-from apps.bitcoin import control as bitcoin_control
-from config.settings import MIN_REFUND_AMOUNT
 from config.settings import STOP_CRONS_FILE
+from apps.asset import control as asset_control
 
 class Command(NoArgsCommand):
 
@@ -30,7 +29,7 @@ class Command(NoArgsCommand):
     userfunds = userfunds.exclude(bounty__in=successful_bounties)
 
     # exclude without funds
-    userfunds = filter(lambda uf: uf.balance > MIN_REFUND_AMOUNT, userfunds)
+    userfunds = filter(lambda uf: uf.has_min_refund_amount, userfunds)
 
     # email users with refunds but no refund address
     for userfund in filter(lambda uf: not bool(uf.refund_address), userfunds):
@@ -38,9 +37,16 @@ class Command(NoArgsCommand):
 
     # refund users
     for uf in filter(lambda uf: bool(uf.refund_address), userfunds):
-      log = bitcoin_control.makepayment([uf.account], uf.refund_address)
-      uf.refund_payments.add(log)
-      signals.refunded.send(sender=self.process_refunds, userfund=uf, payment=log)
+      outputs = [{"destination" : uf.refund_address, "amount" : uf.torefund}]
+      am = asset_control.get_manager(uf.bounty.asset)
+      log = am.send(outputs).get(uf.refund_address)
+      if log: # may not have sent if funds in wallet but not available
+        uf.refund_payments.add(log)
+        signals.refunded.send(
+          sender=self.process_refunds, 
+          userfund=uf, 
+          payment=log
+        )
 
   def handle_noargs(self, *args, **options):
     if os.path.isfile(STOP_CRONS_FILE):

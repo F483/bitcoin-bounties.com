@@ -18,7 +18,7 @@
               <p>
                 {% if userfund.refund_address %}
                   {% trans "YOUR_REFUND_ADDRESS" %}:
-                  {{ userfund.refund_address|render_address }}
+                  {{ userfund.refund_address|render_address_link:userfund.bounty.asset }}
                 {% else %}
                   {% trans "NO_REFUND_ADDRESS_SET" %}
                 {% endif %}

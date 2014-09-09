@@ -14,8 +14,7 @@ class Command(NoArgsCommand):
 
   def update_cashed_funds_received(self):
     for userfund in UserFund.objects.all():
-      am = asset_control.get_manager(userfund.bounty.asset)
-      userfund.cashed_funds_received = am.get_received(userfund.funding_address)
+      userfund.cashed_funds_received = userfund.received
       userfund.save()
 
   def handle_noargs(self, *args, **options):

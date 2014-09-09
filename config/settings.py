@@ -291,7 +291,6 @@ FEES =  Decimal("0.025") # %
 MIN_DEADLINE = 3 # days in the future
 MAX_DEADLINE = 365 # days in the future
 DEFAULT_DEADLINE = 150 # days in the future
-MIN_REFUND_AMOUNT = Decimal("0.005") # TODO make value based on FEES
 
 # bitcoind
 BITCOIND_RPC = "http://bitcoindrpc:rpcpassword@127.0.0.1:18332"

@@ -78,7 +78,7 @@ def can_change_address(user, claim):
 def can_accept(user, claim):
   if not user.is_authenticated():
     return False
-  if userfund_control.get_balance(user, claim.bounty) == Decimal("0.0"):
+  if userfund_control.funded_bounty(user, claim.bounty):
     return False # user did not fund bounty
   if claim.bounty.state not in ["ACTIVE", "MEDIATION"]:
     return False # invalid state
