@@ -45,7 +45,11 @@ class Command(NoArgsCommand):
         signals.refunded.send(
           sender=self.process_refunds, 
           userfund=uf, 
-          payment=log
+          payment={ # mock because counterpartyd can't get unconfirmed tx :(
+            "amount" : outputs[0]["amount"],
+            "address" : outputs[0]["destination"],
+            "asset" : uf.bounty.asset,
+          }, 
         )
 
   def handle_noargs(self, *args, **options):
