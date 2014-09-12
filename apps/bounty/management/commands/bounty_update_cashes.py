@@ -24,7 +24,7 @@ class Command(NoArgsCommand):
         bounty.save()
 
   def handle_noargs(self, *args, **options):
-    self.update_cashed_reward()
     if os.path.isfile(STOP_CRONS_FILE):
       raise CommandError('Stop crons flag is set!')
+    self.update_cashed_reward()
 

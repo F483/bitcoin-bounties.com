@@ -17,6 +17,9 @@ class PaymentLog(Model):
   txid = CharField(max_length=100)
   chainheight = IntegerField()
 
+  # METADATA
+  created_on = DateTimeField(auto_now_add=True)
+
   @property
   def transaction(self):
     from apps.asset import control
@@ -25,10 +28,16 @@ class PaymentLog(Model):
 
   @property
   def amount(self):
-    return self.transaction["amount"]
+    transaction = self.transaction
+    return transaction and transaction["amount"] or None
 
+  @property
+  def confirmations(self):
+    transaction = self.transaction
+    return transaction and transaction["confirmations"] or 0
+  
   def __unicode__(self):
-    return "asset: %s, amount: %s, address: %s, txid: %s" % (
-      self.asset, self.amount, self.address, self.txid
+    return "asset: %s, amount: %s, address: %s, confirmations: %s, txid: %s" % (
+      self.asset, self.amount, self.address, self.confirmations, self.txid
     )
 

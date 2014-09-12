@@ -23,7 +23,7 @@ class UserFund(Model):
   refund_address = CharField(max_length=100, blank=True)
   refund_payments = ManyToManyField(
     'asset.PaymentLog',
-    related_name="userfunds",
+    related_name="refunds",
     null=True, blank=True
   )
 

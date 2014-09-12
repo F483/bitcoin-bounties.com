@@ -5,6 +5,7 @@
 import json
 import requests
 import bitcoinaddress
+from apps.common.utils.misc import chunks
 from decimal import Decimal
 from requests.auth import HTTPBasicAuth
 from bitcoinrpc.authproxy import AuthServiceProxy
@@ -95,16 +96,19 @@ class BitcoinManager(AssetManager):
       signals.insufficent_hot_funds.send(sender=self.send, asset=self.key)
       raise Exception("INSUFFICIENT FUNDS IN HOT WALLET")
     logs = {}
-    for output in outputs: # TODO batch send instead
-      address = output["destination"]
-      txid = rpc.sendtoaddress(address, float(output["amount"]))
-      log = PaymentLog()
-      log.chainheight = self.get_chain_height()
-      log.address = address
-      log.asset = self.key
-      log.txid = txid
-      log.save()
-      logs[address] = log
+    max_outputs = 20
+    for chunk in list(chunks(outputs, max_outputs)):
+      dests = dict(map(lambda o: (o["destination"], float(o["amount"])), chunk))
+      txid = rpc.sendmany("", dests)
+      for output in chunk:
+        address = output["destination"]
+        log = PaymentLog()
+        log.chainheight = self.get_chain_height()
+        log.address = address
+        log.asset = self.key
+        log.txid = txid
+        log.save()
+        logs[address] = log
     return logs
 
   def get_qrcode_address_data(self, address):

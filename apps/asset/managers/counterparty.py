@@ -23,6 +23,11 @@ def counterpartyd_querry(payload):
   )
   return response.json()
 
+def get_asset_names():
+    return (counterpartyd_querry({
+      "method": "get_asset_names", "jsonrpc": "2.0", "id": 0,
+    })['result'] + [u'XCP'])
+
 def _sum_key(dictonary, key, move_decimal=0):
   value = sum(map(lambda x: Decimal(x[key]), dictonary))
   value = value / (Decimal("10.0") ** move_decimal)
@@ -33,9 +38,7 @@ class CounterpartyManager(BitcoinManager):
   def __init__(self, key=None, label=None):
     assert(key)
     assert(label)
-    counterparty_assets = (counterpartyd_querry({
-      "method": "get_asset_names", "jsonrpc": "2.0", "id": 0,
-    })['result'] + [u'XCP'])
+    counterparty_assets = get_asset_names()
     assert(key in counterparty_assets)
 
     # get decimal_places
@@ -178,6 +181,16 @@ class CounterpartyManager(BitcoinManager):
     })["result"]
     return txid
 
+  def counterpartysend(self, source, destination, quantity):
+    txid = self._send(source, destination, quantity)
+    log = PaymentLog()
+    log.chainheight = self.get_chain_height()
+    log.address = destination
+    log.asset = self.key
+    log.txid = txid
+    log.save()
+    return log
+
   def send(self, outputs):
     outputs = sorted(outputs, key=lambda o: o["amount"])
     # check if enough funds in hot wallet
@@ -187,17 +200,11 @@ class CounterpartyManager(BitcoinManager):
     outputs = self._findsourceaddresses(outputs)
     logs = {}
     for output in outputs:
-      txid = self._send(
+      log = self.counterpartysend(
         output["source"], 
         output["destination"], 
         int(output["amount"] * 10 ** self.decimal_places)
       )
-      log = PaymentLog()
-      log.chainheight = self.get_chain_height()
-      log.address = output["destination"]
-      log.asset = self.key
-      log.txid = txid
-      log.save()
       logs[output["destination"]] = log
     return logs
 

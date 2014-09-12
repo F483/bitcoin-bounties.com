@@ -1,2 +1,2 @@
 {% load asset_tags %}
-Refund of {{ payment.amount|render_asset:payment.asset }} for unsuccessful bounty: {{ userfund.bounty.title }}
+Refund of {{ payment.amount|render_asset:payment.asset }} for bounty: {{ userfund.bounty.title }}

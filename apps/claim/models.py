@@ -18,7 +18,9 @@ class Claim(Model):
   description = TextField()
   address = CharField(max_length=100) # address for receiving reward
   successful = BooleanField(default=False)
-  payout = ForeignKey("asset.PaymentLog", null=True, blank=True)
+  payout = ForeignKey(
+    "asset.PaymentLog", null=True, blank=True, related_name="payouts"
+  )
 
   # MANY TO MANY
   comments = ManyToManyField(
