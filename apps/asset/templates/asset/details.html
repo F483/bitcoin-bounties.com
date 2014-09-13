@@ -1,7 +1,7 @@
 {% extends "site/base.html" %}
 {% load i18n %}
 {% load common_tags %}
-{% load bitcoin_tags %}
+{% load asset_tags %}
 
 {% block content %}
   <div class="container"> 
@@ -19,7 +19,7 @@
               <tr>
                 <td>{% trans "TOTAL" %}</td>
                 <td style="text-align: right;">
-                  {{ funds_total|render_btc }}
+                  {{ funds_total|render_asset:asset }}
                 </td>
               </tr>
 
@@ -30,7 +30,7 @@
                   ({{ fraction_hot|render_percent }})
                 </td>
                 <td style="text-align: right;">
-                  {{ funds_hot|render_btc }}
+                  {{ funds_hot|render_asset:asset }}
                 </td>
               </tr>
               <tr class="danger">
@@ -50,7 +50,7 @@
                   ({{ fraction_cold|render_percent }})
                 </td>
                 <td style="text-align: right;">
-                  {{ funds_cold|render_btc }}
+                  {{ funds_cold|render_asset:asset }}
                 </td>
               </tr>
               <tr class="info">
@@ -74,7 +74,7 @@
               <tr>
                 <td>{% trans "TOTAL" %}</td>
                 <td style="text-align: right;">
-                  {{ funds_total|render_btc }}
+                  {{ funds_total|render_asset:asset }}
                 </td>
               </tr>
 
@@ -85,7 +85,7 @@
                   ({{ fraction_bound_userfunds|render_percent }})
                 </td>
                 <td style="text-align: right;">
-                  {{ funds_bound_userfunds|render_btc }}
+                  {{ funds_bound_userfunds|render_asset:asset }}
                 </td>
               </tr>
               <tr class="info">
@@ -114,7 +114,7 @@
                   ({{ fraction_uncollected_fees|render_percent }})
                 </td>
                 <td style="text-align: right;">
-                  {{ funds_uncollected_fees|render_btc }}
+                  {{ funds_uncollected_fees|render_asset:asset }}
                 </td>
               </tr>
               <tr class="success">
@@ -143,7 +143,7 @@
                   ({{ fraction_company|render_percent }})
                 </td>
                 <td style="text-align: right;">
-                  {{ funds_company|render_btc }}
+                  {{ funds_company|render_asset:asset }}
                 </td>
               </tr>
               <tr class="success">
@@ -169,7 +169,7 @@
                style="text-align: center;"> 
             <p>&nbsp;</p>
             <button type="button" class="btn btn-danger btn-lg"
-                    onclick="window.location.href = '/bitcoin/emergencystop';">
+                    onclick="window.location.href = '/asset/emergencystop';">
               {% trans "EMERGENCY_STOP" %}
             </button>
             <p>&nbsp;</p>
@@ -181,11 +181,14 @@
           <h4>{% trans "COLD_STORAGE" %}</h4>
 
           {% if user.is_superuser %}
-            {% with "btn btn-warning" as c %}
-              {% render_button _("ADD_WALLET") "/bitcoin/coldstorage/add" c %}
-              {% render_button _("SEND_FUNDS") "/bitcoin/coldstorage/send" c %}
-              {% render_button _("IMPORT_WALLET") "/bitcoin/coldstorage/import" c %}
-            {% endwith %}
+            {% url "asset_coldstorage_add" asset.lower as addurl %}
+            {% render_button _("ADD_WALLET") addurl "btn btn-warning" %}
+
+            {% url "asset_coldstorage_send" asset.lower as sendurl %}
+            {% render_button _("SEND_FUNDS") sendurl "btn btn-warning" %}
+
+            {% url "asset_coldstorage_import" asset.lower as importurl %}
+            {% render_button _("IMPORT_WALLET") importurl "btn btn-warning" %}
           {% endif %}
 
           <table class="table table-striped table-hover ">
@@ -198,8 +201,8 @@
             <tbody>
               {% for wallet in coldstorages %}
               <tr>
-                <td>{{ wallet.address|render_address_link }}</td>
-                <td>{{ wallet.received|render_btc }}</td>
+                <td>{{ wallet.address|render_address_link:asset }}</td>
+                <td>{{ wallet.received|render_asset:asset }}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -211,6 +214,3 @@
   </div>
 
 {% endblock %}
-
-
-

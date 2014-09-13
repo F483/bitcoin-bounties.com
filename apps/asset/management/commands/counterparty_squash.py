@@ -78,8 +78,9 @@ class Command(NoArgsCommand):
     for balancespart in parts(balances, squashto):
       if len(balancespart) < 2:
         continue
-      dest = balancespart[0]["address"]
-      for balance in balancespart[1:]:
+      # always a new address to keep user funding unambiguous
+      dest = am.new_address()
+      for balance in balancespart:
         print "SQUASH: %s %s @ %s > %s" % (
             balance["amount"], asset, balance["address"], dest
         )

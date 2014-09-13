@@ -294,9 +294,6 @@ DEFAULT_DEADLINE = 150 # days in the future
 
 # bitcoind
 BITCOIND_RPC = "http://bitcoindrpc:rpcpassword@127.0.0.1:18332"
-ACCOUNT_PREFIX = "BITCOIN_BOUNTIES_DEVELOPMENT"
-ACCOUNT_MAIN = "%s_Main" % ACCOUNT_PREFIX
-ACCOUNT_COLDSTORAGE = "%s_ColdStorage" % ACCOUNT_PREFIX
 
 # counterpartyd
 COUNTERPARTYD_URL = "http://127.0.0.1:14000/api/"

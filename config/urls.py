@@ -20,6 +20,7 @@ urlpatterns = patterns('',
   # bitcoin bounties urls
   url(r"^$", 'apps.bounty.views.list_active'),
   url(r"^", include("apps.site.urls")),
+  url(r"^asset/", include("apps.asset.urls")),
   url(r"^bounty/", include("apps.bounty.urls")),
   url(r"^comment/", include("apps.comment.urls")),
   url(r"^userfund/", include("apps.userfund.urls")),

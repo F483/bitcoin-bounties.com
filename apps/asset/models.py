@@ -8,6 +8,8 @@ from django.db.models import DateTimeField
 from django.db.models import DecimalField
 from django.db.models import CharField
 from django.db.models import IntegerField
+from django.db.models import ManyToManyField
+from django.db.models import ForeignKey
 from django.utils.translation import ugettext as _
 
 class PaymentLog(Model):
@@ -40,4 +42,45 @@ class PaymentLog(Model):
     return "asset: %s, amount: %s, address: %s, confirmations: %s, txid: %s" % (
       self.asset, self.amount, self.address, self.confirmations, self.txid
     )
+
+class ColdStorage(Model):
+
+  asset = CharField(max_length=100)
+  address = CharField(max_length=100, unique=True)
+  payments = ManyToManyField(
+    'asset.PaymentLog',
+    related_name="coldstorage_payments",
+    null=True, blank=True
+  )
+
+  # METADATA
+  created_on = DateTimeField(auto_now_add=True)
+  created_by = ForeignKey('auth.User', related_name="coldstorages_created")
+  updated_on = DateTimeField(auto_now=True)
+  updated_by = ForeignKey("auth.User", related_name="coldstorages_updated")
+
+  @property
+  def imported(self):
+    # TODO check if private_key in wallet
+    return False
+
+  @property
+  def amount(self):
+    # TODO return amount at address
+    return Decimal("0.0")
+
+  def __unicode__(self):
+    from apps.bitcoin.templatetags.bitcoin_tags import render_bitcoin
+    return "%s %s (%s)" % (
+      self.address, 
+      render_bitcoin(self.received),
+      self.imported and _("IMPORTED") or _("COLD")
+    )
+
+  @property
+  def received(self):
+    total = Decimal("0.0")
+    for payment in self.payments.all():
+      total = total + payment.amount
+    return total
 

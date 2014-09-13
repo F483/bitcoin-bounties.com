@@ -1,0 +1,117 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% load common_tags %}
+{% load asset_tags %}
+
+{% block content %}
+  <div class="container"> 
+
+    {% for chunk in asset_chunks %}
+      <div class="row">
+
+        {% for asset in chunk %}
+          <div class="col-sm-6">
+            <div class="well">
+
+              <h4>
+                {% url 'asset_details' asset.asset.lower as detailsurl %}
+                <a href="{{ detailsurl }}">
+                  {{ asset.label }}
+                </a>
+              </h4>
+
+              <table class="table table-striped table-hover ">
+                <tbody>
+
+                  {##### TOTAL FUNDS #####}
+                  <tr>
+                    <td>{% trans "TOTAL" %}</td>
+                    <td style="text-align: right;">
+                      {{ asset.funds_total|render_asset:asset.asset }}
+                    </td>
+                  </tr>
+
+                  {##### HOT FUNDS #####}
+                  <tr class="danger">
+                    <td>
+                      {% trans "HOT_WALLET" %} 
+                      ({{ asset.funds_hot_fraction|render_percent }})
+                    </td>
+                    <td style="text-align: right;">
+                      {{ asset.funds_hot|render_asset:asset.asset }}
+                    </td>
+                  </tr>
+
+                  {##### COLD FUNDS #####}
+                  <tr class="info">
+                    <td>
+                      {% trans "COLD_STORAGE" %}
+                      ({{ asset.funds_cold_fraction|render_percent }})
+                    </td>
+                    <td style="text-align: right;">
+                      {{ asset.funds_cold|render_asset:asset.asset }}
+                    </td>
+                  </tr>
+
+                  {##### HOT / COLD DISTRIBUTION #####}
+                  <tr>
+                    <td colspan="2">
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-danger"
+                             style="width: {{ asset.funds_hot_fraction|render_percent }}">
+                        </div>
+                        <div class="progress-bar progress-bar-info"
+                             style="width: {{ asset.funds_cold_fraction|render_percent }}">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {##### USER FUNDS #####}
+                  <tr class="warning">
+                    <td>
+                      {% trans "USER_FUNDS" %} 
+                      ({{ asset.funds_users_fraction|render_percent }})
+                    </td>
+                    <td style="text-align: right;">
+                      {{ asset.funds_users|render_asset:asset.asset }}
+                    </td>
+                  </tr>
+
+                  {##### COMPANY FUNDS #####}
+                  <tr class="success">
+                    <td>
+                      {% trans "COMPANY_FUNDS" %}
+                      ({{ asset.funds_company_fraction|render_percent }})
+                    </td>
+                    <td style="text-align: right;">
+                      {{ asset.funds_company|render_asset:asset.asset }}
+                    </td>
+                  </tr>
+
+                  {##### USER / COMPANY DISTRIBUTION #####}
+                  <tr>
+                    <td colspan="2">
+                      <div class="progress">
+                        <div class="progress-bar progress-bar-warning"
+                             style="width: {{ asset.funds_users_fraction|render_percent }}">
+                        </div>
+                        <div class="progress-bar progress-bar-success"
+                             style="width: {{ asset.funds_company_fraction|render_percent }}">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    {% endfor %}
+    
+  </div>
+{% endblock %}

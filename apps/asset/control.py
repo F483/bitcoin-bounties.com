@@ -9,7 +9,9 @@ from decimal import Decimal, ROUND_DOWN
 from requests.auth import HTTPBasicAuth
 from bitcoinrpc.authproxy import AuthServiceProxy
 from config import settings
-from apps.asset.models import PaymentLog
+from apps.common.utils.misc import chunks, fraction
+from apps.userfund.models import UserFund
+from apps.asset.models import PaymentLog, ColdStorage
 from apps.asset.managers.bitcoin import BitcoinManager
 from apps.asset.managers.counterparty import CounterpartyManager
 from apps.asset.managers.counterparty import counterpartyd_querry
@@ -45,4 +47,45 @@ def get_manager(asset):
 def get_choices():
   choices = map(lambda item: (item[0], item[1].label), ASSETS.items())
   return sorted(choices, key=lambda c: c[1])
+
+def details(asset):
+  am = get_manager(asset)
+
+  # coldstorages
+  coldstorages = ColdStorage.objects.filter(asset=asset)
+  coldstorages = filter(lambda cs: cs.imported == False, coldstorages)
+
+  # userfunds
+  #userfunds = UserFund.objects.select_related('bounty') # join bounty
+  #userfunds = userfunds.only('id','bounty__state') # fields
+  userfunds = UserFund.objects.all()#filter('bounty__asset'=asset)
+  
+  # funds
+  funds_hot = am.get_wallet_balance()
+  funds_cold = Decimal(sum(map(lambda cs: cs.amount, coldstorages)))
+  funds_total = funds_hot + funds_cold
+  funds_users = Decimal(sum(map(lambda uf: uf.bound_funds, userfunds)))
+  funds_company = funds_total - funds_users
+
+  result = {
+    "asset" : asset,
+    "label" : am.label,
+    "funds_hot" : funds_hot,
+    "funds_cold" : funds_cold,
+    "funds_users" : funds_users,
+    "funds_company" : funds_company,
+    "funds_hot_fraction" : fraction(funds_hot, funds_total),
+    "funds_cold_fraction" : fraction(funds_cold, funds_total),
+    "funds_users_fraction" : fraction(funds_users, funds_total),
+    "funds_company_fraction" : fraction(funds_company, funds_total),
+    "funds_total" : funds_total,
+    "coldstorages" : coldstorages,
+  }
+  return result
+
+def overview():
+  assets = map(lambda a: details(a[0]), ASSETS.items())
+  assets = sorted(assets, key=lambda a: a["label"])
+  assets = filter(lambda a: a["funds_total"] > Decimal("0.0"), assets)
+  return chunks(assets, 2)
 
