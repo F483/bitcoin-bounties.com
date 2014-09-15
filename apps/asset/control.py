@@ -48,6 +48,11 @@ def get_choices():
   choices = map(lambda item: (item[0], item[1].label), ASSETS.items())
   return sorted(choices, key=lambda c: c[1])
 
+def get_hotwallet(asset):
+  am = get_manager(asset)
+  balances = am.get_address_balances()
+  return map(lambda b: { "address" : b[0], "amount" : b[1] }, balances)
+
 def details(asset):
   am = get_manager(asset)
 
@@ -56,9 +61,8 @@ def details(asset):
   coldstorages = filter(lambda cs: cs.imported == False, coldstorages)
 
   # userfunds
-  #userfunds = UserFund.objects.select_related('bounty') # join bounty
-  #userfunds = userfunds.only('id','bounty__state') # fields
-  userfunds = UserFund.objects.all()#filter('bounty__asset'=asset)
+  userfunds = UserFund.objects.select_related('bounty') # join bounty
+  userfunds = userfunds.filter(bounty__asset=asset)
   
   # funds
   funds_hot = am.get_wallet_balance()
@@ -67,9 +71,6 @@ def details(asset):
   funds_users = Decimal(sum(map(lambda uf: uf.bound_funds, userfunds)))
   funds_company = funds_total - funds_users
 
-  # hotwallets
-  balances = am.get_address_balances()
-  hotwallet = map(lambda b: { "address" : b[0], "amount" : b[1] }, balances)
 
   result = {
     "asset" : asset,
@@ -84,7 +85,6 @@ def details(asset):
     "funds_company_fraction" : fraction(funds_company, funds_total),
     "funds_total" : funds_total,
     "coldstorages" : coldstorages,
-    "hotwallet" : hotwallet,
   }
   return result
 

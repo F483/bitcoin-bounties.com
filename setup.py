@@ -32,6 +32,7 @@ setup(
     'Fuzzy',
     'python-bitcoinrpc',
     'python-bitcoinaddress',
+    'django-debug-toolbar',
     'django-rosetta',
     'django-bootstrap-form',
     'django-pagination',

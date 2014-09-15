@@ -4,12 +4,7 @@
 
 <div class="well">
 
-  <h4>
-    {% url 'asset_details' asset.asset.lower as detailsurl %}
-    <a href="{{ detailsurl }}">
-      {{ asset.label }}
-    </a>
-  </h4>
+  <h4>{{ asset.label }}</h4>
 
   <table class="table table-striped table-hover ">
     <tbody>
@@ -95,5 +90,13 @@
       </tr>
     </tbody>
   </table>
+
+  {% url 'asset_coldstorage_view' asset.asset.lower as coldstorageurl %}
+  {% render_button _("COLDSTORAGE") coldstorageurl "btn btn-primary" %}
+
+  {% if user.is_superuser %}
+    {% url 'asset_hotwallet_view' asset.asset.lower as hotwalleturl %}
+    {% render_button _("HOT_WALLET") hotwalleturl "btn btn-primary" %}
+  {% endif %}
 
 </div>

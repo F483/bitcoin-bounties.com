@@ -19,9 +19,14 @@ urlpatterns = patterns('apps.asset.views',
     name="asset_emergencystop",
   ),
   url(
-    r'^%s/details$' % A,             
-    'details',
-    name="asset_details",
+    r'^%s/hotwallet/view$' % A,             
+    'hotwallet_view',
+    name="asset_hotwallet_view",
+  ),
+  url(
+    r'^%s/coldstorage/view$' % A,             
+    'coldstorage_view',
+    name="asset_coldstorage_view",
   ),
   url(
     r'^%s/coldstorage/add$' % A,    

@@ -56,7 +56,19 @@ class CounterpartyManager(BitcoinManager):
     return super(BitcoinManager, self).get_receive(address, txid)
 
   def get_wallet_balance(self):
-    return super(BitcoinManager, self).get_wallet_balance()
+    result = counterpartyd_querry({
+      "method": "get_balances",
+      "params": {
+        "filters": [
+          {'field': 'asset', 'op': '==', 'value': self.key},
+        ]
+      },
+      "jsonrpc": "2.0",
+      "id": 0,
+    })['result']
+    addresses = self.get_wallet_addresses()
+    result = filter(lambda x: x["address"] in addresses, result)
+    return _sum_key(result, 'quantity', self.decimal_places)
 
   def get_balance(self, address):
     result = counterpartyd_querry({

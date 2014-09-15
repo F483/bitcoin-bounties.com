@@ -3,6 +3,7 @@
 # License: MIT (see LICENSE.TXT file)
 
 from decimal import Decimal
+from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
@@ -18,32 +19,44 @@ def overview(request):
   return render_response(request, 'asset/overview.html', args)
 
 @require_http_methods(['GET'])
-def details(request, asset):
+def coldstorage_view(request, asset):
   asset = asset.upper()
   args = { "asset" : control.details(asset) }
-  return render_response(request, 'asset/details.html', args)
+  return render_response(request, 'asset/coldstorage.html', args)
+
+@require_http_methods(['GET'])
+def hotwallet_view(request, asset):
+  if not request.user.is_superuser:
+    raise PermissionDenied
+  asset = asset.upper()
+  args = {
+      "asset" : control.details(asset),
+      "wallet" : control.get_hotwallet(asset)
+  }
+  return render_response(request, 'asset/hotwallet.html', args)
 
 @login_required
 @require_http_methods(['GET', 'POST'])
 def coldstorage_add(request, asset):
   if not request.user.is_superuser:
     raise PermissionDenied
+  cancel_url = reverse('asset_coldstorage_view', args=(asset,))
   asset = asset.upper()
   if request.method == "POST":
     form = forms.ColdStorageAdd(request.POST, asset=asset)
     if form.is_valid():
       control.cold_storage_add(
-        request.user, 
+        request.user,
         asset,
         form.cleaned_data["address"].strip()
       )
-      return HttpResponseRedirect("/asset/%s/details" % asset.lower())
+      return HttpResponseRedirect(cancel_url)
   else:
     form = forms.ColdStorageAdd(asset=asset)
   args = {
-    "form" : form, 
+    "form" : form,
     "form_title" : _("ADD_COLD_STORAGE_WALLET"),
-    "cancel_url" : "/asset/%s/details" % asset.lower(),
+    "cancel_url" : cancel_url,
   }
   return render_response(request, 'site/form.html', args)
 
@@ -52,18 +65,19 @@ def coldstorage_add(request, asset):
 def coldstorage_send(request, asset):
   if not request.user.is_superuser:
     raise PermissionDenied
+  cancel_url = reverse('asset_coldstorage_view', args=(asset,))
   asset = asset.upper()
   if request.method == "POST":
     form = forms.ColdStorageSend(request.POST, asset=asset)
     if form.is_valid():
       control.cold_storage_send(asset, form.cleaned_data["amount"])
-      return HttpResponseRedirect("/asset/%s/details" % asset.lower())
+      return HttpResponseRedirect(cancel_url)
   else:
     form = forms.ColdStorageSend(asset=asset)
   args = {
-    "form" : form, 
+    "form" : form,
     "form_title" : _("SEND_FUNDS_TO_COLD_STORAGE_WALLET"),
-    "cancel_url" : "/asset/%s/details" % asset.lower(),
+    "cancel_url" : cancel_url,
   }
   return render_response(request, 'site/form.html', args)
 
@@ -72,18 +86,19 @@ def coldstorage_send(request, asset):
 def coldstorage_import(request, asset):
   if not request.user.is_superuser:
     raise PermissionDenied
+  cancel_url = reverse('asset_coldstorage_view', args=(asset,))
   asset = asset.upper()
   if request.method == "POST":
     form = forms.ColdStorageImport(request.POST)
     if form.is_valid():
       control.cold_storage_import(asset, form.cleaned_data["private_key"])
-      return HttpResponseRedirect("/asset/%s/details" % asset.lower())
+      return HttpResponseRedirect(cancel_url)
   else:
     form = forms.ColdStorageImport()
   args = {
-    "form" : form, 
+    "form" : form,
     "form_title" : _("IMPORT_COLD_STORAGE_WALLET"),
-    "cancel_url" : "/asset/%s/details" % asset.lower(),
+    "cancel_url" : cancel_url,
   }
   return render_response(request, 'site/form.html', args)
 
@@ -93,7 +108,7 @@ def coldstorage_import(request, asset):
 @login_required
 @require_http_methods(['GET'])
 def emergencystop(request):
-  """ 
+  """
   TODO require confirm and emergencystop on POST instead
   if not request.user.is_superuser:
     raise PermissionDenied

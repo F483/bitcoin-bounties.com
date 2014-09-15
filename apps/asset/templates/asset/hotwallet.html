@@ -1,0 +1,27 @@
+{% extends "site/base.html" %}
+{% load i18n %}
+{% load common_tags %}
+{% load asset_tags %}
+
+{% block content %}
+  <div class="container"> 
+    <div class="row">
+
+      <div class="col-sm-6">
+        {% include "asset/preview.html" %}
+      </div>
+
+      <div class="col-sm-6">
+
+        <div class="well">
+
+          <h4>{% trans "HOT_WALLET" %}</h4>
+
+          {% include "asset/wallet.html" %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

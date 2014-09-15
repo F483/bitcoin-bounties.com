@@ -9,14 +9,6 @@
 
       <div class="col-sm-6">
         {% include "asset/preview.html" %}
-
-        <div class="well">
-
-          <h4>{% trans "HOT_WALLET" %}</h4>
-          {% with asset.hotwallet as wallet %}
-            {% include "asset/wallet.html" %}
-          {% endwith %}
-        </div>
       </div>
 
       <div class="col-sm-6">
