@@ -119,4 +119,7 @@ def cold_storage_send(asset, amount):
 
   return coldstorage
 
+def cold_storage_import(asset, private_key):
+  am = get_manager(asset)
+  am.import_private_key(private_key)
 

@@ -47,6 +47,9 @@ class AssetManager(object):
   def get_private_key(self, address):
     raise NotImplementedError
 
+  def import_private_key(self, private_key):
+    raise NotImplementedError
+
   def get_chain_height(self):
     raise NotImplementedError
 

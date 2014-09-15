@@ -40,9 +40,9 @@ class ColdStorageSend(Form):
     am = control.get_manager(self.asset)
     amount = am.quantize(self.cleaned_data["amount"])
 
-    # FIXME check max amount
-    #if amount > rpc.getbalance():
-    #  raise ValidationError(_("INSUFFICIENT_HOT_FUNDS"))
+    # check max amount
+    if amount > am.get_wallet_balance():
+      raise ValidationError(_("INSUFFICIENT_HOT_FUNDS"))
 
     # cold storage wallet exists
     coldstorages = ColdStorage.objects.filter(asset=self.asset)
@@ -56,5 +56,4 @@ class ColdStorageImport(Form):
 
   private_key = CharField(label=_("PRIVATE_KEY"))
 
-  # TODO check if private_key was previously imported
 

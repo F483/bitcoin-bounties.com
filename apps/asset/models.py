@@ -56,8 +56,6 @@ class ColdStorage(Model):
   # METADATA
   created_on = DateTimeField(auto_now_add=True)
   created_by = ForeignKey('auth.User', related_name="coldstorages_created")
-  updated_on = DateTimeField(auto_now=True)
-  updated_by = ForeignKey("auth.User", related_name="coldstorages_updated")
 
   @property
   def imported(self):
