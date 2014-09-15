@@ -56,8 +56,8 @@ class BitcoinManager(AssetManager):
 
   def get_receive(self, address, txid):
     tx = get_bitcoind_rpc().gettransaction(txid)
-    valid = lambda d: d['category'] == "receive" and d['address'] == address
-    amount = filter(valid, tx["details"])[0]["amount"]
+    details = filter(lambda d: d['address'] == address, tx["details"])
+    amount = abs(details and details[0]["amount"] or Decimal("0.0"))
     return {
       "txid" : tx['txid'], 
       "address" : address,
@@ -125,4 +125,10 @@ class BitcoinManager(AssetManager):
   def get_transaction_link(self, txid):
     # TODO testnet "http://tbtc.blockr.io/tx/info/%s" % txid
     return "https://blockchain.info/tx/%s" % txid
+
+  def get_private_key(self, address):
+    try:
+        return get_bitcoind_rpc().dumpprivkey(address)
+    except:
+        return None
 

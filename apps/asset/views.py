@@ -50,7 +50,22 @@ def coldstorage_add(request, asset):
 @login_required
 @require_http_methods(['GET', 'POST'])
 def coldstorage_send(request, asset):
-  pass
+  asset = asset.upper()
+  if not request.user.is_superuser:
+    raise PermissionDenied
+  if request.method == "POST":
+    form = forms.ColdStorageSend(request.POST, asset=asset)
+    if form.is_valid():
+      control.cold_storage_send(asset, form.cleaned_data["amount"])
+      return HttpResponseRedirect("/asset/%s/details" % asset.lower())
+  else:
+    form = forms.ColdStorageSend(asset=asset)
+  args = {
+    "form" : form, 
+    "form_title" : _("SEND_FUNDS_TO_COLD_STORAGE_WALLET"),
+    "cancel_url" : "/asset/%s/details" % asset.lower(),
+  }
+  return render_response(request, 'site/form.html', args)
 
 @login_required
 @require_http_methods(['GET', 'POST'])
@@ -73,27 +88,6 @@ def emergencystop(request):
     raise PermissionDenied
   control.emergencystop()
   return render_response(request, 'bitcoin/emergencystop.html', {})
-  """
-
-@login_required
-@require_http_methods(['GET', 'POST'])
-def cold_storage_send(request, asset):
-  """
-  if not request.user.is_superuser:
-    raise PermissionDenied
-  if request.method == "POST":
-    form = forms.ColdStorageSend(request.POST)
-    if form.is_valid():
-      control.cold_storage_send(form.cleaned_data["amount"])
-      return HttpResponseRedirect("/bitcoin/funds")
-  else:
-    form = forms.ColdStorageSend()
-  args = {
-    "form" : form, 
-    "form_title" : _("SEND_FUNDS_TO_COLD_STORAGE_WALLET"),
-    "cancel_url" : "/bitcoin/funds",
-  }
-  return render_response(request, 'site/form.html', args)
   """
 
 @login_required

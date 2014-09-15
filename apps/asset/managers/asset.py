@@ -41,6 +41,12 @@ class AssetManager(object):
     balances = filter(lambda b: b[1] != Decimal("0.0"), balances)
     return sorted(balances, key=lambda b: b[1])
 
+  def address_in_wallet(self, address):
+    return bool(self.get_private_key(address))
+
+  def get_private_key(self, address):
+    raise NotImplementedError
+
   def get_chain_height(self):
     raise NotImplementedError
 

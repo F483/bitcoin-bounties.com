@@ -9,7 +9,14 @@
 
       <div class="col-sm-6">
         {% include "asset/preview.html" %}
-        {# TODO show hot { address : balance } list #}
+
+        <div class="well">
+
+          <h4>{% trans "HOT_WALLET" %}</h4>
+          {% with asset.hotwallet as wallet %}
+            {% include "asset/wallet.html" %}
+          {% endwith %}
+        </div>
       </div>
 
       <div class="col-sm-6">
@@ -29,22 +36,9 @@
             {% render_button _("IMPORT_WALLET") importurl "btn btn-warning" %}
           {% endif %}
 
-          <table class="table table-striped table-hover ">
-            <thead>
-              <tr>
-                <th>{% trans "ADDRESS" %}</th>
-                <th>{% trans "RECEIVED" %}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for wallet in asset.coldstorages %}
-                <tr>
-                  <td>{{ wallet.address|render_address_link:asset.asset }}</td>
-                  <td>{{ wallet.received|render_asset:asset.asset }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          {% with asset.coldstorages as wallet %}
+            {% include "asset/wallet.html" %}
+          {% endwith %}
         </div>
       </div>
 

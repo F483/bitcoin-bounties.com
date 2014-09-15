@@ -27,18 +27,27 @@ class ColdStorageAdd(Form):
 
 class ColdStorageSend(Form):
 
-  amount = DecimalField(label=_("AMOUNT_BTC"), decimal_places=8)
+  amount = DecimalField(label=_("AMOUNT"))
+
+  def __init__(self, *args, **kwargs):
+    self.asset = kwargs.pop("asset")
+    am = control.get_manager(self.asset)
+    super(ColdStorageSend, self).__init__(*args, **kwargs)
+    self.fields["amount"].initial = 0.0
+    self.fields["amount"].decimal_places = am.decimal_places 
 
   def clean_amount(self):
-    amount = self.cleaned_data["amount"]
-    amount = control.quantize_satoshi(amount)
-    
-    rpc = control.get_rpc_access()
-    if amount > rpc.getbalance():
-      raise ValidationError(_("INSUFFICIENT_HOT_FUNDS"))
+    am = control.get_manager(self.asset)
+    amount = am.quantize(self.cleaned_data["amount"])
+
+    # FIXME check max amount
+    #if amount > rpc.getbalance():
+    #  raise ValidationError(_("INSUFFICIENT_HOT_FUNDS"))
 
     # cold storage wallet exists
-    if ColdStorage.objects.filter(imported="").count() == 0:
+    coldstorages = ColdStorage.objects.filter(asset=self.asset)
+    coldstorages = filter(lambda cs: cs.imported == False, coldstorages)
+    if len(coldstorages) == 0:
       raise ValidationError(_("ERROR_NO_COLD_STORAGE"))
 
     return amount

@@ -67,6 +67,10 @@ def details(asset):
   funds_users = Decimal(sum(map(lambda uf: uf.bound_funds, userfunds)))
   funds_company = funds_total - funds_users
 
+  # hotwallets
+  balances = am.get_address_balances()
+  hotwallet = map(lambda b: { "address" : b[0], "amount" : b[1] }, balances)
+
   result = {
     "asset" : asset,
     "label" : am.label,
@@ -80,6 +84,7 @@ def details(asset):
     "funds_company_fraction" : fraction(funds_company, funds_total),
     "funds_total" : funds_total,
     "coldstorages" : coldstorages,
+    "hotwallet" : hotwallet,
   }
   return result
 
@@ -97,4 +102,21 @@ def cold_storage_add(user, asset, address):
   cs.updated_by = user
   cs.save()
   return cs
+
+def cold_storage_send(asset, amount):
+  am = get_manager(asset)
+
+  # get cold storage
+  coldstorages = ColdStorage.objects.filter(asset=asset)
+  coldstorages = filter(lambda cs: cs.imported == False, coldstorages)
+  if len(coldstorages) == 0:
+    raise Exception("No cold storage wallet!")
+  coldstorage = sorted(coldstorages, key=lambda cs: cs.received)[0]
+
+  # send to cold storage
+  logs = am.send([{ "destination" : coldstorage.address, "amount" : amount }])
+  coldstorage.payments.add(logs[coldstorage.address])
+
+  return coldstorage
+
 

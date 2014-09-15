@@ -31,7 +31,7 @@ class PaymentLog(Model):
   @property
   def amount(self):
     transaction = self.transaction
-    return transaction and transaction["amount"] or None
+    return transaction and transaction["amount"] or Decimal("0.0")
 
   @property
   def confirmations(self):
@@ -46,7 +46,7 @@ class PaymentLog(Model):
 class ColdStorage(Model):
 
   asset = CharField(max_length=100)
-  address = CharField(max_length=100, unique=True)
+  address = CharField(max_length=100)
   payments = ManyToManyField(
     'asset.PaymentLog',
     related_name="coldstorage_payments",
@@ -61,26 +61,28 @@ class ColdStorage(Model):
 
   @property
   def imported(self):
-    # TODO check if private_key in wallet
-    return False
+    from apps.asset import control
+    am = control.get_manager(self.asset)
+    return am.address_in_wallet(self.address)
 
   @property
   def amount(self):
-    # TODO return amount at address
-    return Decimal("0.0")
+    if self.imported:
+      from apps.asset import control
+      am = control.get_manager(self.asset)
+      return am.get_balance(self.address)
+    else:
+      return Decimal(sum(map(lambda p: p.amount, self.payments.all())))
+
 
   def __unicode__(self):
-    from apps.bitcoin.templatetags.bitcoin_tags import render_bitcoin
+    from apps.asset.templatetags.asset_tags import render_asset
     return "%s %s (%s)" % (
       self.address, 
-      render_bitcoin(self.received),
+      render_asset(self.amount, self.asset),
       self.imported and _("IMPORTED") or _("COLD")
     )
 
-  @property
-  def received(self):
-    total = Decimal("0.0")
-    for payment in self.payments.all():
-      total = total + payment.amount
-    return total
-
+  class Meta:
+    unique_together = (("asset", "address"),)
+    ordering = ["created_on"]

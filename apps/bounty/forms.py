@@ -46,7 +46,7 @@ class Bounty(Form):
     help_text=_("CREATE_BOUNTY_TARGET_HELP_%(fees)s") % { 
       'fees' : render_percent(settings.FEES)
     },
-    decimal_places=5
+    decimal_places=8
   )
   deadline = DateField(
     label=_("DEADLINE"),
