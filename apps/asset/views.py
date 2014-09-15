@@ -10,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from apps.common.utils.templates import render_response
 from apps.asset import control
-#from apps.asset import forms
+from apps.asset import forms
 
 @require_http_methods(['GET'])
 def overview(request):
@@ -20,12 +20,32 @@ def overview(request):
 @require_http_methods(['GET'])
 def details(request, asset):
   asset = asset.upper()
-  return render_response(request, 'asset/details.html', control.details(asset))
+  args = { "asset" : control.details(asset) }
+  return render_response(request, 'asset/details.html', args)
 
 @login_required
 @require_http_methods(['GET', 'POST'])
 def coldstorage_add(request, asset):
-  pass
+  asset = asset.upper()
+  if not request.user.is_superuser:
+    raise PermissionDenied
+  if request.method == "POST":
+    form = forms.ColdStorageAdd(request.POST, asset=asset)
+    if form.is_valid():
+      control.cold_storage_add(
+        request.user, 
+        asset,
+        form.cleaned_data["address"].strip()
+      )
+      return HttpResponseRedirect("/asset/%s/details" % asset.lower())
+  else:
+    form = forms.ColdStorageAdd(asset=asset)
+  args = {
+    "form" : form, 
+    "form_title" : _("ADD_COLD_STORAGE_WALLET"),
+    "cancel_url" : "/asset/%s/details" % asset.lower(),
+  }
+  return render_response(request, 'site/form.html', args)
 
 @login_required
 @require_http_methods(['GET', 'POST'])
@@ -53,30 +73,6 @@ def emergencystop(request):
     raise PermissionDenied
   control.emergencystop()
   return render_response(request, 'bitcoin/emergencystop.html', {})
-  """
-
-@login_required
-@require_http_methods(['GET', 'POST'])
-def cold_storage_add(request, asset):
-  """
-  if not request.user.is_superuser:
-    raise PermissionDenied
-  if request.method == "POST":
-    form = forms.ColdStorageAdd(request.POST)
-    if form.is_valid():
-      control.cold_storage_add(
-        request.user, 
-        form.cleaned_data["address"].strip()
-      )
-      return HttpResponseRedirect("/bitcoin/funds")
-  else:
-    form = forms.ColdStorageAdd()
-  args = {
-    "form" : form, 
-    "form_title" : _("ADD_COLD_STORAGE_WALLET"),
-    "cancel_url" : "/bitcoin/funds",
-  }
-  return render_response(request, 'site/form.html', args)
   """
 
 @login_required

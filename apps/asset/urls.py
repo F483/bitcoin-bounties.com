@@ -13,10 +13,11 @@ urlpatterns = patterns('apps.asset.views',
     'overview',
     name="asset_overview",
   ),
-#  url(
-#    r'^emergencystop$' % A,         
-#    'emergencystop'
-#  ),
+  url(
+    r'^emergencystop$',         
+    'emergencystop',
+    name="asset_emergencystop",
+  ),
   url(
     r'^%s/details$' % A,             
     'details',

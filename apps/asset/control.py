@@ -89,3 +89,12 @@ def overview():
   assets = filter(lambda a: a["funds_total"] > Decimal("0.0"), assets)
   return chunks(assets, 2)
 
+def cold_storage_add(user, asset, address):
+  cs = ColdStorage()
+  cs.asset = asset
+  cs.address = address
+  cs.created_by = user
+  cs.updated_by = user
+  cs.save()
+  return cs
+
