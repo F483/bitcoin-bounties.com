@@ -1,7 +1,0 @@
-
-End to end cencryption, use SSL & TLS.
-Enable http strict transport security (always use ssl).
-Encrypte datacenter links.
-Use perfect forward secrecy.
-Reduce storage and logging time.
-

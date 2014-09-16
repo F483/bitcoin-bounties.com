@@ -91,6 +91,13 @@ class Command(NoArgsCommand):
     if os.path.isfile(STOP_CRONS_FILE):
       raise CommandError('Stop crons flag is set!')
 
+    # only squash when all payments are confirmed
+    assets = get_asset_names() + [u"BTC"]
+    paymentlogs = PaymentLog.objects.filter(asset__in=assets)
+    unconfirmed = len(filter(lambda pl: pl.confirmations == 0, paymentlogs))
+    if unconfirmed:
+      raise CommandError('Unconfirmed payments!')
+
     # needbtc = [{ "destination" : address, "amount" : amount }]
     # squashable = { "asset" : [{ "address" : address, "amount" : amount }] }
     needbtc, squashable = self.input_data()

@@ -115,11 +115,11 @@ class Bounty(Model):
 
   @property
   def display_fees(self):
-    # FIXME
-    #if self.awarded and self.awarded.payout:
-    #  return self.awarded.payout.fees
-    usetarget = self.state == "PENDING" and self.target_funds > self.received
-    received = usetarget and self.target_funds or self.received
+    if self.awarded and self.awarded.payout:
+      received = (self.awarded.payout.amount / self.fraction_reward)
+    else:
+      usetarget = self.state == "PENDING" and self.target_funds > self.received
+      received = usetarget and self.target_funds or self.received
     amount = received * self.fraction_fees
     return asset_control.get_manager(self.asset).quantize(amount)
 
@@ -128,7 +128,7 @@ class Bounty(Model):
     if self.awarded and self.awarded.payout:
       return self.awarded.payout.amount
     am = asset_control.get_manager(self.asset)
-    return self.received - am.quantize(self.received * self.fees)
+    return self.received - am.quantize(self.received * self.fraction_fees)
 
   @property
   def display_reward(self):

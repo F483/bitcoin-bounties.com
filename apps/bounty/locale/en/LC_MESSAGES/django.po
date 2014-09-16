@@ -2,39 +2,43 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-17 10:49-0500\n"
-"PO-Revision-Date: 2014-07-17 08:36-0500\n"
+"POT-Creation-Date: 2014-09-15 17:12-0500\n"
+"PO-Revision-Date: 2014-09-15 17:24-0600\n"
 "Last-Translator:   <fabian.barkhau@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.4\n"
 
-#: forms.py:31
+#: forms.py:32
 msgid "TITLE"
 msgstr "Title"
 
-#: forms.py:33
+#: forms.py:34
 msgid "DESCRIPTION"
 msgstr "Description"
 
-#: forms.py:36
+#: forms.py:37
 msgid "TAGS"
 msgstr "Tags"
 
-#: forms.py:38
-msgid "TARGET_REWARD"
-msgstr "Target reward (in mBTC)"
+#: forms.py:40
+msgid "ASSET"
+msgstr "Asset"
 
-#: forms.py:39
+#: forms.py:45
+msgid "TARGET_REWARD"
+msgstr "Target reward"
+
+#: forms.py:46
 #, python-format
 msgid "CREATE_BOUNTY_TARGET_HELP_%(fees)s"
 msgstr ""
@@ -42,130 +46,134 @@ msgstr ""
 "reward +%(fees)s service fee). Additional funds can be added at any time to "
 "increase the reward."
 
-#: forms.py:45 templates/bounty/generic_list.html:11
+#: forms.py:52 templates/bounty/generic_list.html:11
 #: templates/bounty/list.html:51 templates/bounty/view/details.html:36
 msgid "DEADLINE"
 msgstr "Deadline"
 
-#: forms.py:46
+#: forms.py:53
 #, python-format
 msgid "CREATE_BOUNTY_DEADLINE_HELP_%(min)s_%(max)s"
 msgstr ""
 "If not claimed before the deadline you will be refunded your investment. "
 "Must be between %(min)s and %(max)s."
 
-#: forms.py:57
+#: forms.py:64
 msgid "ERROR_AT_LEAST_TWO_TAGS_REQUIRED"
 msgstr "Invalid field: At least two tags required!"
 
-#: forms.py:60
+#: forms.py:67
 msgid "ERROR_INVALID_TAG_FORMAT"
 msgstr "Invalid field: Tag format (only a-z with at least three letters)!"
 
-#: forms.py:67
+#: forms.py:74
 #, python-format
 msgid "ERROR_DEADLINE_LESS_THEN_MIN_%(min)s"
 msgstr "Invalid field: Deadline less then minimum (%(min)s)!"
 
-#: forms.py:70
+#: forms.py:77
 #, python-format
 msgid "ERROR_DEADLINE_GREATER_THEN_MAX_%(max)s"
 msgstr "Invalid field: Deadline greater then maximum (%(max)s)!"
 
 #: forms.py:84
+msgid "ERROR_TARGET_REWARD_LESS_THEN_ZERO"
+msgstr "Invalid field: Target reward cannot be negative!"
+
+#: forms.py:89
 msgid "ACCEPT_TERMS"
 msgstr "Accept <a href=\"/terms\">terms and conditions of use</a>."
 
-#: forms.py:108 forms.py:133 forms.py:169 forms.py:192
+#: forms.py:111 forms.py:136 forms.py:172 forms.py:195
 msgid "SEARCH_TEXT"
 msgstr "Search text"
 
-#: forms.py:112 forms.py:137 forms.py:173 forms.py:196
+#: forms.py:115 forms.py:140 forms.py:176 forms.py:199
 msgid "SEARCH_TITLE_AND_TAGS"
 msgstr "Search title and tags"
 
-#: forms.py:118 forms.py:154 forms.py:179 forms.py:234
+#: forms.py:121 forms.py:157 forms.py:182 forms.py:237
 msgid "REWARD_HIGHEST"
 msgstr "Highest reward"
 
-#: forms.py:119 forms.py:155 forms.py:180 forms.py:235
+#: forms.py:122 forms.py:158 forms.py:183 forms.py:238
 msgid "REWARD_LOWEST"
 msgstr "Lowest reward"
 
-#: forms.py:120 forms.py:156 forms.py:181
+#: forms.py:123 forms.py:159 forms.py:184
 msgid "DEADLINE_NEAREST"
 msgstr "Nearest deadline"
 
-#: forms.py:121 forms.py:157 forms.py:182
+#: forms.py:124 forms.py:160 forms.py:185
 msgid "DEADLINE_FARTHEST"
 msgstr "Farthest deadline"
 
-#: forms.py:122 forms.py:158 forms.py:236
+#: forms.py:125 forms.py:161 forms.py:239
 msgid "NEWEST_BOUNTY"
 msgstr "Newest bounty"
 
-#: forms.py:123 forms.py:159 forms.py:237
+#: forms.py:126 forms.py:162 forms.py:240
 msgid "OLDEST_BOUNTY"
 msgstr "Oldest bounty"
 
-#: forms.py:125 forms.py:161 forms.py:184 forms.py:239
+#: forms.py:128 forms.py:164 forms.py:187 forms.py:242
 msgid "ORDERING"
 msgstr "Ordering"
 
-#: forms.py:143
+#: forms.py:146
 msgid "ANY_CLAIMS"
 msgstr "Any claims"
 
-#: forms.py:144
+#: forms.py:147
 msgid "NO_CLAIMS"
 msgstr "No claims"
 
-#: forms.py:145
+#: forms.py:148
 msgid "HAS_CLAIMS"
 msgstr "Has claims"
 
-#: forms.py:147 views.py:44 templates/bounty/generic_list.html:10
+#: forms.py:150 views.py:43 templates/bounty/generic_list.html:10
 #: templates/bounty/list.html:47 templates/bounty/view/details.html:29
 msgid "CLAIMS"
 msgstr "Claims"
 
-#: forms.py:201 forms.py:206
+#: forms.py:204 forms.py:209
 msgid "DEADLINE_FROM"
 msgstr "Deadline from"
 
-#: forms.py:211 forms.py:216
+#: forms.py:214 forms.py:219
 msgid "DEADLINE_TO"
 msgstr "Deadline to"
 
-#: forms.py:222
+#: forms.py:225
 msgid "ANY_OUTCOME"
 msgstr "Any outcome"
 
-#: forms.py:223 templates/bounty/view/details.html:56
+#: forms.py:226 templates/bounty/view/details.html:56
 msgid "REWARDED"
 msgstr "Rewarded"
 
-#: forms.py:224 templates/bounty/view/details.html:58
+#: forms.py:227 templates/bounty/view/details.html:58
 msgid "UNREWARDED"
 msgstr "Unrewarded"
 
-#: forms.py:225 models.py:28
+#: forms.py:228 models.py:28
 msgid "CANCELLED"
 msgstr "Cancelled"
 
-#: forms.py:227
+#: forms.py:230
 msgid "OUTCOME"
 msgstr "Outcome"
 
-#: models.py:24 views.py:71
+#: models.py:24 views.py:70
 msgid "PENDING"
 msgstr "Pending"
 
-#: models.py:25 views.py:77
+#: models.py:25 views.py:76
 msgid "ACTIVE"
 msgstr "Active"
 
-#: models.py:26 views.py:83
+#: models.py:26 views.py:82
 msgid "MEDIATION"
 msgstr "Mediation"
 
@@ -177,27 +185,27 @@ msgstr "Finished"
 msgid "DELETED"
 msgstr "Deleted"
 
-#: models.py:140
+#: models.py:153
 msgid "PAYOUT"
 msgstr "Payout"
 
-#: views.py:32
+#: views.py:31
 msgid "DETAILS"
 msgstr "Details"
 
-#: views.py:38
+#: views.py:37
 msgid "FUNDS"
 msgstr "Funds"
 
-#: views.py:51
+#: views.py:50
 msgid "COMMENTS"
 msgstr "Comments"
 
-#: views.py:89
+#: views.py:88
 msgid "ARCHIVED"
 msgstr "Archived"
 
-#: views.py:343
+#: views.py:342
 msgid "EDIT_BOUNTY"
 msgstr "Edit bounty"
 
@@ -247,7 +255,8 @@ msgstr ""
 #: templates/bounty/deleted.html:7
 msgid "BOUNTY_DELETED_ALERT_INFO"
 msgstr ""
-"Bounty will be archived and only visible to staff, the creator and investors."
+"Bounty will be archived and only visible to staff, the creator and "
+"investors."
 
 #: templates/bounty/generic_list.html:9 templates/bounty/list.html:41
 #: templates/bounty/view/details.html:19
@@ -272,10 +281,8 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"<p>This bounty will remain <b>pending until it is fully funded or cancelled</"
-"b>,  if not funded by %(deadline)s it will be cancelled automatically.</p>\n"
-"<p>Bounties can only be edited or cancelled while pending. If cancelled any "
-"funds invested will be refunded to the refund address (minus fees).</p>"
+"<p>This bounty will remain <b>pending until it is fully funded or cancelled</b>,  if not funded by %(deadline)s it will be cancelled automatically.</p>\n"
+"<p>Bounties can only be edited or cancelled while pending. If cancelled any funds invested will be refunded to the refund address (minus fees).</p>"
 
 #: templates/bounty/list/preview.html:69
 #, python-format
@@ -343,7 +350,7 @@ msgstr ""
 "\n"
 "%(created_on)s ago by %(name)s"
 
-#: templates/bounty/view/funds.html:19
+#: templates/bounty/view/funds.html:20
 msgid "YOUR_REFUND_ADDRESS"
 msgstr "Your refund address"
 
@@ -364,21 +371,24 @@ msgid "BOUNTY_FUNDING_HELP"
 msgstr ""
 "<h4>Bounty funding</h4>\n"
 "\n"
-"To fund this bounty transfer bitcoin to <b>your funding address</b>. Do not "
-"share this address as its needed to keep track of who funded which amount if "
-"a refund is required."
+"To fund this bounty transfer bitcoin to <b>your funding address</b>. Do not share this address as its needed to keep track of who funded which amount if a refund is required."
 
 #: templates/bounty/view/funds.html:60
 msgid "BOUNTY_REFUNDING_HELP"
 msgstr ""
 "<h4>Bounty refunds</h4>\n"
 "\n"
-"If a refund is required because the bounty was not successful, your share of "
-"the funds (-fees) will be <b>transferred to your refund address</b>. Please "
-"make sure this address is under your control."
+"If a refund is required because the bounty was not successful, your share of the funds (-fees) will be <b>transferred to your refund address</b>. Please make sure this address is under your control."
+
+#: templates/bounty/view/funds.html:71
+msgid "PAYMENTS_RECEIVED"
+msgstr "Payments received"
+
+#: templates/bounty/view/funds.html:79
+msgid "PAYMENTS_SENT"
+msgstr "Payments sent"
 
 #: templates/bounty/view/funds/funding.html:18
-#: templates/bounty/view/funds/transactions_send.html:23
 msgid "FEES"
 msgstr "Fees"
 
@@ -387,41 +397,37 @@ msgid "FUNDS_NEEDED"
 msgstr "Funds needed"
 
 #: templates/bounty/view/funds/funding.html:43
-msgid "BALANCE"
-msgstr "Balance"
+msgid "TOTAL"
+msgstr "Total"
 
-#: templates/bounty/view/funds/funding.html:54
-msgid "YOUR_FUNDS"
-msgstr "Your share"
+#: templates/bounty/view/funds/funding.html:53
+msgid "YOU_INVESTED"
+msgstr "You invested"
 
-#: templates/bounty/view/funds/transactions_receive.html:7
-msgid "PAYMENTS_RECEIVED"
-msgstr "Payments received"
+#: templates/bounty/view/funds/funding.html:64
+msgid "TOREFUND"
+msgstr "Outstanding refund"
 
-#: templates/bounty/view/funds/transactions_receive.html:21
-#: templates/bounty/view/funds/transactions_send.html:28
+#: templates/bounty/view/funds/transactions.html:17
 #, python-format
 msgid ""
 "\n"
-"              %(date)s_AGO\n"
-"            "
+"            %(date)s_AGO\n"
+"          "
 msgstr ""
 "\n"
 "%(date)s ago"
 
-#: templates/bounty/view/funds/transactions_receive.html:27
-#: templates/bounty/view/funds/transactions_send.html:34
+#: templates/bounty/view/funds/transactions.html:23
 msgid "CONFIRMATIONS"
 msgstr "Confirmations"
 
-#: templates/bounty/view/funds/transactions_receive.html:29
-#: templates/bounty/view/funds/transactions_send.html:36
+#: templates/bounty/view/funds/transactions.html:25
 msgid "UNCONFIRMED"
 msgstr "Unconfirmed"
 
-#: templates/bounty/view/funds/transactions_send.html:7
-msgid "PAYMENTS_SENT"
-msgstr "Payments sent"
+#~ msgid "BALANCE"
+#~ msgstr "Balance"
 
 #~ msgid "FILTER"
 #~ msgstr "Filter"

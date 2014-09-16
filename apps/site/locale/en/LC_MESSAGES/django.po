@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-17 10:50-0500\n"
-"PO-Revision-Date: 2014-06-25 17:52-0551\n"
+"POT-Creation-Date: 2014-09-15 17:12-0500\n"
+"PO-Revision-Date: 2014-09-15 17:31-0600\n"
 "Last-Translator:   <fabian.barkhau@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.4\n"
 
 #: templates/account/email.html:7
@@ -61,7 +61,8 @@ msgstr ""
 #: templates/account/email.html:45
 msgid ""
 "You currently do not have any e-mail address set up. You should really add "
-"an e-mail address so you can receive notifications, reset your password, etc."
+"an e-mail address so you can receive notifications, reset your password, "
+"etc."
 msgstr ""
 
 #: templates/account/email.html:50
@@ -98,15 +99,15 @@ msgstr ""
 #: templates/account/email_confirm.html:28
 #, python-format
 msgid ""
-"This e-mail confirmation link expired or is invalid. Please <a href="
-"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+"This e-mail confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr ""
 
 #: templates/account/email_confirmed.html:15
 #, python-format
 msgid ""
-"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-"
-"mail address for user %(user_display)s."
+"You have confirmed that <a href=\"mailto:%(email)s\">%(email)s</a> is an "
+"e-mail address for user %(user_display)s."
 msgstr ""
 
 #: templates/account/login.html:8 templates/account/login.html.py:12
@@ -118,8 +119,7 @@ msgstr "Login"
 #, python-format
 msgid ""
 "Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
-"up</a> \n"
+"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign up</a> \n"
 "for a %(site_name)s account and sign in below:"
 msgstr ""
 
@@ -187,8 +187,8 @@ msgstr ""
 
 #: templates/account/password_reset.html:16
 msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll send you "
-"an e-mail allowing you to reset it."
+"Forgotten your password? Enter your e-mail address below, and we'll send you"
+" an e-mail allowing you to reset it."
 msgstr ""
 
 #: templates/account/password_reset.html:21
@@ -213,8 +213,8 @@ msgstr ""
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
 msgstr ""
 
 #: templates/account/password_reset_from_key.html:19
@@ -287,8 +287,8 @@ msgstr ""
 #: templates/account/verified_email_required.html:21
 #, python-format
 msgid ""
-"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
-"mail address</a>."
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+"e-mail address</a>."
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:1
@@ -302,10 +302,8 @@ msgstr ""
 #: templates/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid ""
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account at %(site_domain)s.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"link below to reset your password.\n"
+"You're receiving this e-mail because you or someone else has requested a password for your user account at %(site_domain)s.\n"
+"It can be safely ignored if you did not request a password reset. Click the link below to reset your password.\n"
 "\n"
 "%(password_reset_url)s\n"
 "\n"
@@ -381,28 +379,24 @@ msgid "SITE_ABOUT"
 msgstr ""
 "# Welcome to Bitcoin Bounties\n"
 "\n"
-"**Bitcoin Bounties** is a site that lets you easily claim, post or fund "
-"rewards with [bitcoin](http://en.wikipedia.org/wiki/Bitcoin).\n"
+"**Bitcoin Bounties** is a site that lets you easily claim, post or fund rewards with [bitcoin](http://en.wikipedia.org/wiki/Bitcoin).\n"
 "\n"
 "Here is a quick overview of how it works.\n"
 "\n"
 "\n"
 "# Claiming bounties\n"
 "\n"
-"**Earn bitcoin** by  completing tasks and successfully claiming bounty "
-"rewards.\n"
+"**Earn bitcoin** by  completing tasks and successfully claiming bounty rewards.\n"
 "\n"
 "\n"
 "# Creating bounties\n"
 "\n"
-"Create a bounty and **only pay the reward if the task is completed**, "
-"otherwise you will be refunded your investment (minus fees). \n"
+"Create a bounty and **only pay the reward if the task is completed**, otherwise you will be refunded your investment (minus fees). \n"
 "\n"
 "\n"
 "# Crowd funding public bounties\n"
 "\n"
-"Bounty creators can make a bounty public to enable crowd funding. The "
-"resulting claims will also be made publicly available."
+"Bounty creators can make a bounty public to enable crowd funding. The resulting claims will also be made publicly available."
 
 #: templates/site/about.html:12
 msgid "CREATE_BOUNTY"
@@ -431,17 +425,12 @@ msgstr ""
 "\n"
 "### What is a \"Private Bounty\"?\n"
 "\n"
-"Every bounty is created as a **private bounty by default**. This means only "
-"the bounty creator can fund the bounty and view the resulting claims. This "
-"allows the creation of bounties where the result is not made available to "
-"the general public.\n"
+"Every bounty is created as a **private bounty by default**. This means only the bounty creator can fund the bounty and view the resulting claims. This allows the creation of bounties where the result is not made available to the general public.\n"
 "\n"
 "\n"
 "### What is a \"Public Bounty\"?\n"
 "\n"
-"If the bounty creator makes a bounty public, anyone will be able to fund the "
-"bounty. This also means that the resulting claims will be made available to "
-"the general public. This allows for crowd funded bounties."
+"If the bounty creator makes a bounty public, anyone will be able to fund the bounty. This also means that the resulting claims will be made available to the general public. This allows for crowd funded bounties."
 
 #: templates/site/form_include.html:32
 msgid "CANCEL"
@@ -457,9 +446,7 @@ msgstr ""
 "Terms and conditions\n"
 "=============\n"
 "\n"
-"Currently we do not have a proper terms and conditions agreement. Once we "
-"are fully incorporated and have arranged the financing of a lawyer this will "
-"be added. Until then we propose the following.\n"
+"Currently we do not have a proper terms and conditions agreement. Once we are fully incorporated and have arranged the financing of a lawyer this will be added. Until then we propose the following.\n"
 "\n"
 "***Be excellent to each other.***"
 
@@ -492,8 +479,8 @@ msgid "FAQ"
 msgstr "F.A.Q."
 
 #: templates/site/base/navbar.html:43
-msgid "SITE_FUNDS"
-msgstr "Site funds"
+msgid "SITE_ASSETS"
+msgstr "Site assets"
 
 #: templates/site/base/navbar.html:44
 msgid "TERMS"
@@ -554,10 +541,8 @@ msgid "TEST_INSTANCE_WARNING"
 msgstr ""
 "<h4>Warning: This is a testing instance!</h4>\n"
 "<p>\n"
-"All bitcoin addresses and transaction ids are for the <b>bitcoin testnet</b>."
-"</br>\n"
-"<b>Do not send real bitcoins</b> to any address on this instance, <b>they "
-"<i>WILL</i> be lost</b>!\n"
+"All bitcoin addresses and transaction ids are for the <b>bitcoin testnet</b>.</br>\n"
+"<b>Do not send real bitcoins</b> to any address on this instance, <b>they <i>WILL</i> be lost</b>!\n"
 "</p>"
 
 #: templates/socialaccount/account_inactive.html:5
@@ -608,8 +593,8 @@ msgstr ""
 #, python-format
 msgid ""
 "You decided to cancel logging in to our site using one of your existing "
-"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
-"\">sign in</a>."
+"accounts. If this was a mistake, please proceed to <a "
+"href=\"%(login_url)s\">sign in</a>."
 msgstr ""
 
 #: templates/socialaccount/signup.html:10
@@ -631,11 +616,13 @@ msgstr ""
 msgid "The social account has been disconnected."
 msgstr ""
 
+#~ msgid "SITE_FUNDS"
+#~ msgstr "Site funds"
+
 #~ msgid "NOOB_HELP"
 #~ msgstr ""
 #~ "<p>\n"
-#~ "  Bitcoin Bounties is a site where anyone easily can post, fund or claim "
-#~ "rewards in bitcoin.\n"
+#~ "  Bitcoin Bounties is a site where anyone easily can post, fund or claim rewards in bitcoin.\n"
 #~ "</p>\n"
 #~ "<a href=\"/about\" class=\"btn btn-primary\">\n"
 #~ "  Learn more\n"
@@ -669,16 +656,11 @@ msgstr ""
 #~ "Creating Bounties\n"
 #~ "===========\n"
 #~ "\n"
-#~ "To create a Bounty simply visit the [create bounty page](/bounty/create), "
-#~ "and fill out the form. Make sure the bounty requirements are easy to "
-#~ "understand and that it is easy for a moderator to verify if a claim is "
-#~ "successful or not.\n"
+#~ "To create a Bounty simply visit the [create bounty page](/bounty/create), and fill out the form. Make sure the bounty requirements are easy to understand and that it is easy for a moderator to verify if a claim is successful or not.\n"
 #~ "\n"
-#~ "A created bounty will remain pending until it is fully funded or "
-#~ "cancelled, if not funded in time it will be cancelled automatically.\n"
+#~ "A created bounty will remain pending until it is fully funded or cancelled, if not funded in time it will be cancelled automatically.\n"
 #~ "\n"
-#~ "Bounties can only be edited or cancelled while pending. If cancelled any "
-#~ "funds invested will be refunded to the refund address (minus fees)."
+#~ "Bounties can only be edited or cancelled while pending. If cancelled any funds invested will be refunded to the refund address (minus fees)."
 
 #~ msgid "SITE_RULES"
 #~ msgstr ""

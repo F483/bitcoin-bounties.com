@@ -14,7 +14,7 @@ from apps.userfund.models import UserFund
 from apps.asset.models import PaymentLog, ColdStorage
 from apps.asset.managers.bitcoin import BitcoinManager
 from apps.asset.managers.counterparty import CounterpartyManager
-from apps.asset.managers.counterparty import counterpartyd_querry
+from apps.asset.managers.counterparty import get_asset_names
 
 def _assets():
   assets = {
@@ -30,11 +30,7 @@ def _assets():
     # TODO 'XMR' :  MoneroManager(),
     # TODO 'BTCD' :  BitcoinDarkManager(),
   }
-  counterparty_assets = [u'XCP'] + counterpartyd_querry({
-    "method": "get_asset_names",
-    "jsonrpc": "2.0",
-    "id": 0,
-  })['result']
+  counterparty_assets = get_asset_names()
   for ca in counterparty_assets:
     assets[ca] = CounterpartyManager(key=ca, label='Counterparty %s' % ca)
   return assets

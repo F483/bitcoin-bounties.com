@@ -1,0 +1,112 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-15 17:12-0500\n"
+"PO-Revision-Date: 2014-09-15 18:27-0600\n"
+"Last-Translator:   <fabian.barkhau@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"X-Translated-Using: django-rosetta 0.7.4\n"
+
+#: forms.py:15 templates/asset/wallet.html:8
+msgid "ADDRESS"
+msgstr "Address"
+
+#: forms.py:25
+msgid "ERROR_INVALID_ADDRESS"
+msgstr "Error: Invalid Address!"
+
+#: forms.py:30 templates/asset/wallet.html:9
+msgid "AMOUNT"
+msgstr "Amount"
+
+#: forms.py:45
+msgid "INSUFFICIENT_HOT_FUNDS"
+msgstr "Error: Insufficient hot funds!"
+
+#: forms.py:51
+msgid "ERROR_NO_COLD_STORAGE"
+msgstr "Error: No cold storage addresses!"
+
+#: forms.py:57
+msgid "PRIVATE_KEY"
+msgstr "Private key"
+
+#: models.py:81
+msgid "IMPORTED"
+msgstr "Imported"
+
+#: models.py:81
+msgid "COLD"
+msgstr "Cold"
+
+#: views.py:58
+msgid "ADD_COLD_STORAGE_WALLET"
+msgstr "Add cold storage"
+
+#: views.py:79
+msgid "SEND_FUNDS_TO_COLD_STORAGE_WALLET"
+msgstr "Send funds to cold storage"
+
+#: views.py:100
+msgid "IMPORT_COLD_STORAGE_WALLET"
+msgstr "Import cold storage"
+
+#: templates/asset/coldstorage.html:18 templates/asset/preview.html:34
+msgid "COLD_STORAGE"
+msgstr "Cold storage"
+
+#: templates/asset/coldstorage.html:22
+msgid "ADD_WALLET"
+msgstr "Add wallet"
+
+#: templates/asset/coldstorage.html:25
+msgid "SEND_FUNDS"
+msgstr "Send funds"
+
+#: templates/asset/coldstorage.html:28
+msgid "IMPORT_WALLET"
+msgstr "Import wallet"
+
+#: templates/asset/emergencystop.html:8
+msgid "EMERGENCY_STOP_DONE"
+msgstr "Emergency stop done!"
+
+#: templates/asset/emergencystop.html:9
+msgid "GOOD_LUCK"
+msgstr "Good luck!"
+
+#: templates/asset/hotwallet.html:18 templates/asset/preview.html:23
+#: templates/asset/preview.html.py:99
+msgid "HOT_WALLET"
+msgstr "Hot wallet"
+
+#: templates/asset/overview.html:17
+msgid "EMERGENCY_STOP"
+msgstr "Emergency stop!"
+
+#: templates/asset/preview.html:14
+msgid "TOTAL"
+msgstr "Total"
+
+#: templates/asset/preview.html:59
+msgid "USER_FUNDS"
+msgstr "User funds"
+
+#: templates/asset/preview.html:70
+msgid "COMPANY_FUNDS"
+msgstr "Company funds"
+
+#: templates/asset/preview.html:95
+msgid "COLDSTORAGE"
+msgstr "Cold storage"
