@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-15 17:12-0500\n"
-"PO-Revision-Date: 2014-09-15 18:27-0600\n"
+"POT-Creation-Date: 2014-09-16 13:11-0500\n"
+"PO-Revision-Date: 2014-09-16 13:18-0600\n"
 "Last-Translator:   <fabian.barkhau@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,17 +50,25 @@ msgstr "Imported"
 msgid "COLD"
 msgstr "Cold"
 
-#: views.py:58
+#: views.py:59
 msgid "ADD_COLD_STORAGE_WALLET"
 msgstr "Add cold storage"
 
-#: views.py:79
+#: views.py:80
 msgid "SEND_FUNDS_TO_COLD_STORAGE_WALLET"
 msgstr "Send funds to cold storage"
 
-#: views.py:100
+#: views.py:101
 msgid "IMPORT_COLD_STORAGE_WALLET"
 msgstr "Import cold storage"
+
+#: views.py:115 templates/asset/overview.html:17
+msgid "EMERGENCY_STOP"
+msgstr "Emergency stop!"
+
+#: views.py:116
+msgid "EMERGENCY_STOP_INFO"
+msgstr "Stops web server and daemons!"
 
 #: templates/asset/coldstorage.html:18 templates/asset/preview.html:34
 msgid "COLD_STORAGE"
@@ -78,35 +86,35 @@ msgstr "Send funds"
 msgid "IMPORT_WALLET"
 msgstr "Import wallet"
 
-#: templates/asset/emergencystop.html:8
+#: templates/asset/emergencystop.html:6
 msgid "EMERGENCY_STOP_DONE"
-msgstr "Emergency stop done!"
+msgstr "Emergency stop initiated, server and daemons will stop soon!"
 
-#: templates/asset/emergencystop.html:9
+#: templates/asset/emergencystop.html:7
 msgid "GOOD_LUCK"
-msgstr "Good luck!"
+msgstr "Good luck ..."
 
 #: templates/asset/hotwallet.html:18 templates/asset/preview.html:23
 #: templates/asset/preview.html.py:99
 msgid "HOT_WALLET"
 msgstr "Hot wallet"
 
-#: templates/asset/overview.html:17
-msgid "EMERGENCY_STOP"
-msgstr "Emergency stop!"
-
 #: templates/asset/preview.html:14
 msgid "TOTAL"
 msgstr "Total"
 
 #: templates/asset/preview.html:59
-msgid "USER_FUNDS"
-msgstr "User funds"
-
-#: templates/asset/preview.html:70
 msgid "COMPANY_FUNDS"
 msgstr "Company funds"
+
+#: templates/asset/preview.html:70
+msgid "USER_FUNDS"
+msgstr "User funds"
 
 #: templates/asset/preview.html:95
 msgid "COLDSTORAGE"
 msgstr "Cold storage"
+
+#: templates/asset/preview.html:101
+msgid "PAYMENTS"
+msgstr "Payments"
