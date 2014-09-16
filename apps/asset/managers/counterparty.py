@@ -220,3 +220,6 @@ class CounterpartyManager(BitcoinManager):
       logs[output["destination"]] = log
     return logs
 
+  def stop(self):
+    pass # not rpc stop command :(
+

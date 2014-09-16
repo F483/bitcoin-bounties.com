@@ -5,6 +5,7 @@
 from decimal import Decimal
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
@@ -102,17 +103,18 @@ def coldstorage_import(request, asset):
   }
   return render_response(request, 'site/form.html', args)
 
-
-
-
 @login_required
-@require_http_methods(['GET'])
+@require_http_methods(['GET', 'POST'])
 def emergencystop(request):
-  """
-  TODO require confirm and emergencystop on POST instead
   if not request.user.is_superuser:
     raise PermissionDenied
-  control.emergencystop()
-  return render_response(request, 'bitcoin/emergencystop.html', {})
-  """
+  if request.method == "POST":
+    control.emergencystop()
+    return render_response(request, 'asset/emergencystop.html', {})
+  args = {
+    "form_title" : _("EMERGENCY_STOP"),
+    "form_alert_info" : mark_safe(_("EMERGENCY_STOP_INFO")),
+    "cancel_url" : reverse('asset_overview', args=())
+  }
+  return render_response(request, 'site/form.html', args)
 

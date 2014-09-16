@@ -110,3 +110,6 @@ class AssetManager(object):
   def get_transaction_link(self, txid):
     raise NotImplementedError
 
+  def stop(self):
+    raise NotImplementedError
+

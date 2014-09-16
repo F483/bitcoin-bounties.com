@@ -135,3 +135,6 @@ class BitcoinManager(AssetManager):
   def import_private_key(self, private_key):
     get_bitcoind_rpc().importprivkey(private_key, "", False)
 
+  def stop(self):
+    get_bitcoind_rpc().stop()
+

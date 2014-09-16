@@ -2,6 +2,7 @@
 # Copyright (c) 2014 Fabian Barkhau <fabian.barkhau@gmail.com>
 # License: MIT (see LICENSE.TXT file)
 
+import os
 import json
 import requests
 import bitcoinaddress
@@ -30,9 +31,11 @@ def _assets():
     # TODO 'XMR' :  MoneroManager(),
     # TODO 'BTCD' :  BitcoinDarkManager(),
   }
+  # counterparty assets (always after BTC because of emergencystop)
   counterparty_assets = get_asset_names()
   for ca in counterparty_assets:
     assets[ca] = CounterpartyManager(key=ca, label='Counterparty %s' % ca)
+
   return assets
 
 ASSETS = _assets()
@@ -107,7 +110,7 @@ def cold_storage_send(asset, amount):
   coldstorages = filter(lambda cs: cs.imported == False, coldstorages)
   if len(coldstorages) == 0:
     raise Exception("No cold storage wallet!")
-  coldstorage = sorted(coldstorages, key=lambda cs: cs.received)[0]
+  coldstorage = sorted(coldstorages, key=lambda cs: cs.amount)[0]
 
   # send to cold storage
   logs = am.send([{ "destination" : coldstorage.address, "amount" : amount }])
@@ -118,4 +121,15 @@ def cold_storage_send(asset, amount):
 def cold_storage_import(asset, private_key):
   am = get_manager(asset)
   am.import_private_key(private_key)
+
+def emergencystop():
+
+  # set stop_crons flag
+  with open(settings.STOP_CRONS_FILE, 'a'):
+    os.utime(settings.STOP_CRONS_FILE, None)
+
+  # set emergencystop flag
+  with open(settings.EMERGENCY_STOP_FILE, 'a'):
+    os.utime(settings.EMERGENCY_STOP_FILE, None)
+
 
