@@ -30,6 +30,8 @@ setup(
     'bleach',
     'Unidecode',
     'Fuzzy',
+    'psycopg2', # only when using postgres
+    'requests',
     'python-bitcoinrpc',
     'python-bitcoinaddress',
     'django-debug-toolbar',

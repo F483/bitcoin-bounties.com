@@ -14,15 +14,24 @@ framework.
 
 """
 import os
+import sys
+import site
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-# This application object is used by any WSGI server configured to use this
-# file. This includes Django's development server, if the WSGI_APPLICATION
-# setting points here.
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+# add the site-packages of the virtualenv
+site.addsitedir(os.path.join(PROJECT_DIR, 'env/local/lib/python2.7/site-packages'))
 
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
+# add the app's directory to the PYTHONPATH
+sys.path.append(PROJECT_DIR)
+
+# activate virtual env
+activate_env=os.path.expanduser(os.path.join(PROJECT_DIR, "env/bin/activate_this.py"))
+execfile(activate_env, dict(__file__=activate_env))
+
+# path to settings file
+os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings'
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
+

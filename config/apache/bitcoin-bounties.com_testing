@@ -1,4 +1,5 @@
 <VirtualHost *:80>
+
     ServerAdmin fabian.barkhau@gmail.com
     ServerName testing.bitcoin-bounties.com
     #ServerAlias bitcoin-bounties.com
@@ -7,8 +8,7 @@
     DocumentRoot /home/bitcoin_bounties_testing/www
  
     # mod_wsgi settings
-    WSGIDaemonProcess bitcoin_bounties_testing user=bitcoin_bounties_testing group=bitcoin_bounties_testing python-path=/home/bitcoin_bounties_testing/www:/usr/lib/python2.7:/usr/lib/python2.7/plat-linux2:/usr/lib/python2.7/lib-tk:/usr/lib/python2.7/lib-old:/usr/lib/python2.7/lib-dynload:/usr/local/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages/PIL
-
+    WSGIDaemonProcess bitcoin_bounties_testing user=bitcoin_bounties_testing group=bitcoin_bounties_testing
     WSGIProcessGroup bitcoin_bounties_testing
     WSGIScriptAlias / /home/bitcoin_bounties_testing/www/config/wsgi.py
  
