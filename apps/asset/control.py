@@ -38,13 +38,11 @@ def _assets():
 
   return assets
 
-ASSETS = _assets()
-
 def get_manager(asset):
-  return ASSETS[asset]
+  return _assets()[asset]
 
 def get_choices():
-  choices = map(lambda item: (item[0], item[1].label), ASSETS.items())
+  choices = map(lambda item: (item[0], item[1].label), _assets().items())
   return sorted(choices, key=lambda c: c[1])
 
 def get_hotwallet(asset):
@@ -88,7 +86,7 @@ def details(asset):
   return result
 
 def overview():
-  assets = map(lambda a: details(a[0]), ASSETS.items())
+  assets = map(lambda a: details(a[0]), _assets().items())
   assets = sorted(assets, key=lambda a: a["label"])
   assets = filter(lambda a: a["funds_total"] > Decimal("0.0"), assets)
   return chunks(assets, 2)
@@ -131,5 +129,4 @@ def emergencystop():
   # set emergencystop flag
   with open(settings.EMERGENCY_STOP_FILE, 'a'):
     os.utime(settings.EMERGENCY_STOP_FILE, None)
-
 
