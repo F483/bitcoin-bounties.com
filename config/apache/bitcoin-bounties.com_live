@@ -8,8 +8,7 @@
     DocumentRoot /home/bitcoin_bounties/www
  
     # mod_wsgi settings
-    WSGIDaemonProcess bitcoin_bounties user=bitcoin_bounties group=bitcoin_bounties python-path=/home/bitcoin_bounties/www:/usr/lib/python2.7:/usr/lib/python2.7/plat-linux2:/usr/lib/python2.7/lib-tk:/usr/lib/python2.7/lib-old:/usr/lib/python2.7/lib-dynload:/usr/local/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages:/usr/lib/python2.7/dist-packages/PIL
-
+    WSGIDaemonProcess bitcoin_bounties user=bitcoin_bounties group=bitcoin_bounties
     WSGIProcessGroup bitcoin_bounties
     WSGIScriptAlias / /home/bitcoin_bounties/www/config/wsgi.py
  
