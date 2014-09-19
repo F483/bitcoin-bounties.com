@@ -87,6 +87,12 @@ MIDDLEWARE_CLASSES = (
   'django.contrib.auth.middleware.AuthenticationMiddleware',
   'django.contrib.messages.middleware.MessageMiddleware',
   'pagination.middleware.PaginationMiddleware',
+
+  # profiler 
+  # add ?prof to url to see performance profile
+  # 'apps.common.middleware.profiler.ProfileMiddleware',
+
+  # FIXME get clickjacking protection
   # Uncomment the next line for simple clickjacking protection:
   # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -297,12 +303,12 @@ MAX_DEADLINE = 365 # days in the future
 DEFAULT_DEADLINE = 150 # days in the future
 
 # bitcoind
-BITCOIND_RPC = "http://bitcoindrpc:rpcpassword@127.0.0.1:18332"
+BITCOIND_RPC = "http://bitcoindrpcuser:bitcoinrpcpass@127.0.0.1:18332"
 
 # counterpartyd
 COUNTERPARTYD_URL = "http://127.0.0.1:14000/api/"
-COUNTERPARTYD_USER = 'rpcuser'
-COUNTERPARTYD_PASS = 'rpcpassword'
+COUNTERPARTYD_USER = 'counterpartyrpcuser'
+COUNTERPARTYD_PASS = 'counterpartyrpcpass'
 
 # flags
 FLAGS_DIR = os.path.join(PROJECT_DIR, 'config', 'flags')

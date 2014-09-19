@@ -17,7 +17,11 @@ from apps.asset.managers.bitcoin import BitcoinManager
 from apps.asset.managers.counterparty import CounterpartyManager
 from apps.asset.managers.counterparty import get_asset_names
 
+_ASSETS = {}
+
 def _assets():
+  if _ASSETS:
+    return _ASSETS
   assets = {
     'BTC' : BitcoinManager(),
     # TODO 'LTC' : LitecoinManager(),
@@ -35,8 +39,8 @@ def _assets():
   counterparty_assets = get_asset_names()
   for ca in counterparty_assets:
     assets[ca] = CounterpartyManager(key=ca, label='Counterparty %s' % ca)
-
-  return assets
+  _ASSETS.update(assets)
+  return _ASSETS
 
 def get_manager(asset):
   return _assets()[asset]
@@ -67,7 +71,6 @@ def details(asset):
   funds_total = funds_hot + funds_cold
   funds_users = Decimal(sum(map(lambda uf: uf.bound_funds, userfunds)))
   funds_company = funds_total - funds_users
-
 
   result = {
     "asset" : asset,

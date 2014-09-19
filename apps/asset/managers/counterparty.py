@@ -23,10 +23,17 @@ def counterpartyd_querry(payload):
   )
   return response.json()
 
+def _get_asset_names():
+  return (counterpartyd_querry({
+    "method": "get_asset_names", "jsonrpc": "2.0", "id": 0,
+  })['result'] + [u'XCP'])
+
+_ASSET_NAMES = []
 def get_asset_names():
-    return (counterpartyd_querry({
-      "method": "get_asset_names", "jsonrpc": "2.0", "id": 0,
-    })['result'] + [u'XCP'])
+  if _ASSET_NAMES:
+    return _ASSET_NAMES
+  _ASSET_NAMES.extend(_get_asset_names())
+  return _ASSET_NAMES
 
 def _sum_key(dictonary, key, move_decimal=0):
   value = sum(map(lambda x: Decimal(x[key]), dictonary))
