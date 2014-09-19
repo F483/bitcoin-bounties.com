@@ -18,6 +18,8 @@ def get_bitcoind_rpc():
 
 class BitcoinManager(AssetManager):
 
+  _wallet_addresses_cache = []
+
   def __init__(self):
     super(BitcoinManager, self).__init__(
       key='BTC', label='Bitcoin', decimal_places=8
@@ -37,12 +39,15 @@ class BitcoinManager(AssetManager):
     return balance and balance or Decimal("0.0")
 
   def get_wallet_addresses(self):
+    if self._wallet_addresses_cache:
+      return self._wallet_addresses_cache
     rpc = get_bitcoind_rpc()
     addresses = []
     accounts = rpc.listaccounts().keys()
     for account in accounts:
       addresses = addresses + rpc.getaddressesbyaccount(account)
-    return addresses
+    self._wallet_addresses_cache = addresses
+    return self._wallet_addresses_cache
 
   def get_wallet_balance(self):
     return get_bitcoind_rpc().getbalance()

@@ -136,7 +136,7 @@ INSTALLED_APPS = (
   'bootstrapform',    # https://pypi.python.org/pypi/django-bootstrap-form/2.0.5
   'pagination',       # https://pypi.python.org/pypi/django-pagination/
   #'debug_toolbar.apps.DebugToolbarConfig', # Django 1.7.x or later
-  'debug_toolbar', # Django 1.6.x or earlier
+  #'debug_toolbar', # Django 1.6.x or earlier
 
   'allauth',
   'allauth.account',
