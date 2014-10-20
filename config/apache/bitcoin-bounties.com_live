@@ -48,3 +48,41 @@
 
   </VirtualHost>
 </IfModule>
+
+<VirtualHost *:80>
+
+  ServerAdmin admin@bitcoin-bounties.com
+  ServerName  bitcoin-bounties.com
+  ServerAlias www.bitcoin-bounties.com
+
+  DocumentRoot /home/bitcoin_bounties/www
+
+  # Canonical Hostname and always use https
+  <IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # http://bitcoin-bounties.com -> https://bitcoin-bounties.com
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} ^bitcoin-bounties\.com$
+    RewriteRule (.*) https://bitcoin-bounties.com%{REQUEST_URI}
+  
+    # http://www.bitcoin-bounties.com -> https://bitcoin-bounties.com
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} ^www\.bitcoin-bounties\.com$
+    RewriteRule (.*) https://bitcoin-bounties.com%{REQUEST_URI}
+  
+    # https://www.bitcoin-bounties.com -> https://bitcoin-bounties.com
+    # FIXME broken
+    #RewriteCond %{HTTPS} on
+    #RewriteCond %{HTTP_HOST} ^www\.bitcoin-bounties\.com$
+    #RewriteRule (.*) https://bitcoin-bounties.com%{REQUEST_URI}
+  
+  </IfModule>
+
+  # logging
+  LogLevel warn
+  ErrorLog  /home/bitcoin_bounties/log/apache_error.log
+  CustomLog /home/bitcoin_bounties/log/apache_access.log combined
+
+</VirtualHost>
+
