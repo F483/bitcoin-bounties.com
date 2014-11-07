@@ -12,8 +12,10 @@ insufficent_hot_funds = Signal(providing_args=["asset"])
 @receiver(insufficent_hot_funds)
 def on_insufficent_hot_funds_emails(sender, **kwargs):
   superusers = User.objects.filter(is_superuser=True)
-  emails = map(lambda u: email.get_emailaddress_or_404(u), superusers)
+  emails = map(lambda u: email.get_emailaddress_or_none(u), superusers)
+  emails = filter(lambda email: email != None, emails)
   subject = "asset/email/insufficent_hot_funds_subject.txt"
   message = "asset/email/insufficent_hot_funds_message.txt"
-  email.send(emails, subject, message, kwargs)
+  if emails:
+    email.send(emails, subject, message, kwargs)
 

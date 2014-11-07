@@ -1,6 +1,9 @@
 #!/bin/bash
 
-python ~/www/manage.py bounty_update_states
-python ~/www/manage.py userfund_update_cashes
-python ~/www/manage.py bounty_update_cashes
+cd ~/www/
+source env/bin/activate
+python manage.py bounty_update_states
+python manage.py userfund_update_cashes
+python manage.py bounty_update_cashes
+
 

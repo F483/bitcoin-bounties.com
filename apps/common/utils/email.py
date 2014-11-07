@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail as _send_mail
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from apps.common.utils.models import get_object_or_none
 from allauth.account.models import EmailAddress
 
 def send(recipient_list, template_subject, template_message, context):
@@ -22,4 +23,8 @@ def send(recipient_list, template_subject, template_message, context):
 
 def get_emailaddress_or_404(user):
   return get_object_or_404(EmailAddress, user=user, primary=True).email
+
+def get_emailaddress_or_none(user):
+  email_address = get_object_or_none(EmailAddress, user=user, primary=True)
+  return email_address and email_address.email or None
 

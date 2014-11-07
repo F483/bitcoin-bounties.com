@@ -10,6 +10,7 @@ from config import settings
 from apps.asset.models import PaymentLog
 from apps.asset.managers.bitcoin import BitcoinManager
 from apps.asset.managers.bitcoin import get_bitcoind_rpc
+from apps.asset import signals
 
 _all_balances_cache = []
 _all_balances_cached = False

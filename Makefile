@@ -9,11 +9,9 @@ help:
 	@echo "  django_startserver               "
 	@echo "  bitcoin_startserver              "
 	@echo "  bitcoin_stopserver               "
-	@echo "  shell_python                     "
-	@echo "  shell_sqlite                     "
+	@echo "  shell                            "
 	@echo "  clean                            "
-	@echo "  messages_make                    "
-	@echo "  messages_compile                 "
+	@echo "  messages                         "
 
 docs:
 	@$(foreach DITAA,$(DITAA_DOCS), \
@@ -21,6 +19,7 @@ docs:
     )
 
 django_startserver:
+	@source env/bin/activate
 	@python manage.py runserver
 
 counterparty_startserver:
@@ -32,21 +31,16 @@ bitcoin_startserver:
 bitcoin_stopserver:
 	@bitcoin-cli stop
 
-shell_sqlite:
-	sqlite3 $(SQLITE_FILE)
+shell:
+	@source env/bin/activate
+	@python manage.py shell
 
-shell_python:
-	python manage.py shell
-
-messages_make:
+messages:
 	scripts/messages.sh makemessages
-
-messages_compile:
 	scripts/messages.sh compilemessages
 
 clean:
 	@find | grep -i ".*\.pyc$$" | xargs -r -L1 rm
-	@find | grep -i ".*\.orig$$" | xargs -r -L1 rm
 	@find | grep -i ".*\.swp$$" | xargs -r -L1 rm
 	@find | grep -i ".*\.swo$$" | xargs -r -L1 rm
 	@rm -rf bitcoin_bounties.egg-info
