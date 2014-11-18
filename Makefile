@@ -5,7 +5,6 @@ DITAA_DOCS := $(shell find | grep -i "doc/.*\.ditaa$$")
 help:
 	@echo "Usage: make <target> <option>=VALUE"
 	@echo "  TARGETS                OPTIONS   "
-	@echo "  docs                             "
 	@echo "  django_startserver               "
 	@echo "  bitcoin_startserver              "
 	@echo "  bitcoin_stopserver               "
@@ -13,17 +12,11 @@ help:
 	@echo "  clean                            "
 	@echo "  messages                         "
 
-docs:
-	@$(foreach DITAA,$(DITAA_DOCS), \
-        ditaa $(DITAA) $(DITAA:.ditaa=.png);\
-    )
-
 django_startserver:
-	@source env/bin/activate
 	@python manage.py runserver
 
 counterparty_startserver:
-	@counterpartyd --testnet --testcoin
+	@counterpartyd --testnet --testcoin server
 
 bitcoin_startserver:
 	@bitcoind -testnet -daemon -txindex
@@ -32,7 +25,6 @@ bitcoin_stopserver:
 	@bitcoin-cli stop
 
 shell:
-	@source env/bin/activate
 	@python manage.py shell
 
 messages:
@@ -46,3 +38,7 @@ clean:
 	@rm -rf bitcoin_bounties.egg-info
 	@rm -rf build/*
 
+
+# DEBUGGING
+# pip install pudb # install debugger
+# import pudb; pu.db # set break point

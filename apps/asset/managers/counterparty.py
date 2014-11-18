@@ -12,8 +12,6 @@ from apps.asset.managers.bitcoin import BitcoinManager
 from apps.asset.managers.bitcoin import get_bitcoind_rpc
 from apps.asset import signals
 
-_all_balances_cache = []
-_all_balances_cached = False
 
 def counterpartyd_querry(payload):
   response = requests.post(
@@ -65,20 +63,6 @@ class CounterpartyManager(BitcoinManager):
 
   def get_receive(self, address, txid):
     return super(BitcoinManager, self).get_receive(address, txid)
-
-  def get_wallet_balance(self):
-    global _all_balances_cache
-    global _all_balances_cached
-    if not _all_balances_cached:
-      balances = counterpartyd_querry({
-        "method": "get_balances", "jsonrpc": "2.0", "id": 0,
-      })['result']
-      addresses = self.get_wallet_addresses()
-      valid = lambda x: (x["address"] in addresses)
-      _all_balances_cache.extend(filter(valid, balances))
-      _all_balances_cached |= True
-    result = filter(lambda x: x["asset"] == self.key, _all_balances_cache)
-    return _sum_key(result, 'quantity', self.decimal_places)
 
   def get_balance(self, address):
     result = counterpartyd_querry({

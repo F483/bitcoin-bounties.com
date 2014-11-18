@@ -25,23 +25,33 @@ setup(
   packages=find_packages(),
   include_package_data=True,
   zip_safe=False,
-  install_requires=[ # TODO add newest tested versions and use virtualenv !
-    'Markdown',
-    'bleach',
-    'Unidecode',
-    'Fuzzy',
-    'psycopg2', # only when using postgres
-    'requests',
-    'python-bitcoinrpc',
-    'python-bitcoinaddress',
-    'django-debug-toolbar',
-    'django-rosetta',
-    'django-bootstrap-form',
-    'django-pagination',
-    'django-allauth',
-    'Django',
+  install_requires=[
+    'Django==1.7.1',
+    'Fuzzy==1.0',
+    'Markdown==2.5.1',
+    'Unidecode==0.04.16',
+    'argparse==1.2.1',
+    'bleach==1.4',
+    'django-allauth==0.18.0',
+    'django-bootstrap-form==3.1',
+    'django-debug-toolbar==1.2.2',
+    'django-pagination==1.0.7',
+    'django-rosetta==0.7.4',
+    'html5lib==1.0b3',
+    'oauthlib==0.7.1',
+    'polib==1.0.5', # because rosetta requires an old buggy version
+    #'psycopg2==2.5.4', # only needed when using postgres
+    'python-bitcoinaddress==0.2.2',
+    'python-bitcoinrpc==0.1',
+    'python-openid==2.2.5',
+    'requests==2.4.3',
+    'requests-oauthlib==0.4.2',
+    'six==1.8.0',
+    'sqlparse==0.1.13',
+    'wsgiref==0.1.2',
   ],
   dependency_links=[],
   #test_suite="tests",
 )
+
 
