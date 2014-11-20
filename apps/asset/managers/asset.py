@@ -32,7 +32,8 @@ class AssetManager(object):
     return available >= required
 
   def get_wallet_balance(self):
-    return sum(map(self.get_balance, self.get_wallet_addresses()))
+    balance = sum(map(self.get_balance, self.get_wallet_addresses()))
+    return balance and balance or Decimal("0.0")
 
   def get_address_balances(self):
     """ Returns: sorted([(address, balance), ...]) """
