@@ -64,6 +64,9 @@ class CounterpartyManager(BitcoinManager):
   def get_receive(self, address, txid):
     return super(BitcoinManager, self).get_receive(address, txid)
 
+  def get_wallet_balance(self):
+    super(BitcoinManager, self).get_wallet_balance()
+
   def get_balance(self, address):
     result = counterpartyd_querry({
       "method": "get_balances",
