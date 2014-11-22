@@ -114,13 +114,14 @@ class CounterpartyManager(BitcoinManager):
     })['result']
     asset = self.key
     def reformat(tx):
-      btctx = btcrpc.gettransaction(tx['tx_hash'])
+      # FIXME use blocktime instead?
+      # FIXME btctx = btcrpc.gettransaction(tx['tx_hash'])
       return {
         "txid" : tx['tx_hash'], 
         "address" : tx['destination'],
         "asset" : asset,
         "amount" : (tx['quantity'] / (Decimal("10.0") ** self.decimal_places)), 
-        "timereceived" : btctx['timereceived'],
+        "timereceived" : 0, # FIXME btctx['timereceived'],
         "confirmations" : blockcount - tx['block_index'] + 1,
       }
     txlist = map(reformat, result)
